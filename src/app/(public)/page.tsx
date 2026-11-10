@@ -31,17 +31,17 @@ export default function HomePage() {
     <div>
       {/* 1. Hero Section */}
       <section className="relative pt-16 pb-20 md:pt-24 md:pb-32 px-4 sm:px-6 overflow-hidden">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,theme(colors.rose.100),theme(colors.white))] opacity-60" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,theme(colors.amber.100),theme(colors.white))] opacity-50" />
 
         <div className="max-w-4xl mx-auto text-center space-y-6 animate-fade-in-up">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-50 border border-rose-200/80 text-rose-800 text-xs sm:text-sm font-semibold shadow-xs">
-            <Sparkles className="w-4 h-4 text-rose-600" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-50 border border-amber-200/80 text-[#844307] text-xs sm:text-sm font-semibold shadow-xs">
+            <Sparkles className="w-4 h-4 text-[#844307]" />
             <span>Platform Undangan Digital Personal &amp; Cepat</span>
           </div>
 
           <h1 className="text-4xl sm:text-6xl font-serif font-bold text-stone-900 tracking-tight leading-[1.15]">
             Bagikan Momen Bahagia dengan{" "}
-            <span className="bg-gradient-to-r from-rose-600 to-amber-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#844307] via-amber-700 to-amber-600 bg-clip-text text-transparent">
               Undangan Digital Elegan
             </span>
           </h1>
@@ -53,7 +53,7 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
             <a
               href="#katalog"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-rose-600 hover:bg-rose-700 text-white font-medium text-sm rounded-full shadow-lg shadow-rose-600/25 transition-all hover:scale-105"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#844307] hover:bg-[#6d3505] text-white font-medium text-sm rounded-full shadow-lg shadow-[#844307]/25 transition-all hover:scale-105"
             >
               <span>Pilih Template Sekarang</span>
               <ChevronRight className="w-4 h-4" />
@@ -74,7 +74,7 @@ export default function HomePage() {
               <p className="text-xs text-stone-500">Pengerjaan kilat</p>
             </div>
             <div className="p-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-stone-200/70 shadow-xs">
-              <Clock className="w-5 h-5 text-rose-500 mb-2" />
+              <Clock className="w-5 h-5 text-[#844307] mb-2" />
               <p className="font-bold text-stone-900 text-lg">3 Bulan</p>
               <p className="text-xs text-stone-500">Masa aktif tayang</p>
             </div>
@@ -96,7 +96,7 @@ export default function HomePage() {
       <section id="katalog" className="py-20 px-4 sm:px-6 bg-white border-y border-stone-200/80">
         <div className="max-w-6xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-            <span className="text-xs font-semibold uppercase tracking-widest text-rose-600">
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#844307]">
               Koleksi Desain Pilihan
             </span>
             <h2 className="text-3xl sm:text-4xl font-serif font-bold text-stone-900">
@@ -179,7 +179,7 @@ export default function HomePage() {
       <section id="cara-pesan" className="py-20 px-4 sm:px-6">
         <div className="max-w-5xl mx-auto">
           <div className="text-center max-w-xl mx-auto mb-16 space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-widest text-rose-600">
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#844307]">
               Mudah &amp; Personal
             </span>
             <h2 className="text-3xl font-serif font-bold text-stone-900">
@@ -218,7 +218,7 @@ export default function HomePage() {
                 className="p-6 bg-white rounded-3xl border border-stone-200/80 shadow-xs relative flex flex-col justify-between"
               >
                 <div>
-                  <span className="text-3xl font-mono font-bold text-rose-200 mb-4 block">
+                  <span className="text-3xl font-mono font-bold text-[#d7b588] mb-4 block">
                     {item.step}
                   </span>
                   <h3 className="text-base font-serif font-bold text-stone-900 mb-2">
@@ -285,7 +285,7 @@ export default function HomePage() {
       <section id="faq" className="py-20 px-4 sm:px-6">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-14 space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-widest text-rose-600">
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#844307]">
               FAQ
             </span>
             <h2 className="text-3xl font-serif font-bold text-stone-900">

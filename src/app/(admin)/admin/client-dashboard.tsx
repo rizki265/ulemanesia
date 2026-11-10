@@ -188,7 +188,7 @@ export function AdminDashboardClient({
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Cari customer, judul, atau slug..."
-            className="w-full pl-10 pr-4 py-2 bg-stone-50 rounded-xl border border-stone-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500"
+            className="w-full pl-10 pr-4 py-2 bg-stone-50 rounded-xl border border-stone-200 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#844307]/20 focus:border-[#844307]"
           />
         </div>
 
@@ -276,7 +276,7 @@ export function AdminDashboardClient({
                             href={`/${inv.slug}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-xs text-rose-600 hover:text-rose-700 font-mono hover:underline"
+                            className="inline-flex items-center gap-1 text-xs text-[#844307] hover:text-[#6d3505] font-mono hover:underline"
                           >
                             <span>/{inv.slug}</span>
                             <ExternalLink className="w-3 h-3" />
@@ -407,7 +407,7 @@ export function AdminDashboardClient({
                   value={guestInputName}
                   onChange={(e) => setGuestInputName(e.target.value)}
                   placeholder="Contoh: Budi Santoso atau Bpk. Hendro & Keluarga"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#844307]/20 focus:border-[#844307]"
                 />
                 <p className="text-[11px] text-stone-400 mt-1">
                   *Sesuai BRD FR-20: Daftar nama tamu tidak disimpan ke database.
@@ -426,7 +426,7 @@ export function AdminDashboardClient({
               <div className="pt-2 flex items-center gap-3">
                 <button
                   onClick={copyGuestUrl}
-                  className="flex-1 inline-flex items-center justify-center gap-2 py-2.5 px-4 bg-rose-600 hover:bg-rose-700 text-white font-medium text-xs rounded-xl shadow-xs transition-all"
+                  className="flex-1 inline-flex items-center justify-center gap-2 py-2.5 px-4 bg-[#844307] hover:bg-[#6d3505] text-white font-medium text-xs rounded-xl shadow-xs transition-all"
                 >
                   {copiedLink ? (
                     <>

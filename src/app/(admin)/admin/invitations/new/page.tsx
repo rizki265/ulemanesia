@@ -244,14 +244,14 @@ export default function NewInvitationPage() {
                 onClick={() => setTemplateKey(tpl.key)}
                 className={`p-4 rounded-2xl border cursor-pointer transition-all ${
                   templateKey === tpl.key
-                    ? "border-rose-600 bg-rose-50/50 ring-2 ring-rose-500/20"
+                    ? "border-[#844307] bg-[#faf5ee] ring-2 ring-[#844307]/20"
                     : "border-stone-200 hover:border-stone-300 bg-stone-50/30"
                 }`}
               >
                 <div className="flex items-center justify-between mb-1.5">
                   <h3 className="font-serif font-bold text-sm text-stone-900">{tpl.name}</h3>
                   {templateKey === tpl.key && (
-                    <CheckCircle className="w-4 h-4 text-rose-600" />
+                    <CheckCircle className="w-4 h-4 text-[#844307]" />
                   )}
                 </div>
                 <p className="text-xs text-stone-500 line-clamp-2">{tpl.description}</p>
@@ -277,7 +277,7 @@ export default function NewInvitationPage() {
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
                 placeholder="Contoh: Kak Shinta"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-sm focus:outline-none focus:border-rose-500"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-sm focus:outline-none focus:border-[#844307]"
               />
             </div>
 
@@ -291,7 +291,7 @@ export default function NewInvitationPage() {
                 value={customerPhone}
                 onChange={(e) => setCustomerPhone(e.target.value)}
                 placeholder="Contoh: 081234567890"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-sm focus:outline-none focus:border-rose-500"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-sm focus:outline-none focus:border-[#844307]"
               />
             </div>
           </div>
@@ -304,7 +304,7 @@ export default function NewInvitationPage() {
               <button
                 type="button"
                 onClick={handleAutoSlug}
-                className="text-xs text-rose-600 hover:underline"
+                className="text-xs text-[#844307] hover:underline"
               >
                 Generate dari nama mempelai
               </button>
@@ -316,7 +316,7 @@ export default function NewInvitationPage() {
               onChange={(e) => handleSlugChange(e.target.value)}
               placeholder="Contoh: rama-dan-shinta"
               className={`w-full px-3.5 py-2.5 rounded-xl border text-sm font-mono focus:outline-none ${
-                slugError ? "border-red-400 bg-red-50/20" : "border-stone-200 focus:border-rose-500"
+                slugError ? "border-red-400 bg-red-50/20" : "border-stone-200 focus:border-[#844307]"
               }`}
             />
             {slugError && <p className="text-xs text-red-600 mt-1">{slugError}</p>}
@@ -333,7 +333,7 @@ export default function NewInvitationPage() {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="The Wedding of Rama & Shinta"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-sm focus:outline-none focus:border-rose-500"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-sm focus:outline-none focus:border-[#844307]"
               />
             </div>
             <div>
@@ -345,7 +345,7 @@ export default function NewInvitationPage() {
                 required
                 value={eventDate}
                 onChange={(e) => setEventDate(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-sm focus:outline-none focus:border-rose-500"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-sm focus:outline-none focus:border-[#844307]"
               />
             </div>
           </div>
@@ -484,21 +484,21 @@ export default function NewInvitationPage() {
               value={bankName}
               onChange={(e) => setBankName(e.target.value)}
               placeholder="Nama Bank (e.g. BCA, Mandiri)"
-              className="px-3.5 py-2 rounded-xl border border-stone-200 text-xs sm:text-sm focus:outline-none focus:border-rose-500"
+              className="px-3.5 py-2 rounded-xl border border-stone-200 text-xs sm:text-sm focus:outline-none focus:border-[#844307]"
             />
             <input
               type="text"
               value={accountNumber}
               onChange={(e) => setAccountNumber(e.target.value)}
               placeholder="Nomor Rekening"
-              className="px-3.5 py-2 rounded-xl border border-stone-200 text-xs sm:text-sm focus:outline-none focus:border-rose-500"
+              className="px-3.5 py-2 rounded-xl border border-stone-200 text-xs sm:text-sm focus:outline-none focus:border-[#844307]"
             />
             <input
               type="text"
               value={accountHolder}
               onChange={(e) => setAccountHolder(e.target.value)}
               placeholder="Atas Nama (Pemilik)"
-              className="px-3.5 py-2 rounded-xl border border-stone-200 text-xs sm:text-sm focus:outline-none focus:border-rose-500"
+              className="px-3.5 py-2 rounded-xl border border-stone-200 text-xs sm:text-sm focus:outline-none focus:border-[#844307]"
             />
           </div>
         </section>
@@ -518,7 +518,7 @@ export default function NewInvitationPage() {
             type="button"
             disabled={submitting}
             onClick={() => handleSave("published")}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs sm:text-sm font-semibold shadow-md shadow-rose-600/20 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl bg-[#844307] hover:bg-[#6d3505] text-white text-xs sm:text-sm font-semibold shadow-md shadow-[#844307]/20 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
           >
             <CheckCircle className="w-4 h-4" />
             <span>Publish Langsung (Aktif 3 Bulan)</span>

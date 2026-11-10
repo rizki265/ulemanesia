@@ -17,7 +17,7 @@ export default function TemplatesPage() {
   return (
     <div className="py-16 px-4 sm:px-6 max-w-6xl mx-auto">
       <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-        <span className="text-xs font-semibold uppercase tracking-widest text-rose-600">
+        <span className="text-xs font-semibold uppercase tracking-widest text-[#844307]">
           Galeri Desain
         </span>
         <h1 className="text-4xl font-serif font-bold text-stone-900">

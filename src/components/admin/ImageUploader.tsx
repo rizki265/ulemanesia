@@ -156,24 +156,24 @@ export function ImageUploader({
           onClick={() => !uploading && fileInputRef.current?.click()}
           className={`border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-all duration-200 ${
             dragActive
-              ? "border-rose-500 bg-rose-50/50 scale-[1.01]"
-              : "border-stone-200 hover:border-rose-400 bg-stone-50/50 hover:bg-white"
+              ? "border-[#844307] bg-[#faf5ee] scale-[1.01]"
+              : "border-stone-200 hover:border-[#c5965a] bg-stone-50/50 hover:bg-white"
           } ${uploading ? "opacity-60 cursor-not-allowed" : ""}`}
         >
           {uploading ? (
             <div className="flex flex-col items-center justify-center py-2 space-y-2">
-              <Loader2 className="w-7 h-7 text-rose-600 animate-spin" />
+              <Loader2 className="w-7 h-7 text-[#844307] animate-spin" />
               <p className="text-xs font-medium text-stone-700">{uploadStatus}</p>
               <p className="text-[11px] text-stone-400">Kompresi WebP otomatis sedang berjalan...</p>
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center space-y-2">
-              <div className="w-10 h-10 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-[#faf5ee] text-[#844307] flex items-center justify-center">
                 <UploadCloud className="w-5 h-5" />
               </div>
               <div className="space-y-1">
                 <p className="text-xs font-semibold text-stone-800">
-                  <span className="text-rose-600 underline">Pilih File Foto</span> atau seret foto ke sini
+                  <span className="text-[#844307] underline">Pilih File Foto</span> atau seret foto ke sini
                 </p>
                 <p className="text-[11px] text-stone-400">
                   {multiple
@@ -221,9 +221,9 @@ export function ImageUploader({
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="w-32 h-32 shrink-0 border-2 border-dashed border-stone-200 hover:border-rose-400 rounded-xl flex flex-col items-center justify-center p-3 text-center text-xs text-stone-500 hover:text-rose-600 bg-stone-50/50 hover:bg-white transition-all cursor-pointer"
+              className="w-32 h-32 shrink-0 border-2 border-dashed border-stone-200 hover:border-[#c5965a] rounded-xl flex flex-col items-center justify-center p-3 text-center text-xs text-stone-500 hover:text-[#844307] bg-stone-50/50 hover:bg-white transition-all cursor-pointer"
             >
-              <UploadCloud className="w-5 h-5 mb-1 text-stone-400 group-hover:text-rose-500" />
+              <UploadCloud className="w-5 h-5 mb-1 text-stone-400 group-hover:text-[#844307]" />
               <span className="font-medium text-[11px]">Ganti Foto</span>
             </button>
           )}
