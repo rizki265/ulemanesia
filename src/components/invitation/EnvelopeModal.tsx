@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MailOpen, Heart } from "lucide-react";
 
 interface EnvelopeModalProps {
@@ -12,6 +12,9 @@ interface EnvelopeModalProps {
   onOpen: () => void;
 }
 
+const DEFAULT_COVER =
+  "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80";
+
 export function EnvelopeModal({
   title,
   coupleNames,
@@ -20,68 +23,101 @@ export function EnvelopeModal({
   coverImageUrl,
   onOpen,
 }: EnvelopeModalProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+  const [isClosed, setIsClosed] = useState(false);
+
+  // Kunci scroll halaman sebelum undangan dibuka
+  useEffect(() => {
+    if (!isClosed) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isClosed]);
 
   const handleOpenInvitation = () => {
-    setIsOpen(true);
+    setIsClosing(true);
     onOpen();
+    setTimeout(() => {
+      setIsClosed(true);
+    }, 750);
   };
 
-  if (isOpen) return null;
+  if (isClosed) return null;
+
+  const bgImage = coverImageUrl || DEFAULT_COVER;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md transition-opacity duration-700 animate-fadeIn">
-      {/* Background with blur if cover image provided */}
-      {coverImageUrl && (
-        <div
-          className="absolute inset-0 bg-cover bg-center filter blur-lg opacity-40 scale-105"
-          style={{ backgroundImage: `url(${coverImageUrl})` }}
+    <div
+      className={`fixed inset-0 z-50 flex flex-col justify-between transition-all duration-700 ease-in-out ${
+        isClosing
+          ? "-translate-y-full opacity-0 pointer-events-none"
+          : "translate-y-0 opacity-100"
+      }`}
+    >
+      {/* 1. Fullscreen Background Image - Jelas tanpa blur agar foto tetap terlihat */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={bgImage}
+          alt={coupleNames}
+          className="w-full h-full object-cover object-center scale-100 transition-transform duration-1000"
         />
-      )}
+        {/* Gradient lembut dari atas dan bawah agar teks terbaca tajam namun foto tetap terlihat jelas */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/20 to-black/85" />
+      </div>
 
-      <div className="relative w-full max-w-md bg-white/95 backdrop-blur-xl border border-rose-100 rounded-3xl p-8 sm:p-10 shadow-2xl text-center transform transition-all duration-500 hover:shadow-rose-500/10">
-        {/* Subtle decorative heart */}
-        <div className="mx-auto w-14 h-14 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mb-6 shadow-inner ring-4 ring-rose-50">
-          <Heart className="w-6 h-6 fill-rose-500 text-rose-500 animate-pulse" />
+      {/* 2. Bagian Atas: Tulisan Judul & Nama Kedua Mempelai langsung di atas gambar */}
+      <div className="pt-14 sm:pt-20 px-6 text-center text-white space-y-3">
+        <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-rose-200 text-xs tracking-widest uppercase font-medium shadow-sm">
+          <Heart className="w-3.5 h-3.5 fill-rose-400 text-rose-400" />
+          <span>The Wedding Of</span>
         </div>
 
-        <p className="text-xs uppercase tracking-widest text-rose-800/80 font-medium mb-1">
-          The Wedding of
-        </p>
-
-        <h1 className="text-3xl sm:text-4xl font-serif font-bold text-rose-950 mb-3 tracking-tight">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white tracking-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
           {coupleNames}
         </h1>
 
         {eventDate && (
-          <p className="text-sm text-gray-500 mb-6 font-light">{eventDate}</p>
+          <p className="text-sm sm:text-base text-stone-200 font-light tracking-wide drop-shadow-md">
+            {eventDate}
+          </p>
         )}
+      </div>
 
-        {/* Guest Name Card */}
-        <div className="bg-rose-50/60 border border-rose-100 rounded-2xl p-5 mb-8">
-          <p className="text-xs text-rose-800/70 font-medium mb-1">
+      {/* 3. Bagian Bawah: Nama Tamu & Tombol Buka Undangan (Glassmorphism tipis, tanpa popup tebal) */}
+      <div className="pb-10 sm:pb-14 px-6 max-w-md mx-auto w-full text-center space-y-5">
+        {/* Kotak Transparan Tipis Nama Tamu */}
+        <div className="p-4 sm:p-5 rounded-2xl bg-black/40 backdrop-blur-md border border-white/20 text-white shadow-xl space-y-1.5">
+          <p className="text-[11px] sm:text-xs text-rose-200 tracking-wider font-light uppercase">
             Kepada Yth. Bapak/Ibu/Saudara/i:
           </p>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-rose-900 break-words">
-            {guestName}
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-white tracking-wide drop-shadow-md">
+            {guestName || "Tamu Undangan"}
           </h2>
-          <p className="text-[11px] text-gray-500 italic mt-1.5">
+          <p className="text-[10px] sm:text-[11px] text-white/70 italic">
             *Mohon maaf jika ada kesalahan penulisan nama dan gelar
           </p>
         </div>
 
-        {/* Action Button */}
-        <button
-          onClick={handleOpenInvitation}
-          className="w-full inline-flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-700 hover:to-rose-800 text-white font-medium rounded-full shadow-lg shadow-rose-600/30 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
-        >
-          <MailOpen className="w-5 h-5" />
-          <span>Buka Undangan</span>
-        </button>
+        {/* Tombol Buka Undangan */}
+        <div className="space-y-2.5">
+          <button
+            type="button"
+            onClick={handleOpenInvitation}
+            className="w-full inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-gradient-to-r from-rose-600 via-rose-500 to-rose-600 hover:from-rose-500 hover:to-rose-700 text-white font-medium text-sm sm:text-base rounded-full shadow-2xl shadow-rose-950/60 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] border border-white/20 cursor-pointer"
+          >
+            <MailOpen className="w-5 h-5 animate-bounce" />
+            <span className="font-semibold tracking-wide">Buka Undangan</span>
+          </button>
 
-        <p className="text-[11px] text-gray-400 mt-4">
-          Sentuh tombol untuk membuka undangan & memutar musik
-        </p>
+          <p className="text-[11px] text-white/80 drop-shadow-md font-light">
+            Sentuh tombol untuk membuka undangan & memutar musik
+          </p>
+        </div>
       </div>
     </div>
   );
