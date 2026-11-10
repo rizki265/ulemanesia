@@ -1,158 +1,205 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import Link from "next/link";
 import {
-  ArrowLeft,
-  MessageCircle,
-  Smartphone,
-  Monitor,
-  Share2,
-  Check,
   Sparkles,
+  Heart,
+  Maximize2,
+  ExternalLink,
+  MousePointerClick,
+  ChevronRight,
 } from "lucide-react";
+import { PublicNavbar } from "@/app/(public)/navbar";
+
+interface TemplateSummary {
+  key: string;
+  name: string;
+  tags: string[];
+}
 
 interface DemoClientProps {
   templateKey: string;
   templateName: string;
+  templateDescription: string;
+  templateTags: string[];
   whatsappUrl: string;
+  allTemplates: TemplateSummary[];
 }
 
 export function DemoClient({
   templateKey,
   templateName,
+  templateDescription,
+  templateTags,
   whatsappUrl,
+  allTemplates,
 }: DemoClientProps) {
-  const [device, setDevice] = useState<"mobile" | "desktop">("mobile");
-  const [copied, setCopied] = useState(false);
+  const phoneRef = useRef<HTMLDivElement>(null);
 
-  const handleCopyLink = () => {
-    if (typeof window !== "undefined") {
-      navigator.clipboard.writeText(window.location.href);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+  const scrollToPhone = () => {
+    if (phoneRef.current) {
+      phoneRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   };
 
+  // Distinctive poetic subtitle and description per template matching the reference layout
+  const templateMeta: Record<
+    string,
+    { badge: string; detailedDescription: string }
+  > = {
+    "javanese-royal": {
+      badge: "KOSMOLOGI SAKRAL ADAT JAWA KRATON",
+      detailedDescription:
+        "Undangan sakral bernuansa adat Jawa Kraton berlatar hitam obsidian megah, berhiaskan Gunungan Wayang emas, kaligrafi anggun, serta alunan gending yang syahdu. Sempurna untuk menyambut keluarga besar dan para sahabat dalam sakralnya prosesi pernikahan adat Jawa yang agung.",
+    },
+    "minimalist-floral": {
+      badge: "SENTUHAN BOTANIKAL PASTEL HANGAT",
+      detailedDescription:
+        "Undangan bernuansa botanical dengan ilustrasi bunga lembut, aksen pastel hangat, dan tipografi minimalis kontemporer. Menghadirkan atmosfer romantis, intim, dan memikat untuk momen terindah hari bahagia Anda.",
+    },
+    "modern-elegance": {
+      badge: "ELEGANSI MONOKROM KONTEMPORER MEWAH",
+      detailedDescription:
+        "Kemewahan kontemporer monokrom berpadu aksen emas temaram. Kontras tajam yang berkarakter, tipografi modern berkelas, dan animasi halus yang memukau di layar smartphone para tamu kehormatan.",
+    },
+  };
+
+  const currentMeta = templateMeta[templateKey] || {
+    badge: templateTags[0]?.toUpperCase() || "DESAIN EKSKLUSIF",
+    detailedDescription: templateDescription,
+  };
+
   return (
-    <div className="min-h-screen bg-[#0b0b0e] text-stone-100 flex flex-col selection:bg-amber-500/30">
-      {/* Top Studio Control Bar */}
-      <header className="sticky top-0 z-50 bg-[#121217]/90 backdrop-blur-xl border-b border-stone-800/80 py-3 px-4 sm:px-6 flex items-center justify-between shadow-lg">
-        {/* Left: Back Link & Template Indicator */}
-        <div className="flex items-center gap-3">
-          <Link
-            href="/templates"
-            className="inline-flex items-center gap-1.5 text-xs text-stone-400 hover:text-white transition-colors py-1.5 px-3 rounded-xl hover:bg-stone-800/80 border border-transparent hover:border-stone-700"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span className="hidden sm:inline font-medium">Katalog</span>
-          </Link>
-          <span className="hidden sm:inline text-stone-700">|</span>
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-stone-400 hidden sm:inline">Desain:</span>
-            <span className="text-xs sm:text-sm font-semibold text-amber-300 font-serif tracking-wide">
+    <div className="min-h-screen bg-[#faf7f2] text-stone-900 flex flex-col selection:bg-amber-500/20">
+      {/* 1. Website Navbar Header */}
+      <PublicNavbar />
+
+      {/* 2. Main Showcase Split Section */}
+      <main className="flex-1 flex items-center justify-center py-10 lg:py-16 px-4 sm:px-6 lg:px-12 relative overflow-hidden">
+        {/* Subtle Warm Amber / Rose Ambient Light in Background */}
+        <div className="absolute top-1/4 left-1/3 -translate-x-1/2 w-[600px] h-[500px] bg-gradient-to-br from-amber-200/30 via-rose-100/25 to-transparent blur-3xl pointer-events-none" />
+
+        <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          {/* Left Column: Template Details & Action CTAs */}
+          <div className="lg:col-span-6 space-y-6 sm:space-y-8 text-center lg:text-left">
+            {/* Top Subtitle Badge */}
+            <div>
+              <span className="inline-block px-4 py-1.5 rounded-full bg-amber-100/70 text-[#844307] text-[11px] sm:text-xs font-bold uppercase tracking-wider border border-amber-200/80 shadow-2xs">
+                {currentMeta.badge}
+              </span>
+            </div>
+
+            {/* Main Headline */}
+            <h1 className="font-serif font-bold text-4xl sm:text-5xl lg:text-6xl text-stone-900 tracking-tight leading-[1.1]">
               {templateName}
-            </span>
-          </div>
-        </div>
+            </h1>
 
-        {/* Center: Device Switcher (Mobile Mockup vs Fullscreen Desktop) */}
-        <div className="hidden md:flex items-center p-1 bg-stone-900/90 rounded-2xl border border-stone-700/60 shadow-inner">
-          <button
-            type="button"
-            onClick={() => setDevice("mobile")}
-            className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer ${
-              device === "mobile"
-                ? "bg-[#844307] text-white shadow-md shadow-[#844307]/30 scale-[1.02]"
-                : "text-stone-400 hover:text-stone-200"
-            }`}
-          >
-            <Smartphone className="w-3.5 h-3.5" />
-            <span>Tampilan HP (Mobile)</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => setDevice("desktop")}
-            className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer ${
-              device === "desktop"
-                ? "bg-[#844307] text-white shadow-md shadow-[#844307]/30 scale-[1.02]"
-                : "text-stone-400 hover:text-stone-200"
-            }`}
-          >
-            <Monitor className="w-3.5 h-3.5" />
-            <span>Layar Penuh (Desktop)</span>
-          </button>
-        </div>
+            {/* Rich Detailed Description */}
+            <p className="text-sm sm:text-base text-stone-600 leading-relaxed max-w-xl mx-auto lg:mx-0">
+              {currentMeta.detailedDescription}
+            </p>
 
-        {/* Right Actions: Share Link & WhatsApp CTA */}
-        <div className="flex items-center gap-2.5">
-          <button
-            type="button"
-            onClick={handleCopyLink}
-            title="Salin Link Demo"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 bg-stone-800/80 hover:bg-stone-700 text-stone-300 hover:text-white text-xs font-medium rounded-full border border-stone-700/70 transition-all cursor-pointer"
-          >
-            {copied ? (
-              <>
-                <Check className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="text-emerald-300 font-semibold">Tersalin!</span>
-              </>
-            ) : (
-              <>
-                <Share2 className="w-3.5 h-3.5" />
-                <span>Salin Link</span>
-              </>
-            )}
-          </button>
-
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white text-xs sm:text-sm font-semibold rounded-full shadow-md shadow-emerald-700/25 transition-all hover:scale-105"
-          >
-            <MessageCircle className="w-4 h-4" />
-            <span>Pesan Desain</span>
-          </a>
-        </div>
-      </header>
-
-      {/* Main Studio Stage with Ambient Light Radial Background */}
-      <main className="flex-1 flex items-center justify-center p-0 sm:p-6 md:p-8 overflow-hidden relative">
-        {/* Subtle Warm Spotlight Glow centered on stage */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_45%,rgba(217,119,6,0.12),transparent_70%)] pointer-events-none" />
-
-        {device === "mobile" ? (
-          /* Smartphone Device Frame (iPhone 15 Pro Titanium Style) */
-          <div className="w-full h-[calc(100vh-61px)] sm:w-[420px] sm:h-[840px] sm:max-h-[89vh] sm:rounded-[54px] sm:border-[12px] sm:border-stone-800/90 sm:shadow-[0_25px_80px_rgba(0,0,0,0.95)] sm:ring-1 sm:ring-white/15 relative overflow-hidden bg-black flex flex-col transition-all duration-300">
-            {/* Dynamic Island / Speaker Notch (only shown in desktop studio frame) */}
-            <div className="hidden sm:block absolute top-3.5 left-1/2 -translate-x-1/2 w-28 h-5 bg-black rounded-full z-30 pointer-events-none ring-1 ring-white/10 shadow-sm">
-              <div className="absolute right-3.5 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-stone-900 ring-1 ring-stone-800" />
+            {/* Quick Template Switcher Pills */}
+            <div className="pt-1">
+              <p className="text-xs font-semibold text-stone-500 uppercase tracking-wider mb-2.5">
+                Pilihan Desain Lainnya:
+              </p>
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
+                {allTemplates.map((item) => {
+                  const isActive = item.key === templateKey;
+                  return (
+                    <Link
+                      key={item.key}
+                      href={`/demo/${item.key}`}
+                      className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
+                        isActive
+                          ? "bg-[#844307] text-white shadow-sm font-semibold scale-105"
+                          : "bg-white text-stone-700 hover:bg-stone-100 border border-stone-200/80"
+                      }`}
+                    >
+                      {item.name}
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
 
-            {/* Inner Phone Screen */}
-            <div className="w-full h-full sm:rounded-[42px] overflow-hidden bg-white relative">
-              <iframe
-                src={`/demo/${templateKey}?view=raw`}
-                title={`Preview ${templateName}`}
-                allow="autoplay"
-                loading="eager"
-                className="w-full h-full border-0 select-none"
-              />
+            {/* Action Buttons */}
+            <div className="pt-2 space-y-3.5">
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4">
+                {/* Button 1: Coba Demo Langsung */}
+                <button
+                  type="button"
+                  onClick={scrollToPhone}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-[#18191d] hover:bg-black text-white text-sm font-semibold rounded-2xl shadow-lg shadow-black/10 transition-all duration-200 hover:scale-[1.02] active:scale-98 cursor-pointer"
+                >
+                  <MousePointerClick className="w-4 h-4 text-amber-400" />
+                  <span>Coba Demo Langsung &rarr;</span>
+                </button>
+
+                {/* Button 2: Pakai Template */}
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 bg-gradient-to-r from-[#844307] via-[#9e5108] to-[#b45309] hover:from-[#6d3505] hover:to-[#844307] text-white text-sm font-semibold rounded-2xl shadow-lg shadow-[#844307]/25 transition-all duration-200 hover:scale-[1.02] active:scale-98 cursor-pointer"
+                >
+                  <Heart className="w-4 h-4 fill-white text-white" />
+                  <span>Pakai Template</span>
+                </a>
+              </div>
+
+              {/* Fullscreen Alternative Link */}
+              <div className="pt-1">
+                <Link
+                  href={`/demo/${templateKey}?view=raw`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs text-stone-500 hover:text-stone-900 transition-colors"
+                >
+                  <Maximize2 className="w-3.5 h-3.5" />
+                  <span>Atau buka layar penuh di tab baru</span>
+                </Link>
+              </div>
             </div>
           </div>
-        ) : (
-          /* Fullscreen Desktop View */
-          <div className="w-full h-[calc(100vh-61px)] bg-white overflow-hidden shadow-2xl relative">
-            <iframe
-              src={`/demo/${templateKey}?view=raw`}
-              title={`Preview ${templateName}`}
-              allow="autoplay"
-              loading="eager"
-              className="w-full h-full border-0"
-            />
+
+          {/* Right Column: Live Interactive Smartphone Handphone Mockup */}
+          <div
+            ref={phoneRef}
+            className="lg:col-span-6 flex flex-col items-center justify-center relative"
+          >
+            {/* Floating Top Pill: ● PRATINJAU LANGSUNG */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-stone-900/90 text-white text-[11px] font-semibold tracking-wider shadow-lg mb-4 backdrop-blur-md border border-stone-700/60 z-20">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>PRATINJAU LANGSUNG</span>
+            </div>
+
+            {/* Smartphone Handphone Frame */}
+            <div className="w-[310px] sm:w-[350px] lg:w-[370px] h-[640px] sm:h-[700px] lg:h-[740px] rounded-[48px] sm:rounded-[54px] border-[8px] sm:border-[10px] border-[#18181b] shadow-[0_25px_70px_rgba(0,0,0,0.18)] relative overflow-hidden bg-black flex flex-col ring-1 ring-black/25">
+              {/* iPhone Top Camera Notch */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-5 bg-[#18181b] rounded-b-2xl z-30 pointer-events-none flex items-center justify-center gap-2 shadow-xs">
+                <div className="w-10 h-1 bg-stone-700/80 rounded-full" />
+                <div className="w-2.5 h-2.5 rounded-full bg-stone-900 ring-1 ring-stone-700/60" />
+              </div>
+
+              {/* Bottom Home Indicator Bar */}
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-28 h-1 bg-white/40 rounded-full z-20 pointer-events-none" />
+
+              {/* Inner Screen Area running the live interactive template */}
+              <div className="w-full h-full rounded-[38px] sm:rounded-[44px] overflow-hidden bg-white relative">
+                <iframe
+                  src={`/demo/${templateKey}?view=raw`}
+                  title={`Live Preview ${templateName}`}
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
+                  loading="eager"
+                  className="w-full h-full border-0 select-none"
+                />
+              </div>
+            </div>
           </div>
-        )}
+        </div>
       </main>
     </div>
   );
