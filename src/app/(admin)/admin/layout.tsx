@@ -15,13 +15,13 @@ export default function AdminLayout({
         <div className="space-y-8">
           {/* Logo & Brand */}
           <div className="flex flex-col gap-1.5 pb-2">
-            <div className="p-3 bg-white/5 rounded-2xl border border-white/10 flex items-center justify-center">
+            <div className="p-2.5 bg-white rounded-2xl flex items-center justify-center shadow-sm">
               <Image
                 src="/logo.png"
                 alt="Logo Ulemanesia"
                 width={220}
                 height={130}
-                className="h-12 w-auto object-contain brightness-125"
+                className="h-12 w-auto object-contain"
                 priority
               />
             </div>
