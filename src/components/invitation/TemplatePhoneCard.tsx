@@ -18,6 +18,7 @@ export function TemplatePhoneCard({
   whatsappUrl,
   priority = false,
 }: TemplatePhoneCardProps) {
+  const isEditorial = template.key === "editorial-photo";
   const isJavanese = template.key === "javanese-royal";
   const isModern = template.key === "modern-elegance";
 
@@ -40,7 +41,49 @@ export function TemplatePhoneCard({
 
         {/* Screen Area with Realistic Inner Bezel */}
         <div className="w-full h-full rounded-[33px] sm:rounded-[37px] overflow-hidden relative flex flex-col justify-between">
-          {isJavanese ? (
+          {isEditorial ? (
+            /* Cinematic Editorial Romance Phone Cover Preview */
+            <div className="w-full h-full relative flex flex-col justify-between py-7 px-3.5 text-center">
+              <Image
+                src={template.thumbnailUrl}
+                alt={template.name}
+                fill
+                priority={priority}
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                sizes="220px"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/40 to-black/90" />
+
+              {/* Top Tagline */}
+              <div className="relative z-10 pt-4 space-y-1.5">
+                <span className="inline-block px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-amber-200 text-[8px] uppercase tracking-[0.2em] font-medium border border-white/20">
+                  THE WEDDING INVITATION
+                </span>
+                <p className="text-[8px] uppercase tracking-[0.22em] text-stone-300 font-light">
+                  WE ARE GETTING MARRIED
+                </p>
+                <h4 className="font-serif text-2xl sm:text-3xl font-bold text-white tracking-tight drop-shadow-md">
+                  Dimas &amp; Clarissa
+                </h4>
+                <p className="text-[10px] font-serif italic text-amber-200/90">
+                  12 &middot; 12 &middot; 2026
+                </p>
+              </div>
+
+              {/* Bottom Actions */}
+              <div className="relative z-10 pb-2 space-y-2 flex flex-col items-center">
+                <div className="px-3 py-1.5 rounded-xl bg-black/60 backdrop-blur-md border border-white/20 text-white w-full max-w-[170px] shadow-lg">
+                  <p className="text-[8px] uppercase tracking-wider text-amber-300/90 mb-0.5">Kepada Yth:</p>
+                  <p className="text-[11px] font-serif font-bold text-white">Tamu Undangan</p>
+                </div>
+
+                <div className="w-full max-w-[170px] py-1.5 px-3 rounded-full bg-gradient-to-r from-amber-600 via-amber-700 to-[#844307] text-white font-semibold text-[10px] shadow-lg flex items-center justify-center gap-1.5 ring-1 ring-amber-400/40">
+                  <MailOpen className="w-3 h-3 text-white" />
+                  <span>Buka Undangan</span>
+                </div>
+              </div>
+            </div>
+          ) : isJavanese ? (
             /* Javanese Royal Heritage Phone Cover Preview */
             <div className="w-full h-full bg-[#0d0d0f] text-center flex flex-col justify-between py-7 px-3.5 relative overflow-hidden">
               {/* Subtle side kayon ornaments */}

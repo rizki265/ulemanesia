@@ -2,6 +2,7 @@ import { RegisteredTemplate } from "./types";
 import MinimalistFloralTemplate from "./designs/minimalist-floral";
 import ModernEleganceTemplate from "./designs/modern-elegance";
 import JavaneseRoyalTemplate from "./designs/javanese-royal";
+import EditorialPhotoTemplate from "./designs/editorial-photo";
 
 /**
  * Ulemanesia Template Registry
@@ -9,6 +10,14 @@ import JavaneseRoyalTemplate from "./designs/javanese-royal";
  * Adding a new template only requires adding a component and registering it here!
  */
 export const TEMPLATE_REGISTRY: Record<string, RegisteredTemplate> = {
+  "editorial-photo": {
+    key: "editorial-photo",
+    name: "Cinematic Editorial Romance",
+    description: "Desain tren modern bergaya majalah editorial dengan foto pengantin layar penuh, tipografi mewah di atas background, dan transisi sinematik.",
+    thumbnailUrl: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
+    tags: ["Editorial", "Full Photo", "Cinematic", "Modern", "Trending"],
+    component: EditorialPhotoTemplate,
+  },
   "javanese-royal": {
     key: "javanese-royal",
     name: "Javanese Royal Heritage",

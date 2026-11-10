@@ -48,6 +48,11 @@ export function DemoClient({
     string,
     { badge: string; detailedDescription: string }
   > = {
+    "editorial-photo": {
+      badge: "FOTO EDITORIAL SINEMATIK KONTEMPORER",
+      detailedDescription:
+        "Desain tren modern bergaya majalah editorial dengan latar belakang foto pengantin layar penuh, tipografi mewah di atas background, dan transisi sinematik. Menghadirkan kesan visual intim, berkelas, dan memikat di layar smartphone para tamu.",
+    },
     "javanese-royal": {
       badge: "KOSMOLOGI SAKRAL ADAT JAWA KRATON",
       detailedDescription:

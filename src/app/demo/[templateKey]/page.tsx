@@ -6,6 +6,7 @@ import {
   MOCK_INVITATION_FLORAL,
   MOCK_INVITATION_MODERN,
   MOCK_INVITATION_JAVANESE,
+  MOCK_INVITATION_EDITORIAL,
   MOCK_WISHES,
 } from "@/lib/mock-data";
 import { getWhatsAppOrderUrl } from "@/lib/whatsapp";
@@ -41,7 +42,9 @@ export default async function DemoPage({ params, searchParams }: DemoPageProps) 
 
   // Choose appropriate mock data for each template design
   const mockData =
-    templateKey === "javanese-royal"
+    templateKey === "editorial-photo"
+      ? MOCK_INVITATION_EDITORIAL
+      : templateKey === "javanese-royal"
       ? MOCK_INVITATION_JAVANESE
       : templateKey === "modern-elegance"
       ? MOCK_INVITATION_MODERN

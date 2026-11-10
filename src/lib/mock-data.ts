@@ -280,4 +280,95 @@ export const MOCK_INVITATION_JAVANESE: InvitationDataPayload = {
   custom_music_url: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-acoustic-guitar-112191.mp3",
 };
 
+export const MOCK_INVITATION_EDITORIAL: InvitationDataPayload = {
+  bride: {
+    name: "Clarissa Aurelia, B.A.",
+    nickname: "Clarissa",
+    father_name: "Bpk. Ir. Rian Handoko",
+    mother_name: "Ibu Dian Anggraini",
+    child_order: "Putri pertama dari",
+    photo_url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80",
+    instagram: "clarissaaurelia",
+  },
+  groom: {
+    name: "Dimas Pratama, M.Sc.",
+    nickname: "Dimas",
+    father_name: "Bpk. H. Tri Wibowo",
+    mother_name: "Ibu Hj. Siti Nurjanah",
+    child_order: "Putra kedua dari",
+    photo_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80",
+    instagram: "dimaspratama",
+  },
+  quote: {
+    text: "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.",
+    source: "QS. Ar-Rum: 21",
+  },
+  countdown_target: new Date(Date.now() + 1000 * 60 * 60 * 24 * 40).toISOString(),
+  events: [
+    {
+      title: "Akad Nikah",
+      date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 40).toISOString(),
+      start_time: "08:30",
+      end_time: "10:30",
+      timezone: "WIB",
+      location_name: "Glasshouse Plataran Dharmawangsa",
+      address: "Jl. Dharmawangsa Raya No. 6, Kebayoran Baru, Jakarta Selatan",
+      google_maps_url: "https://maps.google.com/?q=Plataran+Dharmawangsa",
+    },
+    {
+      title: "Resepsi Pernikahan",
+      date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 40).toISOString(),
+      start_time: "18:30",
+      end_time: "21:30",
+      timezone: "WIB",
+      location_name: "The Glass House Ballroom",
+      address: "Jl. Dharmawangsa Raya No. 6, Kebayoran Baru, Jakarta Selatan",
+      google_maps_url: "https://maps.google.com/?q=Plataran+Dharmawangsa",
+    },
+  ],
+  gallery: [
+    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1200&q=80",
+  ],
+  stories: [
+    {
+      year: "2021",
+      title: "First Encounter",
+      description: "Takdir mempertemukan kami di sebuah galeri seni di Jakarta Selatan.",
+    },
+    {
+      year: "2024",
+      title: "A Promise Made",
+      description: "Di bawah langit senja pantai Bali, Dimas meminta Clarissa untuk menjadi teman hidupnya selamanya.",
+    },
+    {
+      year: "2026",
+      title: "The Beginning of Forever",
+      description: "Mengikat janji suci di hadapan keluarga besar dan para sahabat terkasih.",
+    },
+  ],
+  bank_accounts: [
+    {
+      bank_name: "BCA",
+      account_number: "8839019201",
+      account_holder: "Clarissa Aurelia",
+    },
+    {
+      bank_name: "Bank Mandiri",
+      account_number: "1370019283742",
+      account_holder: "Dimas Pratama",
+    },
+  ],
+  gift_address: {
+    recipient_name: "Dimas & Clarissa",
+    phone: "081298765432",
+    address: "Jl. Brawijaya Raya No. 22, Kebayoran Baru, Jakarta Selatan 12160",
+  },
+  custom_music_url: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-acoustic-guitar-112191.mp3",
+};
+
+
 
