@@ -230,6 +230,8 @@ export default function JavaneseRoyalTemplate({
                     src={data.groom.photo_url}
                     alt={data.groom.name}
                     fill
+                    sizes="144px"
+                    loading="lazy"
                     className="object-cover rounded-full"
                   />
                 </div>
@@ -268,6 +270,8 @@ export default function JavaneseRoyalTemplate({
                     src={data.bride.photo_url}
                     alt={data.bride.name}
                     fill
+                    sizes="144px"
+                    loading="lazy"
                     className="object-cover rounded-full"
                   />
                 </div>
@@ -392,6 +396,8 @@ export default function JavaneseRoyalTemplate({
                     src={photo}
                     alt={`Galeri ${i + 1}`}
                     fill
+                    sizes="(max-width: 640px) 50vw, 33vw"
+                    loading="lazy"
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
@@ -412,6 +418,7 @@ export default function JavaneseRoyalTemplate({
                 src={selectedPhoto}
                 alt="Enlarged photo"
                 fill
+                sizes="(max-width: 768px) 100vw, 800px"
                 className="object-contain"
               />
             </div>

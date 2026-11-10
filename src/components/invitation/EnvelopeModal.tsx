@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { MailOpen, Heart } from "lucide-react";
 
 interface EnvelopeModalProps {
@@ -60,11 +61,13 @@ export function EnvelopeModal({
     >
       {/* 1. Fullscreen Background Image - Jelas tanpa blur agar foto tetap terlihat */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={bgImage}
           alt={coupleNames}
-          className="w-full h-full object-cover object-center scale-100 transition-transform duration-1000"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center scale-100 transition-transform duration-1000"
         />
         {/* Gradient lembut dari atas dan bawah agar teks terbaca tajam namun foto tetap terlihat jelas */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/20 to-black/85" />

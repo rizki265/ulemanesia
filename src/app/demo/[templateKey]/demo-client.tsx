@@ -94,6 +94,7 @@ export function DemoClient({
                 src={`/demo/${templateKey}?view=raw`}
                 title={`Preview ${templateName}`}
                 allow="autoplay"
+                loading="eager"
                 className="w-full h-full border-0 select-none"
               />
             </div>
@@ -105,6 +106,7 @@ export function DemoClient({
               src={`/demo/${templateKey}?view=raw`}
               title={`Preview ${templateName}`}
               allow="autoplay"
+              loading="eager"
               className="w-full h-full border-0"
             />
           </div>

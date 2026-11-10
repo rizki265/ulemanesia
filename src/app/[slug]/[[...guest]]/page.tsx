@@ -1,4 +1,4 @@
-import React from "react";
+import React, { cache } from "react";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
@@ -19,6 +19,44 @@ interface PageProps {
 export const dynamic = "force-dynamic";
 
 /**
+ * Per-request cached data fetchers using React.cache()
+ * (Eliminates duplicate database calls between generateMetadata and InvitationPage)
+ */
+const getInvitation = cache(async (slug: string) => {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("invitations")
+      .select("*, music:music_library(*)")
+      .eq("slug", slug)
+      .single();
+
+    if (error || !data) return null;
+    return data as Invitation;
+  } catch (err) {
+    console.error("Database connection error fetching invitation:", err);
+    return null;
+  }
+});
+
+const getWishes = cache(async (invitationId: string) => {
+  try {
+    const supabase = await createClient();
+    const { data } = await supabase
+      .from("wishes")
+      .select("*")
+      .eq("invitation_id", invitationId)
+      .eq("is_hidden", false)
+      .order("created_at", { ascending: false });
+
+    return (data || []) as Wish[];
+  } catch (err) {
+    console.error("Database connection error fetching wishes:", err);
+    return [] as Wish[];
+  }
+});
+
+/**
  * FR-10, BR-09: Metadata Open Graph (judul, deskripsi, foto cover) per undangan untuk preview WhatsApp
  */
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -26,12 +64,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const guestName = sanitizeGuestName(guest);
 
   try {
-    const supabase = await createClient();
-    const { data: invitation } = await supabase
-      .from("invitations")
-      .select("title, cover_image_url, status, expires_at, data")
-      .eq("slug", slug)
-      .single();
+    const invitation = await getInvitation(slug);
 
     if (!invitation || invitation.status === "draft") {
       return {
@@ -82,46 +115,14 @@ export default async function InvitationPage({ params }: PageProps) {
   const { slug, guest } = await params;
   const guestName = sanitizeGuestName(guest);
 
-  let invitation: Invitation | null = null;
-  let wishes: Wish[] = [];
+  const invitation = await getInvitation(slug);
 
-  try {
-    const supabase = await createClient();
-
-    // Query invitation by unique slug
-    const { data, error } = await supabase
-      .from("invitations")
-      .select("*, music:music_library(*)")
-      .eq("slug", slug)
-      .single();
-
-    if (error || !data) {
-      // After data is deleted by admin (FR-09), show 404
-      return notFound();
-    }
-
-    invitation = data as Invitation;
-
-    // Fetch wishes for this invitation
-    const { data: wishesData } = await supabase
-      .from("wishes")
-      .select("*")
-      .eq("invitation_id", invitation.id)
-      .eq("is_hidden", false)
-      .order("created_at", { ascending: false });
-
-    if (wishesData) {
-      wishes = wishesData as Wish[];
-    }
-  } catch (err) {
-    console.error("Database connection error:", err);
+  if (!invitation || invitation.status === "draft") {
     return notFound();
   }
 
-  // AB-02: Undangan berstatus draft tidak dapat diakses publik
-  if (invitation.status === "draft") {
-    return notFound();
-  }
+  // Fetch wishes for this invitation (per-request cached)
+  const wishes = await getWishes(invitation.id);
 
   // Check if invitation has expired (FR-09, AB-03)
   const isExpired =

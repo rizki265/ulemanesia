@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import confetti from "canvas-confetti";
 import { Send, CheckCircle, MessageSquare, Users, Sparkles } from "lucide-react";
 import { Wish, RsvpAttendance } from "@/types/database";
 
@@ -82,12 +81,17 @@ export function RsvpAndWishes({
         setWishesList((prev) => [newWish, ...prev]);
       }
 
-      // Trigger celebratory confetti
-      confetti({
-        particleCount: 80,
-        spread: 60,
-        origin: { y: 0.8 },
-      });
+      // Trigger celebratory confetti dynamically without blocking initial page bundle
+      try {
+        const confetti = (await import("canvas-confetti")).default;
+        confetti({
+          particleCount: 80,
+          spread: 60,
+          origin: { y: 0.8 },
+        });
+      } catch {
+        // graceful fallback if canvas-confetti fails to load
+      }
 
       setSubmittedSuccess(true);
       setMessage("");

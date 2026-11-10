@@ -137,3 +137,4 @@ export function GununganOrnament({ className = "w-28 h-40", size }: GununganProp
     </svg>
   );
 }
+

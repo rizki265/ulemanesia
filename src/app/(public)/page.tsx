@@ -108,7 +108,7 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-            {templates.map((tpl) => {
+            {templates.map((tpl, idx) => {
               const whatsappUrl = getWhatsAppOrderUrl(tpl.name, DEFAULT_WHATSAPP_NUMBER);
 
               return (
@@ -121,6 +121,7 @@ export default function HomePage() {
                       src={tpl.thumbnailUrl}
                       alt={tpl.name}
                       fill
+                      priority={idx < 2}
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                       sizes="(max-width: 768px) 100vw, 50vw"
                     />
