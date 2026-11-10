@@ -205,7 +205,7 @@ export default function HomePage() {
               {
                 step: "03",
                 title: "Diproses & Ditinjau",
-                desc: "Admin menyusun undangan Anda, mengompres foto agar ringan di HP, dan memberikan link preview.",
+                desc: "Admin menyusun undangan Anda,dan memberikan link preview.",
               },
               {
                 step: "04",
