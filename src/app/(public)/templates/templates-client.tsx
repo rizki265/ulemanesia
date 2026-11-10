@@ -95,7 +95,7 @@ export function TemplatesClient({ templates }: TemplatesClientProps) {
       </div>
 
       {/* Grid of Templates in Smartphone Mockup Frames */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 sm:gap-14 justify-items-center pt-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 justify-items-center pt-4">
         {filtered.map((tpl, idx) => {
           const whatsappUrl = getWhatsAppOrderUrl(tpl.name, DEFAULT_WHATSAPP_NUMBER);
 

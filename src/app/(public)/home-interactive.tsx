@@ -94,7 +94,7 @@ export function HomeInteractive({ templates }: HomeInteractiveProps) {
   return (
     <>
       {/* 2. Template Catalog Section with Category Filter */}
-      <section id="katalog" className="py-24 px-4 sm:px-6 bg-white border-y border-stone-200/80">
+      <section id="katalog" className="py-24 px-4 sm:px-6 bg-[#faf8f5] border-y border-stone-200/80">
         <div className="max-w-6xl mx-auto space-y-12">
           {/* Header */}
           <div className="text-center max-w-2xl mx-auto space-y-3">
@@ -118,7 +118,7 @@ export function HomeInteractive({ templates }: HomeInteractiveProps) {
                   className={`px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer ${
                     selectedCategory === cat.id
                       ? "bg-[#844307] text-white shadow-md shadow-[#844307]/20 scale-105"
-                      : "bg-stone-100 text-stone-700 hover:bg-stone-200"
+                      : "bg-white border border-stone-200 text-stone-700 hover:bg-stone-50"
                   }`}
                 >
                   {cat.label}
@@ -128,7 +128,7 @@ export function HomeInteractive({ templates }: HomeInteractiveProps) {
           </div>
 
           {/* Catalog Grid with Smartphone Mockups */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 sm:gap-14 justify-items-center pt-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 justify-items-center pt-4">
             {filteredTemplates.map((tpl, idx) => {
               const whatsappUrl = getWhatsAppOrderUrl(tpl.name, DEFAULT_WHATSAPP_NUMBER);
 
