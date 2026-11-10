@@ -190,3 +190,94 @@ export const MOCK_WISHES: Wish[] = [
   },
 ];
 
+export const MOCK_INVITATION_JAVANESE: InvitationDataPayload = {
+  bride: {
+    name: "R.Aj. Kayla Paramitha, S.Pd.",
+    nickname: "Kayla",
+    father_name: "Bpk. R.M. Bambang Soetopo",
+    mother_name: "Ibu R.Ay. Sri Wahyuningsih",
+    child_order: "Putri wuragil saking",
+    photo_url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80",
+    instagram: "kaylaparamitha",
+  },
+  groom: {
+    name: "R.M. Arka Daniswara, S.T.",
+    nickname: "Arka",
+    father_name: "Bpk. K.R.T. Haryo Daniswara",
+    mother_name: "Ibu Nyi M.A. Endang Rahayu",
+    child_order: "Putra pambarep saking",
+    photo_url: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80",
+    instagram: "arkadaniswara",
+  },
+  quote: {
+    text: "Ngesti wara nirmala, ambabar katresnan suci. Mugi Gusti Ingkang Murbeng Dumadi tansah paring berkah, karaharjan, lan katentreman lahir tumusing batin.",
+    source: "Serat Kinanthi — Falsafah Krama Jawa",
+  },
+  countdown_target: new Date(Date.now() + 1000 * 60 * 60 * 24 * 32).toISOString(),
+  events: [
+    {
+      title: "Upacara Ijab Qabul (Akad)",
+      date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 32).toISOString(),
+      start_time: "08:00",
+      end_time: "10:00",
+      timezone: "WIB",
+      location_name: "Pendopo Ageng Ndalem Mangkubumen",
+      address: "Jl. Kadipaten Kulon No. 12, Kraton, Yogyakarta",
+      google_maps_url: "https://maps.google.com/?q=Kraton+Yogyakarta",
+    },
+    {
+      title: "Pahargyan Temanten (Resepsi Adat)",
+      date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 32).toISOString(),
+      start_time: "11:00",
+      end_time: "14:00",
+      timezone: "WIB",
+      location_name: "Sasana Hinggil Dwi Abad",
+      address: "Alun-Alun Selatan, Kraton, Kota Yogyakarta, D.I. Yogyakarta",
+      google_maps_url: "https://maps.google.com/?q=Sasana+Hinggil+Dwi+Abad",
+    },
+  ],
+  gallery: [
+    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=800&q=80",
+  ],
+  stories: [
+    {
+      year: "2020",
+      title: "Pitepangan (Awal Perjumpaan)",
+      description: "Kanthi kersaning Gusti, kawitan pepanggihan wonten ing kitha Ngayogyakarta Hadiningrat nalika sami ngudi ngelmu.",
+    },
+    {
+      year: "2024",
+      title: "Nglambang Katresnan (Lamaran)",
+      description: "Kulawarga ageng kakung sowan marak ing dalemipun putri saperlu ngaturaken tali asih tuwin nyuwun pangestu palakrama.",
+    },
+    {
+      year: "2026",
+      title: "Daup Palakrama (Hari Bahagia)",
+      description: "Nyawijining katresnan ing sangandhaping pangauban Gusti Ingkang Maha Agung tumuju bale wisma ingkang tentrem rahayu.",
+    },
+  ],
+  bank_accounts: [
+    {
+      bank_name: "BCA",
+      account_number: "8839012931",
+      account_holder: "Kayla Paramitha",
+    },
+    {
+      bank_name: "Mandiri",
+      account_number: "1370098234120",
+      account_holder: "Arka Daniswara",
+    },
+  ],
+  gift_address: {
+    recipient_name: "Arka & Kayla",
+    phone: "085601878097",
+    address: "Ndalem Daniswaran, Jl. Suryodiningratan No. 45, Mantrijeron, Yogyakarta 55141",
+  },
+  custom_music_url: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-acoustic-guitar-112191.mp3",
+};
+
+

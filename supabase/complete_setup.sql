@@ -214,6 +214,14 @@ USING (bucket_id IN ('covers', 'galleries', 'music'));
 INSERT INTO public.templates (key, name, description, thumbnail_url, tags, is_active)
 VALUES 
     (
+        'javanese-royal',
+        'Javanese Royal Heritage',
+        'Desain sakral adat Jawa berlatar hitam megah, berhiaskan Gunungan Wayang emas, kaligrafi anggun, dan nuansa keraton yang agung.',
+        'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80',
+        ARRAY['Adat Jawa', 'Gunungan', 'Royal Gold', 'Tradisional', 'Keraton'],
+        true
+    ),
+    (
         'minimalist-floral',
         'Floral Botanical Minimalist',
         'Desain elegan bertema dedaunan botanical dengan sentuhan nuansa emas dan tipografi modern yang bersih.',

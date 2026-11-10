@@ -2,7 +2,12 @@ import React from "react";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { getTemplateByKey } from "@/templates/registry";
-import { MOCK_INVITATION_FLORAL, MOCK_INVITATION_MODERN, MOCK_WISHES } from "@/lib/mock-data";
+import {
+  MOCK_INVITATION_FLORAL,
+  MOCK_INVITATION_MODERN,
+  MOCK_INVITATION_JAVANESE,
+  MOCK_WISHES,
+} from "@/lib/mock-data";
 import { getWhatsAppOrderUrl } from "@/lib/whatsapp";
 import { DemoClient } from "./demo-client";
 
@@ -36,7 +41,11 @@ export default async function DemoPage({ params, searchParams }: DemoPageProps) 
 
   // Choose appropriate mock data for each template design
   const mockData =
-    templateKey === "modern-elegance" ? MOCK_INVITATION_MODERN : MOCK_INVITATION_FLORAL;
+    templateKey === "javanese-royal"
+      ? MOCK_INVITATION_JAVANESE
+      : templateKey === "modern-elegance"
+      ? MOCK_INVITATION_MODERN
+      : MOCK_INVITATION_FLORAL;
 
   const TemplateComponent = template.component;
 

@@ -1,6 +1,7 @@
 import { RegisteredTemplate } from "./types";
 import MinimalistFloralTemplate from "./designs/minimalist-floral";
 import ModernEleganceTemplate from "./designs/modern-elegance";
+import JavaneseRoyalTemplate from "./designs/javanese-royal";
 
 /**
  * Ulemanesia Template Registry
@@ -8,6 +9,14 @@ import ModernEleganceTemplate from "./designs/modern-elegance";
  * Adding a new template only requires adding a component and registering it here!
  */
 export const TEMPLATE_REGISTRY: Record<string, RegisteredTemplate> = {
+  "javanese-royal": {
+    key: "javanese-royal",
+    name: "Javanese Royal Heritage",
+    description: "Desain sakral adat Jawa berlatar hitam megah, berhiaskan Gunungan Wayang emas, kaligrafi anggun, dan nuansa keraton yang agung.",
+    thumbnailUrl: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80",
+    tags: ["Adat Jawa", "Gunungan", "Royal Gold", "Tradisional", "Keraton"],
+    component: JavaneseRoyalTemplate,
+  },
   "minimalist-floral": {
     key: "minimalist-floral",
     name: "Floral Botanical Minimalist",
