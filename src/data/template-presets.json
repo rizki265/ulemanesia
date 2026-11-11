@@ -1,0 +1,276 @@
+{
+  "editorial-photo": {
+    "key": "editorial-photo",
+    "name": "Cinematic Editorial Romance",
+    "title": "The Wedding of Kayla & Arka",
+    "customer_name": "Referensi Katalog Ulemanesia",
+    "customer_phone": "08123456789",
+    "cover_image_url": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
+    "theme_config": {
+      "cover_tagline": "WE ARE GETTING MARRIED",
+      "overlay_style": "cinematic_dark",
+      "hero_subtitle": "SAVE OUR DATE",
+      "cover_bg_url": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80"
+    },
+    "groom": {
+      "name": "Arka Dananjaya, S.Ars",
+      "nickname": "Arka",
+      "father_name": "Bpk. Bambang Dananjaya",
+      "mother_name": "Ibu Sri Rahayu",
+      "child_order": "Putra pertama dari",
+      "instagram": "arkadananjaya",
+      "photo_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80"
+    },
+    "bride": {
+      "name": "Kayla Anandita, M.Ds",
+      "nickname": "Kayla",
+      "father_name": "Bpk. Hendro Kusumo",
+      "mother_name": "Ibu Ratna Dewi",
+      "child_order": "Putri bungsu dari",
+      "instagram": "kaylaanandita",
+      "photo_url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80"
+    },
+    "quote": {
+      "text": "In the middle of an ordinary life, love gave us a fairytale.",
+      "source": "Cinematic Love Story"
+    }
+  },
+  "javanese-royal": {
+    "key": "javanese-royal",
+    "name": "Javanese Royal Heritage",
+    "title": "Pawiwahan Ageng Arka & Kayla",
+    "customer_name": "Referensi Katalog Ulemanesia",
+    "customer_phone": "08123456789",
+    "cover_image_url": "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80",
+    "theme_config": {
+      "salam_type": "bismillah_serat",
+      "gunungan_color": "#d4af37",
+      "cover_bg_url": "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80"
+    },
+    "groom": {
+      "name": "Raden Mas Arka Dananjaya, S.T",
+      "nickname": "Arka",
+      "father_name": "K.P.H. Bambang Soerjodiningrat",
+      "mother_name": "K.R.Ay. Sri Retnodumilah",
+      "child_order": "Putra kakung pambayun saking",
+      "instagram": "arkadananjaya",
+      "photo_url": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80"
+    },
+    "bride": {
+      "name": "Raden Ajeng Kayla Anandita, B.A",
+      "nickname": "Kayla",
+      "father_name": "Bpk. Hendro Kusumo Hadiningrat",
+      "mother_name": "Ibu Ratna Dewi Anggraini",
+      "child_order": "Putri wuragil saking",
+      "instagram": "kaylaanandita",
+      "photo_url": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80"
+    },
+    "quote": {
+      "text": "Ngluruk tanpa bala, menang tanpa ngasorake, tresna tanpa pungkasan.",
+      "source": "Serat Wedhatama"
+    }
+  },
+  "islamic-elegance": {
+    "key": "islamic-elegance",
+    "name": "Islamic Madinah Grace",
+    "title": "Walimatul 'Ursy Farhan & Aisyah",
+    "customer_name": "Referensi Katalog Ulemanesia",
+    "customer_phone": "08123456789",
+    "cover_image_url": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
+    "theme_config": {
+      "cover_tagline": "WALIMATUL 'URSY",
+      "greeting_title": "Assalamu'alaikum Warahmatullahi Wabarakatuh",
+      "cover_bg_url": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80"
+    },
+    "groom": {
+      "name": "Muhammad Farhan Al-Ghifari, S.T",
+      "nickname": "Farhan",
+      "father_name": "Bpk. H. Ahmad Dahlan",
+      "mother_name": "Ibu Hj. Aminah Zuhri",
+      "child_order": "Putra pertama dari",
+      "instagram": "farhanalghifari",
+      "photo_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80"
+    },
+    "bride": {
+      "name": "Siti Aisyah Humaira, S.Psi",
+      "nickname": "Aisyah",
+      "father_name": "Bpk. H. Mansyur Hidayat",
+      "mother_name": "Ibu Hj. Khadijah",
+      "child_order": "Putri kedua dari",
+      "instagram": "aisyahhumaira",
+      "photo_url": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80"
+    },
+    "quote": {
+      "text": "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.",
+      "source": "QS. Ar-Rum: 21"
+    }
+  },
+  "bali-breeze": {
+    "key": "bali-breeze",
+    "name": "Bali Tropical Sunset",
+    "title": "Pawiwahan Sekar & Bayu",
+    "customer_name": "Referensi Katalog Ulemanesia",
+    "customer_phone": "08123456789",
+    "cover_image_url": "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=1200&q=80",
+    "theme_config": {
+      "cover_tagline": "SENJA KEEMASAN BALI DI TEPI LAUT",
+      "greeting_title": "OM SWASTYASTU / SALAM HANGAT",
+      "cover_bg_url": "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=1200&q=80"
+    },
+    "groom": {
+      "name": "I Putu Bayu Mahendra, S.Sn",
+      "nickname": "Bayu",
+      "father_name": "I Made Sujana",
+      "mother_name": "Ni Wayan Sulastri",
+      "child_order": "Putra pertama dari",
+      "instagram": "bayumahendra",
+      "photo_url": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80"
+    },
+    "bride": {
+      "name": "Ni Kadek Sekar Saraswati, S.E",
+      "nickname": "Sekar",
+      "father_name": "I Nyoman Artha",
+      "mother_name": "Ni Ketut Suartini",
+      "child_order": "Putri kedua dari",
+      "instagram": "sekarsaraswati",
+      "photo_url": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80"
+    },
+    "quote": {
+      "text": "Cinta bukan sekadar saling memandang, melainkan bersama-sama menatap ke arah yang sama, melintasi samudera kehidupan.",
+      "source": "Dewata Blessing & Love"
+    }
+  },
+  "rustic-boho": {
+    "key": "rustic-boho",
+    "name": "Rustic Pampas & Kraft",
+    "title": "The Wedding of Dika & Vina",
+    "customer_name": "Referensi Katalog Ulemanesia",
+    "customer_phone": "08123456789",
+    "cover_image_url": "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1200&q=80",
+    "theme_config": {
+      "cover_tagline": "RUSTIC BOTANICAL CELEBRATION",
+      "greeting_title": "THE PROMISE OF LOVE",
+      "cover_bg_url": "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1200&q=80"
+    },
+    "groom": {
+      "name": "Andhika Pratama, S.Kom",
+      "nickname": "Dika",
+      "father_name": "Bpk. Bambang Sutrisno",
+      "mother_name": "Ibu Nuraini",
+      "child_order": "Putra pertama dari",
+      "instagram": "andhikapratama",
+      "photo_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80"
+    },
+    "bride": {
+      "name": "Davina Aurelia, S.I.Kom",
+      "nickname": "Vina",
+      "father_name": "Bpk. Ir. Gunawan Wibowo",
+      "mother_name": "Ibu Maya Kartika",
+      "child_order": "Putri bungsu dari",
+      "instagram": "davinaurelia",
+      "photo_url": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80"
+    },
+    "quote": {
+      "text": "I have found the one whom my soul loves.",
+      "source": "Song of Solomon 3:4"
+    }
+  },
+  "chinese-modern": {
+    "key": "chinese-modern",
+    "name": "Oriental Double Happiness",
+    "title": "The Wedding Celebration of Evan & Chelsea",
+    "customer_name": "Referensi Katalog Ulemanesia",
+    "customer_phone": "08123456789",
+    "cover_image_url": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
+    "theme_config": {
+      "cover_tagline": "DOUBLE HAPPINESS • 囍",
+      "greeting_title": "BLESSINGS OF DOUBLE HAPPINESS",
+      "cover_bg_url": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80"
+    },
+    "groom": {
+      "name": "Evan Chen, B.Eng",
+      "nickname": "Evan",
+      "father_name": "Bpk. David Chen (陈大卫)",
+      "mother_name": "Ibu Linda Wijaya (黄丽娜)",
+      "child_order": "Putra sulung dari",
+      "instagram": "evanchen",
+      "photo_url": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80"
+    },
+    "bride": {
+      "name": "Chelsea Tan, B.Comm",
+      "nickname": "Chelsea",
+      "father_name": "Bpk. Ronald Tan (陈永强)",
+      "mother_name": "Ibu Susan Halim (林素芳)",
+      "child_order": "Putri kedua dari",
+      "instagram": "chelseatan",
+      "photo_url": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80"
+    },
+    "quote": {
+      "text": "百年好合，永结同心。Semoga cinta kami bertumbuh semakin kuat setiap tahunnya dan rumah tangga kami dipenuhi sukacita serta kedamaian.",
+      "source": "Chinese Wedding Proverb"
+    }
+  },
+  "minimalist-floral": {
+    "key": "minimalist-floral",
+    "name": "Floral Botanical Minimalist",
+    "title": "The Wedding of Rama & Shinta",
+    "customer_name": "Referensi Katalog Ulemanesia",
+    "customer_phone": "08123456789",
+    "cover_image_url": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
+    "theme_config": {},
+    "groom": {
+      "name": "Rama Wijaya, S.T",
+      "nickname": "Rama",
+      "father_name": "Bpk. Hendro Wijaya",
+      "mother_name": "Ibu Ratna Dewi",
+      "child_order": "Putra pertama dari",
+      "instagram": "ramawijaya",
+      "photo_url": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80"
+    },
+    "bride": {
+      "name": "Shinta Putri Lestari, S.Ked",
+      "nickname": "Shinta",
+      "father_name": "Bpk. Bambang Soetopo",
+      "mother_name": "Ibu Sri Wahyuningsih",
+      "child_order": "Putri kedua dari",
+      "instagram": "shintaputri",
+      "photo_url": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80"
+    },
+    "quote": {
+      "text": "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri.",
+      "source": "QS. Ar-Rum: 21"
+    }
+  },
+  "modern-elegance": {
+    "key": "modern-elegance",
+    "name": "Modern Monochrome Elegance",
+    "title": "The Wedding of Arthur & Victoria",
+    "customer_name": "Referensi Katalog Ulemanesia",
+    "customer_phone": "08123456789",
+    "cover_image_url": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
+    "theme_config": {},
+    "groom": {
+      "name": "Arthur Bradley, M.Fin",
+      "nickname": "Arthur",
+      "father_name": "Mr. Jonathan Bradley",
+      "mother_name": "Mrs. Catherine Bradley",
+      "child_order": "First son of",
+      "instagram": "arthurbradley",
+      "photo_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80"
+    },
+    "bride": {
+      "name": "Victoria Laurent, B.Arch",
+      "nickname": "Victoria",
+      "father_name": "Mr. Richard Laurent",
+      "mother_name": "Mrs. Diane Laurent",
+      "child_order": "Daughter of",
+      "instagram": "victorialaurent",
+      "photo_url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80"
+    },
+    "quote": {
+      "text": "True elegance is where love meets eternity.",
+      "source": "Contemporary Vows"
+    }
+  }
+}
+

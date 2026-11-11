@@ -14,6 +14,7 @@ import {
   MOCK_WISHES,
 } from "@/lib/mock-data";
 import { getWhatsAppOrderUrl } from "@/lib/whatsapp";
+import templatePresetsData from "@/data/template-presets.json";
 import { DemoClient } from "./demo-client";
 
 interface DemoPageProps {
@@ -64,16 +65,34 @@ export default async function DemoPage({ params, searchParams }: DemoPageProps) 
 
   const TemplateComponent = template.component;
 
+  // Check if an admin has saved a custom reference preset for this template
+  const preset = (templatePresetsData as Record<string, any>)[templateKey];
+  const effectiveData: typeof mockData = preset
+    ? {
+        ...mockData,
+        groom: { ...mockData.groom, ...(preset.groom || {}) },
+        bride: { ...mockData.bride, ...(preset.bride || {}) },
+        quote: preset.quote || mockData.quote,
+        theme_config: { ...mockData.theme_config, ...(preset.theme_config || {}) },
+        theme_options: { ...mockData.theme_options, ...(preset.theme_config || {}) },
+      }
+    : mockData;
+
+  const effectiveCover = preset?.cover_image_url || effectiveData.gallery[0] || mockData.gallery[0];
+  const effectiveTitle =
+    preset?.title ||
+    `The Wedding of ${effectiveData.groom.nickname} & ${effectiveData.bride.nickname}`;
+
   // Jika dipanggil dari dalam iframe frame smartphone, render template secara langsung
   if (view === "raw") {
     return (
       <TemplateComponent
         slug="demo"
         guestName="Bapak Budi Santoso"
-        title={`The Wedding of ${mockData.groom.nickname} & ${mockData.bride.nickname}`}
-        coverImageUrl={mockData.gallery[0]}
-        audioUrl={mockData.custom_music_url}
-        data={mockData}
+        title={effectiveTitle}
+        coverImageUrl={effectiveCover}
+        audioUrl={effectiveData.custom_music_url}
+        data={effectiveData}
         wishes={MOCK_WISHES}
         isPreview={true}
       />

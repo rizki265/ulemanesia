@@ -21,9 +21,11 @@ import { Invitation } from "@/types/database";
 import { getInvitationLifecycle, formatDate, formatRupiah } from "@/lib/utils";
 import { getWhatsAppExpiryReminderUrl } from "@/lib/whatsapp";
 import { EXTENSION_FEE_PER_MONTH } from "@/lib/constants";
+import { AdminTemplatesClient, AdminTemplateItem } from "./templates/templates-client";
 
 interface Props {
   initialInvitations: Invitation[];
+  templates?: AdminTemplateItem[];
   onExtend: (id: string) => Promise<{ success: boolean; message?: string }>;
   onPublish: (id: string) => Promise<{ success: boolean; message?: string }>;
   onDelete: (id: string) => Promise<{ success: boolean; message?: string }>;
@@ -31,10 +33,12 @@ interface Props {
 
 export function AdminDashboardClient({
   initialInvitations,
+  templates = [],
   onExtend,
   onPublish,
   onDelete,
 }: Props) {
+  const [activeMainTab, setActiveMainTab] = useState<"invitations" | "templates">("invitations");
   const [searchTerm, setSearchTerm] = useState("");
   const [filterState, setFilterState] = useState<string>("all");
   const [loadingId, setLoadingId] = useState<string | null>(null);
@@ -131,7 +135,38 @@ export function AdminDashboardClient({
 
   return (
     <div className="space-y-6">
-      {/* KPI Cards */}
+      {/* Primary Top Tab Switcher */}
+      <div className="flex items-center gap-2 border-b border-stone-200 pb-3">
+        <button
+          type="button"
+          onClick={() => setActiveMainTab("invitations")}
+          className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+            activeMainTab === "invitations"
+              ? "bg-[#844307] text-white shadow-sm"
+              : "bg-white text-stone-600 hover:bg-stone-100 border border-stone-200"
+          }`}
+        >
+          📋 Daftar Undangan Klien ({initialInvitations.length})
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setActiveMainTab("templates")}
+          className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+            activeMainTab === "templates"
+              ? "bg-[#844307] text-white shadow-sm"
+              : "bg-white text-stone-600 hover:bg-stone-100 border border-stone-200"
+          }`}
+        >
+          🎨 Katalog &amp; Master Template ({templates.length || 8})
+        </button>
+      </div>
+
+      {activeMainTab === "templates" ? (
+        <AdminTemplatesClient templates={templates} />
+      ) : (
+        <>
+          {/* KPI Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="p-5 bg-white rounded-2xl border border-stone-200/90 shadow-xs">
           <div className="flex items-center justify-between mb-2">
@@ -456,6 +491,8 @@ export function AdminDashboardClient({
             </div>
           </div>
         </div>
+      )}
+        </>
       )}
     </div>
   );

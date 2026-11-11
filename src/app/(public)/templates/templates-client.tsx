@@ -52,8 +52,9 @@ export function TemplatesClient({ templates }: TemplatesClientProps) {
   });
 
   return (
-    <div className="py-16 px-4 sm:px-6 max-w-6xl mx-auto space-y-12">
-      {/* Page Header */}
+    <div className="min-h-screen bg-[#fcfaf7] py-14 px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto space-y-12">
+        {/* Page Header */}
       <div className="text-center max-w-2xl mx-auto space-y-3">
         <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-[#844307] text-xs font-semibold uppercase tracking-widest border border-amber-200/80">
           <Sparkles className="w-3.5 h-3.5" />
@@ -132,6 +133,7 @@ export function TemplatesClient({ templates }: TemplatesClientProps) {
         </div>
       )}
     </div>
+  </div>
   );
 }
 

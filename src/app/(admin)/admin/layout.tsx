@@ -34,18 +34,26 @@ export default function AdminLayout({
           <nav className="space-y-1 text-sm font-medium">
             <Link
               href="/admin"
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-stone-800 text-white transition-colors"
+              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-stone-300 hover:text-white hover:bg-stone-800 transition-colors"
             >
               <LayoutDashboard className="w-4 h-4 text-amber-400" />
               <span>Dashboard Undangan</span>
             </Link>
 
             <Link
+              href="/admin/templates"
+              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-stone-300 hover:text-white hover:bg-stone-800 transition-colors"
+            >
+              <Music className="w-4 h-4 text-amber-300" />
+              <span>Katalog &amp; Master Template</span>
+            </Link>
+
+            <Link
               href="/admin/invitations/new"
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-stone-400 hover:text-white hover:bg-stone-800 transition-colors"
+              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-stone-300 hover:text-white hover:bg-stone-800 transition-colors"
             >
               <PlusCircle className="w-4 h-4 text-emerald-400" />
-              <span>Buat Undangan Baru</span>
+              <span>Buat / Sesuaikan Undangan</span>
             </Link>
 
             <Link
@@ -53,11 +61,10 @@ export default function AdminLayout({
               target="_blank"
               className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-stone-400 hover:text-white hover:bg-stone-800 transition-colors"
             >
-              <span className="flex items-center gap-3">
-                <Music className="w-4 h-4 text-amber-400" />
-                <span>Katalog Template</span>
+              <span className="flex items-center gap-2.5">
+                <ExternalLink className="w-4 h-4 text-stone-400" />
+                <span>Web Publik Customer</span>
               </span>
-              <ExternalLink className="w-3 h-3 text-stone-500" />
             </Link>
           </nav>
         </div>

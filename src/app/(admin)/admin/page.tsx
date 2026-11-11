@@ -20,6 +20,7 @@ import { Invitation } from "@/types/database";
 import { getInvitationLifecycle, formatDate, formatRupiah } from "@/lib/utils";
 import { getWhatsAppExpiryReminderUrl } from "@/lib/whatsapp";
 import { EXTENSION_FEE_PER_MONTH } from "@/lib/constants";
+import { getAllRegisteredTemplates } from "@/templates/registry";
 import { AdminDashboardClient } from "./client-dashboard";
 
 export const metadata = {
@@ -130,31 +131,43 @@ export default async function AdminDashboardPage() {
     }
   }
 
+  const allTemplates = getAllRegisteredTemplates().map((tpl) => ({
+    key: tpl.key,
+    name: tpl.name,
+    subtitle: tpl.subtitle || "",
+    category: tpl.category || "Modern",
+    description: tpl.description,
+    thumbnailUrl: tpl.thumbnailUrl,
+    tags: tpl.tags,
+    customFieldsCount: tpl.customFields?.length || 0,
+  }));
+
   return (
     <div className="space-y-8">
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900">
-            Daftar Undangan
+            Panel Kontrol Undangan
           </h1>
           <p className="text-xs sm:text-sm text-stone-500 mt-1">
-            Pantau status masa aktif 3 bulan, peringatan kedaluwarsa, dan perpanjangan
+            Kelola katalog template, masa aktif 3 bulan, dan penerbitan undangan klien
           </p>
         </div>
 
         <Link
           href="/admin/invitations/new"
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white text-xs sm:text-sm font-semibold rounded-xl shadow-md shadow-rose-600/20 transition-all self-start sm:self-auto"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#844307] to-[#b45309] hover:from-[#6d3505] hover:to-[#844307] text-white text-xs sm:text-sm font-semibold rounded-xl shadow-md shadow-[#844307]/20 transition-all hover:scale-[1.02] active:scale-98 self-start sm:self-auto cursor-pointer"
         >
           <Plus className="w-4 h-4" />
-          <span>Buat Undangan Baru</span>
+          <span>+ Buat dari Katalog Template</span>
         </Link>
       </div>
 
-      {/* Interactive Client Dashboard with Search, Filters, WhatsApp Links & Modals */}
+      {/* Interactive Client Dashboard with Tabs (Undangan Klien & Katalog Template) */}
       <AdminDashboardClient
         initialInvitations={invitations}
+        templates={allTemplates}
         onExtend={extendInvitationAction}
         onPublish={publishInvitationAction}
         onDelete={deleteInvitationAction}

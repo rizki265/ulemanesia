@@ -339,11 +339,44 @@ export function TemplatePhoneCard({
         </div>
       </Link>
 
-      {/* 2. Di Bawah Handphone: HANYA Nama Template dan Tombol Demo & Pesan */}
-      <div className="w-full mt-4 text-center space-y-3">
-        <h3 className="font-serif font-bold text-stone-900 text-base sm:text-lg group-hover:text-[#844307] transition-colors leading-tight line-clamp-1">
-          {template.name}
-        </h3>
+      {/* 2. Di Bawah Handphone: Nama Template, Badge, Kategori, dan Tombol Demo & Pesan */}
+      <div className="w-full mt-3.5 text-center space-y-2">
+        <div className="flex items-center justify-center gap-1.5 flex-wrap">
+          <h3 className="font-serif font-bold text-stone-900 text-sm sm:text-base group-hover:text-[#844307] transition-colors leading-tight line-clamp-1">
+            {template.name}
+          </h3>
+          {isJavanese || template.key === "minimalist-floral" ? (
+            <span className="px-1.5 py-0.5 rounded-md bg-rose-50 border border-rose-200 text-rose-600 text-[8px] font-bold tracking-wider uppercase">
+              BEST SELLER
+            </span>
+          ) : isModern ? (
+            <span className="px-1.5 py-0.5 rounded-md bg-amber-50 border border-amber-200 text-amber-700 text-[8px] font-bold tracking-wider uppercase">
+              POPULER
+            </span>
+          ) : (
+            <span className="px-1.5 py-0.5 rounded-md bg-rose-50 border border-rose-200 text-rose-600 text-[8px] font-bold tracking-wider uppercase">
+              NEW
+            </span>
+          )}
+        </div>
+
+        <p className="text-[11px] text-stone-500 font-medium">
+          {isEditorial
+            ? "Editorial Photo"
+            : isJavanese
+            ? "Adat Tradisional"
+            : isIslamic
+            ? "Islami & Kaligrafi"
+            : isBali
+            ? "Bali & Tropis"
+            : isBoho
+            ? "Rustic & Boho"
+            : isChinese
+            ? "Oriental Sangjit"
+            : isModern
+            ? "Modern Luxury"
+            : "Botanical Floral"}
+        </p>
 
         <div className="grid grid-cols-2 gap-2 w-full pt-1">
           <Link
