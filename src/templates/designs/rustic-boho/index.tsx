@@ -4,7 +4,8 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { TemplateProps } from "@/templates/types";
 import { BohoOrnament } from "@/components/invitation/BohoOrnament";
-import { AudioPlayer } from "@/components/invitation/AudioPlayer";
+import { FloatingControls } from "@/components/invitation/FloatingControls";
+import { RevealOnScroll } from "@/components/invitation/RevealOnScroll";
 import { CountdownTimer } from "@/components/invitation/CountdownTimer";
 import { RsvpAndWishes } from "@/components/invitation/RsvpAndWishes";
 import { GiftSection } from "@/components/invitation/GiftSection";
@@ -139,10 +140,10 @@ export default function RusticBohoTemplate({
       )}
 
       {/* ======================================================== */}
-      {/* 2. AUDIO BACKGROUND CONTROLLER                            */}
+      {/* 2. FLOATING CONTROLS: AUDIO & AUTO-SCROLL                */}
       {/* ======================================================== */}
       {isOpened && (
-        <AudioPlayer
+        <FloatingControls
           audioUrl={audioUrl || data.custom_music_url}
           autoPlayTrigger={true}
         />
@@ -193,19 +194,21 @@ export default function RusticBohoTemplate({
       {/* 4. RUSTIC QUOTE                                          */}
       {/* ======================================================== */}
       <section className="py-20 px-4 sm:px-6 relative overflow-hidden bg-[#fcf9f5]">
-        <div className="max-w-3xl mx-auto text-center space-y-6 relative z-10">
-          <BohoOrnament size={56} color="#b08968" className="mx-auto" />
-          <p className="text-xs uppercase font-serif tracking-[0.25em] text-[#7f5539] font-bold">
-            {themeConfig.greeting_title || "THE PROMISE OF LOVE"}
-          </p>
-          <blockquote className="font-serif italic text-base sm:text-xl text-stone-700 leading-relaxed font-light px-4">
-            &ldquo;{data.quote?.text ||
-              "I have found the one whom my soul loves. In all the world, there is no heart for me like yours. In all the world, there is no love for you like mine."}&rdquo;
-          </blockquote>
-          <p className="text-xs sm:text-sm font-semibold tracking-widest uppercase text-[#7f5539] font-serif">
-            — {data.quote?.source || "Song of Solomon 3:4"}
-          </p>
-        </div>
+        <RevealOnScroll animation="fade-up">
+          <div className="max-w-3xl mx-auto text-center space-y-6 relative z-10">
+            <BohoOrnament size={56} color="#b08968" className="mx-auto" />
+            <p className="text-xs uppercase font-serif tracking-[0.25em] text-[#7f5539] font-bold">
+              {themeConfig.greeting_title || "THE PROMISE OF LOVE"}
+            </p>
+            <blockquote className="font-serif italic text-base sm:text-xl text-stone-700 leading-relaxed font-light px-4">
+              &ldquo;{data.quote?.text ||
+                "I have found the one whom my soul loves. In all the world, there is no heart for me like yours. In all the world, there is no love for you like mine."}&rdquo;
+            </blockquote>
+            <p className="text-xs sm:text-sm font-semibold tracking-widest uppercase text-[#7f5539] font-serif">
+              — {data.quote?.source || "Song of Solomon 3:4"}
+            </p>
+          </div>
+        </RevealOnScroll>
       </section>
 
       {/* ======================================================== */}
@@ -213,102 +216,108 @@ export default function RusticBohoTemplate({
       {/* ======================================================== */}
       <section className="py-24 px-4 sm:px-6 bg-[#f5ede3] relative">
         <div className="max-w-4xl mx-auto space-y-16">
-          <div className="text-center space-y-3">
-            <span className="text-xs uppercase font-serif tracking-[0.25em] text-[#7f5539] font-bold">
-              THE BRIDE &amp; GROOM
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-stone-900 tracking-tight">
-              Mempelai Bahagia
-            </h2>
-            <p className="text-xs sm:text-sm text-stone-600 max-w-lg mx-auto">
-              Dengan penuh syukur dan kebahagiaan, kami mengundang Anda untuk merayakan cinta kami:
-            </p>
-          </div>
+          <RevealOnScroll animation="fade-up">
+            <div className="text-center space-y-3">
+              <span className="text-xs uppercase font-serif tracking-[0.25em] text-[#7f5539] font-bold">
+                THE BRIDE &amp; GROOM
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-stone-900 tracking-tight">
+                Mempelai Bahagia
+              </h2>
+              <p className="text-xs sm:text-sm text-stone-600 max-w-lg mx-auto">
+                Dengan penuh syukur dan kebahagiaan, kami mengundang Anda untuk merayakan cinta kami:
+              </p>
+            </div>
+          </RevealOnScroll>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14">
             {/* Pria */}
-            <div className="p-8 rounded-3xl bg-white border border-[#e6ccb2] hover:border-[#b08968] transition-all text-center space-y-5 group shadow-sm hover:shadow-xl">
-              <div className="relative w-36 h-36 sm:w-44 sm:h-44 mx-auto rounded-full overflow-hidden border-4 border-[#b08968]/30 shadow-lg group-hover:scale-105 transition-transform duration-500">
-                <Image
-                  src={
-                    data.groom.photo_url ||
-                    "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80"
-                  }
-                  alt={data.groom.name}
-                  fill
-                  className="object-cover"
-                  sizes="180px"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <h3 className="font-serif font-bold text-2xl sm:text-3xl text-stone-900">
-                  {data.groom.name}
-                </h3>
-                <p className="text-xs text-[#7f5539] font-semibold">
-                  {data.groom.child_order || "Putra dari"}
-                </p>
-                <p className="text-xs sm:text-sm text-stone-600">
-                  {data.groom.father_name} &amp; {data.groom.mother_name}
-                </p>
-              </div>
-
-              {data.groom.instagram && (
-                <div className="pt-2">
-                  <a
-                    href={`https://instagram.com/${data.groom.instagram.replace("@", "")}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-stone-100 hover:bg-stone-200 text-xs font-medium text-stone-800 transition-colors"
-                  >
-                    <Instagram className="w-3.5 h-3.5 text-[#7f5539]" />
-                    <span>@{data.groom.instagram.replace("@", "")}</span>
-                  </a>
+            <RevealOnScroll animation="fade-right" delay={100}>
+              <div className="p-8 rounded-3xl bg-white border border-[#e6ccb2] hover:border-[#b08968] transition-all text-center space-y-5 group shadow-sm hover:shadow-xl">
+                <div className="relative w-36 h-36 sm:w-44 sm:h-44 mx-auto rounded-full overflow-hidden border-4 border-[#b08968]/30 shadow-lg group-hover:scale-105 transition-transform duration-500">
+                  <Image
+                    src={
+                      data.groom.photo_url ||
+                      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80"
+                    }
+                    alt={data.groom.name}
+                    fill
+                    className="object-cover"
+                    sizes="180px"
+                  />
                 </div>
-              )}
-            </div>
+
+                <div className="space-y-2">
+                  <h3 className="font-serif font-bold text-2xl sm:text-3xl text-stone-900">
+                    {data.groom.name}
+                  </h3>
+                  <p className="text-xs text-[#7f5539] font-semibold">
+                    {data.groom.child_order || "Putra dari"}
+                  </p>
+                  <p className="text-xs sm:text-sm text-stone-600">
+                    {data.groom.father_name} &amp; {data.groom.mother_name}
+                  </p>
+                </div>
+
+                {data.groom.instagram && (
+                  <div className="pt-2">
+                    <a
+                      href={`https://instagram.com/${data.groom.instagram.replace("@", "")}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-stone-100 hover:bg-stone-200 text-xs font-medium text-stone-800 transition-colors"
+                    >
+                      <Instagram className="w-3.5 h-3.5 text-[#7f5539]" />
+                      <span>@{data.groom.instagram.replace("@", "")}</span>
+                    </a>
+                  </div>
+                )}
+              </div>
+            </RevealOnScroll>
 
             {/* Wanita */}
-            <div className="p-8 rounded-3xl bg-white border border-[#e6ccb2] hover:border-[#b08968] transition-all text-center space-y-5 group shadow-sm hover:shadow-xl">
-              <div className="relative w-36 h-36 sm:w-44 sm:h-44 mx-auto rounded-full overflow-hidden border-4 border-[#b08968]/30 shadow-lg group-hover:scale-105 transition-transform duration-500">
-                <Image
-                  src={
-                    data.bride.photo_url ||
-                    "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80"
-                  }
-                  alt={data.bride.name}
-                  fill
-                  className="object-cover"
-                  sizes="180px"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <h3 className="font-serif font-bold text-2xl sm:text-3xl text-stone-900">
-                  {data.bride.name}
-                </h3>
-                <p className="text-xs text-[#7f5539] font-semibold">
-                  {data.bride.child_order || "Putri dari"}
-                </p>
-                <p className="text-xs sm:text-sm text-stone-600">
-                  {data.bride.father_name} &amp; {data.bride.mother_name}
-                </p>
-              </div>
-
-              {data.bride.instagram && (
-                <div className="pt-2">
-                  <a
-                    href={`https://instagram.com/${data.bride.instagram.replace("@", "")}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-stone-100 hover:bg-stone-200 text-xs font-medium text-stone-800 transition-colors"
-                  >
-                    <Instagram className="w-3.5 h-3.5 text-[#7f5539]" />
-                    <span>@{data.bride.instagram.replace("@", "")}</span>
-                  </a>
+            <RevealOnScroll animation="fade-left" delay={200}>
+              <div className="p-8 rounded-3xl bg-white border border-[#e6ccb2] hover:border-[#b08968] transition-all text-center space-y-5 group shadow-sm hover:shadow-xl">
+                <div className="relative w-36 h-36 sm:w-44 sm:h-44 mx-auto rounded-full overflow-hidden border-4 border-[#b08968]/30 shadow-lg group-hover:scale-105 transition-transform duration-500">
+                  <Image
+                    src={
+                      data.bride.photo_url ||
+                      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80"
+                    }
+                    alt={data.bride.name}
+                    fill
+                    className="object-cover"
+                    sizes="180px"
+                  />
                 </div>
-              )}
-            </div>
+
+                <div className="space-y-2">
+                  <h3 className="font-serif font-bold text-2xl sm:text-3xl text-stone-900">
+                    {data.bride.name}
+                  </h3>
+                  <p className="text-xs text-[#7f5539] font-semibold">
+                    {data.bride.child_order || "Putri dari"}
+                  </p>
+                  <p className="text-xs sm:text-sm text-stone-600">
+                    {data.bride.father_name} &amp; {data.bride.mother_name}
+                  </p>
+                </div>
+
+                {data.bride.instagram && (
+                  <div className="pt-2">
+                    <a
+                      href={`https://instagram.com/${data.bride.instagram.replace("@", "")}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-stone-100 hover:bg-stone-200 text-xs font-medium text-stone-800 transition-colors"
+                    >
+                      <Instagram className="w-3.5 h-3.5 text-[#7f5539]" />
+                      <span>@{data.bride.instagram.replace("@", "")}</span>
+                    </a>
+                  </div>
+                )}
+              </div>
+            </RevealOnScroll>
           </div>
         </div>
       </section>
@@ -318,66 +327,69 @@ export default function RusticBohoTemplate({
       {/* ======================================================== */}
       <section className="py-24 px-4 sm:px-6 bg-[#fcf9f5] border-t border-stone-200/80">
         <div className="max-w-4xl mx-auto space-y-14">
-          <div className="text-center space-y-3">
-            <span className="text-xs uppercase font-serif tracking-[0.25em] text-[#7f5539] font-bold">
-              CELEBRATION DETAILS
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-stone-900 tracking-tight">
-              Rangkaian Acara
-            </h2>
-          </div>
+          <RevealOnScroll animation="fade-up">
+            <div className="text-center space-y-3">
+              <span className="text-xs uppercase font-serif tracking-[0.25em] text-[#7f5539] font-bold">
+                CELEBRATION DETAILS
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-stone-900 tracking-tight">
+                Rangkaian Acara
+              </h2>
+            </div>
+          </RevealOnScroll>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {data.events.map((event, idx) => (
-              <div
-                key={idx}
-                className="p-8 rounded-3xl bg-white border border-[#e6ccb2] hover:border-[#b08968] transition-all space-y-6 shadow-sm hover:shadow-xl flex flex-col justify-between"
-              >
-                <div className="space-y-4">
-                  <div className="inline-block px-3 py-1 rounded-full bg-[#f5ede3] border border-[#e6ccb2] text-[#7f5539] text-xs font-semibold tracking-wider uppercase font-serif">
-                    {event.title}
-                  </div>
-
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2.5 text-stone-800 text-sm">
-                      <Calendar className="w-4 h-4 text-[#7f5539] shrink-0" />
-                      <span className="font-semibold">{formatDate(event.date)}</span>
+              <RevealOnScroll key={idx} animation={idx % 2 === 0 ? "fade-right" : "fade-left"} delay={idx * 150}>
+                <div
+                  className="p-8 rounded-3xl bg-white border border-[#e6ccb2] hover:border-[#b08968] transition-all space-y-6 shadow-sm hover:shadow-xl flex flex-col justify-between h-full"
+                >
+                  <div className="space-y-4">
+                    <div className="inline-block px-3 py-1 rounded-full bg-[#f5ede3] border border-[#e6ccb2] text-[#7f5539] text-xs font-semibold tracking-wider uppercase font-serif">
+                      {event.title}
                     </div>
 
-                    <div className="flex items-center gap-2.5 text-stone-600 text-xs">
-                      <Clock className="w-4 h-4 text-[#7f5539] shrink-0" />
-                      <span>
-                        {event.start_time} - {event.end_time} {event.timezone || "WIB"}
-                      </span>
-                    </div>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2.5 text-stone-800 text-sm">
+                        <Calendar className="w-4 h-4 text-[#7f5539] shrink-0" />
+                        <span className="font-semibold">{formatDate(event.date)}</span>
+                      </div>
 
-                    <div className="flex items-start gap-2.5 text-stone-600 text-xs pt-1">
-                      <MapPin className="w-4 h-4 text-[#7f5539] shrink-0 mt-0.5" />
-                      <div>
-                        <p className="font-semibold text-stone-900">{event.location_name}</p>
-                        <p className="text-stone-500 text-[11px] leading-relaxed mt-0.5">
-                          {event.address}
-                        </p>
+                      <div className="flex items-center gap-2.5 text-stone-600 text-xs">
+                        <Clock className="w-4 h-4 text-[#7f5539] shrink-0" />
+                        <span>
+                          {event.start_time} - {event.end_time} {event.timezone || "WIB"}
+                        </span>
+                      </div>
+
+                      <div className="flex items-start gap-2.5 text-stone-600 text-xs pt-1">
+                        <MapPin className="w-4 h-4 text-[#7f5539] shrink-0 mt-0.5" />
+                        <div>
+                          <p className="font-semibold text-stone-900">{event.location_name}</p>
+                          <p className="text-stone-500 text-[11px] leading-relaxed mt-0.5">
+                            {event.address}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                {event.google_maps_url && (
-                  <div className="pt-4 border-t border-stone-100">
-                    <a
-                      href={event.google_maps_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#7f5539] hover:bg-[#68432b] text-white text-xs font-semibold transition-all hover:scale-[1.02] shadow-sm"
-                    >
-                      <MapPin className="w-3.5 h-3.5" />
-                      <span>Buka Google Maps</span>
-                      <ExternalLink className="w-3 h-3 opacity-60 ml-1" />
-                    </a>
-                  </div>
-                )}
-              </div>
+                  {event.google_maps_url && (
+                    <div className="pt-4 border-t border-stone-100">
+                      <a
+                        href={event.google_maps_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#7f5539] hover:bg-[#68432b] text-white text-xs font-semibold transition-all hover:scale-[1.02] shadow-sm"
+                      >
+                        <MapPin className="w-3.5 h-3.5" />
+                        <span>Buka Google Maps</span>
+                        <ExternalLink className="w-3 h-3 opacity-60 ml-1" />
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </RevealOnScroll>
             ))}
           </div>
         </div>
@@ -389,31 +401,34 @@ export default function RusticBohoTemplate({
       {data.gallery && data.gallery.length > 0 && (
         <section className="py-24 px-4 sm:px-6 bg-[#f5ede3]">
           <div className="max-w-5xl mx-auto space-y-12">
-            <div className="text-center space-y-3">
-              <span className="text-xs uppercase font-serif tracking-[0.25em] text-[#7f5539] font-bold">
-                MEMORIES IN FRAMES
-              </span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-stone-900 tracking-tight">
-                Galeri Kenangan
-              </h2>
-            </div>
+            <RevealOnScroll animation="fade-up">
+              <div className="text-center space-y-3">
+                <span className="text-xs uppercase font-serif tracking-[0.25em] text-[#7f5539] font-bold">
+                  MEMORIES IN FRAMES
+                </span>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-stone-900 tracking-tight">
+                  Galeri Kenangan
+                </h2>
+              </div>
+            </RevealOnScroll>
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
               {data.gallery.map((imgUrl, i) => (
-                <div
-                  key={i}
-                  onClick={() => setSelectedPhoto(imgUrl)}
-                  className="relative aspect-4/5 rounded-2xl overflow-hidden cursor-pointer group bg-stone-200 border border-[#e6ccb2]"
-                >
-                  <Image
-                    src={imgUrl}
-                    alt={`Galeri ${i + 1}`}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
-                    sizes="(max-width: 768px) 50vw, 33vw"
-                  />
-                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
-                </div>
+                <RevealOnScroll key={i} animation="scale-up" delay={i * 80}>
+                  <div
+                    onClick={() => setSelectedPhoto(imgUrl)}
+                    className="relative aspect-4/5 rounded-2xl overflow-hidden cursor-pointer group bg-stone-200 border border-[#e6ccb2]"
+                  >
+                    <Image
+                      src={imgUrl}
+                      alt={`Galeri ${i + 1}`}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-700"
+                      sizes="(max-width: 768px) 50vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
+                  </div>
+                </RevealOnScroll>
               ))}
             </div>
           </div>
@@ -444,7 +459,9 @@ export default function RusticBohoTemplate({
       {data.bank_accounts && data.bank_accounts.length > 0 && (
         <section className="py-20 px-4 sm:px-6 bg-[#fcf9f5] border-t border-stone-200/80">
           <div className="max-w-2xl mx-auto">
-            <GiftSection bankAccounts={data.bank_accounts} giftAddress={data.gift_address} />
+            <RevealOnScroll animation="fade-up">
+              <GiftSection bankAccounts={data.bank_accounts} giftAddress={data.gift_address} />
+            </RevealOnScroll>
           </div>
         </section>
       )}
@@ -454,12 +471,14 @@ export default function RusticBohoTemplate({
       {/* ======================================================== */}
       <section className="py-24 px-4 sm:px-6 bg-[#f5ede3] border-t border-stone-200/80">
         <div className="max-w-3xl mx-auto">
-          <RsvpAndWishes
-            invitationId={slug}
-            defaultGuestName={guestName}
-            wishes={wishes}
-            onSendWish={onSendWish}
-          />
+          <RevealOnScroll animation="fade-up">
+            <RsvpAndWishes
+              invitationId={slug}
+              defaultGuestName={guestName}
+              wishes={wishes}
+              onSendWish={onSendWish}
+            />
+          </RevealOnScroll>
         </div>
       </section>
 
@@ -467,13 +486,17 @@ export default function RusticBohoTemplate({
       {/* 10. PENUTUP                                              */}
       {/* ======================================================== */}
       <footer className="py-16 px-4 text-center space-y-4 bg-[#3a2e2b] text-stone-300 text-xs">
-        <p className="font-serif italic text-sm text-amber-100">
-          Thank you for sharing in our joy and blessing our union.
-        </p>
-        <p className="font-serif font-bold text-base text-white">{coupleNames}</p>
-        <p className="text-[11px] text-stone-500 pt-4">
-          Powered by <span className="font-semibold text-stone-400">Ulemanesia</span> — Undangan Digital Eksklusif
-        </p>
+        <RevealOnScroll animation="fade-up">
+          <div className="space-y-4">
+            <p className="font-serif italic text-sm text-amber-100">
+              Thank you for sharing in our joy and blessing our union.
+            </p>
+            <p className="font-serif font-bold text-base text-white">{coupleNames}</p>
+            <p className="text-[11px] text-stone-500 pt-4">
+              Powered by <span className="font-semibold text-stone-400">Ulemanesia</span> — Undangan Digital Eksklusif
+            </p>
+          </div>
+        </RevealOnScroll>
       </footer>
     </div>
   );

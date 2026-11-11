@@ -4,7 +4,8 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { TemplateProps } from "@/templates/types";
 import { GununganOrnament } from "@/components/invitation/GununganOrnament";
-import { AudioPlayer } from "@/components/invitation/AudioPlayer";
+import { FloatingControls } from "@/components/invitation/FloatingControls";
+import { RevealOnScroll } from "@/components/invitation/RevealOnScroll";
 import { CountdownTimer } from "@/components/invitation/CountdownTimer";
 import { RsvpAndWishes } from "@/components/invitation/RsvpAndWishes";
 import { GiftSection } from "@/components/invitation/GiftSection";
@@ -149,8 +150,12 @@ export default function JavaneseRoyalTemplate({
       {/* 2. KONTEN UTAMA UNDANGAN ADAT JAWA                       */}
       {/* ======================================================== */}
 
-      {/* Musik Latar Otomatis Putar Begitu Dibuka */}
-      <AudioPlayer audioUrl={audioUrl || data.custom_music_url} autoPlayTrigger={isOpened} />
+      {/* Floating Controls: Musik Latar & Auto-Scroll Otomatis */}
+      <FloatingControls
+        audioUrl={audioUrl || data.custom_music_url}
+        autoPlayTrigger={isOpened}
+        enableAutoScroll={true}
+      />
 
       {/* Hero Cover Header */}
       <header className="relative min-h-[90vh] flex flex-col items-center justify-center text-center p-6 bg-gradient-to-b from-[#131317] via-[#0d0d0f] to-[#0d0d0f] border-b border-amber-900/30">

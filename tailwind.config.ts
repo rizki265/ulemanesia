@@ -39,11 +39,36 @@ const config: Config = {
         "spin-slow": "spin 12s linear infinite",
         "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         "fade-in-up": "fadeInUp 0.8s ease-out forwards",
+        "float-slow": "floatSlow 6s ease-in-out infinite",
+        "float-reverse": "floatReverse 7s ease-in-out infinite",
+        "ken-burns": "kenBurns 25s ease-in-out infinite alternate",
+        "pulse-glow": "pulseGlow 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "shimmer": "shimmer 2.5s linear infinite",
       },
       keyframes: {
         fadeInUp: {
-          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "0%": { opacity: "0", transform: "translateY(24px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        floatSlow: {
+          "0%, 100%": { transform: "translateY(0px) rotate(0deg)" },
+          "50%": { transform: "translateY(-10px) rotate(2deg)" },
+        },
+        floatReverse: {
+          "0%, 100%": { transform: "translateY(0px) rotate(0deg)" },
+          "50%": { transform: "translateY(10px) rotate(-2deg)" },
+        },
+        kenBurns: {
+          "0%": { transform: "scale(1)" },
+          "100%": { transform: "scale(1.08)" },
+        },
+        pulseGlow: {
+          "0%, 100%": { opacity: "1", boxShadow: "0 0 20px rgba(217, 119, 6, 0.4)" },
+          "50%": { opacity: "0.85", boxShadow: "0 0 35px rgba(217, 119, 6, 0.75)" },
+        },
+        shimmer: {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
         },
       },
     },

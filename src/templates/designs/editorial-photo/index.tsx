@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { TemplateProps } from "@/templates/types";
-import { AudioPlayer } from "@/components/invitation/AudioPlayer";
+import { FloatingControls } from "@/components/invitation/FloatingControls";
+import { RevealOnScroll } from "@/components/invitation/RevealOnScroll";
 import { CountdownTimer } from "@/components/invitation/CountdownTimer";
 import { RsvpAndWishes } from "@/components/invitation/RsvpAndWishes";
 import { GiftSection } from "@/components/invitation/GiftSection";
@@ -146,12 +147,13 @@ export default function EditorialPhotoTemplate({
       )}
 
       {/* ======================================================== */}
-      {/* 2. AUDIO BACKGROUND CONTROLLER                            */}
+      {/* 2. FLOATING CONTROLS: AUDIO & AUTO-SCROLL                */}
       {/* ======================================================== */}
       {isOpened && (
-        <AudioPlayer
+        <FloatingControls
           audioUrl={audioUrl || data.custom_music_url}
           autoPlayTrigger={true}
+          enableAutoScroll={true}
         />
       )}
 
