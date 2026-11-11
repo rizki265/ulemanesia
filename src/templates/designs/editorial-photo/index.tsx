@@ -154,6 +154,7 @@ export default function EditorialPhotoTemplate({
           audioUrl={audioUrl || data.custom_music_url}
           autoPlayTrigger={true}
           enableAutoScroll={true}
+          isPreview={isPreview}
         />
       )}
 

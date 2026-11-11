@@ -155,6 +155,7 @@ export default function JavaneseRoyalTemplate({
         audioUrl={audioUrl || data.custom_music_url}
         autoPlayTrigger={isOpened}
         enableAutoScroll={true}
+        isPreview={isPreview}
       />
 
       {/* Hero Cover Header */}

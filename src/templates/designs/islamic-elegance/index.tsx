@@ -148,6 +148,7 @@ export default function IslamicEleganceTemplate({
           audioUrl={audioUrl || data.custom_music_url}
           autoPlayTrigger={true}
           enableAutoScroll={true}
+          isPreview={isPreview}
         />
       )}
 

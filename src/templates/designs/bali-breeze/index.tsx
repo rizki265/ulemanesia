@@ -147,6 +147,7 @@ export default function BaliBreezeTemplate({
         <FloatingControls
           audioUrl={audioUrl || data.custom_music_url}
           autoPlayTrigger={true}
+          isPreview={isPreview}
         />
       )}
 

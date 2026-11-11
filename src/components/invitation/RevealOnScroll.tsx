@@ -15,9 +15,9 @@ export function RevealOnScroll({
   children,
   animation = "fade-up",
   delay = 0,
-  duration = 700,
+  duration = 750,
   className = "",
-  threshold = 0.15,
+  threshold = 0.08,
 }: RevealOnScrollProps) {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
@@ -26,17 +26,19 @@ export function RevealOnScroll({
     const element = ref.current;
     if (!element) return;
 
+    // Bidirectional IntersectionObserver: activates on scroll down AND scroll up
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          // Once animated, unobserve to keep it visible
-          observer.unobserve(element);
+        } else {
+          // Reset visibility when element exits the viewport so it can re-animate when scrolled back
+          setIsVisible(false);
         }
       },
       {
         threshold,
-        rootMargin: "0px 0px -40px 0px",
+        rootMargin: "0px 0px -25px 0px",
       }
     );
 
@@ -48,20 +50,21 @@ export function RevealOnScroll({
   }, [threshold]);
 
   const getAnimationStyles = () => {
-    const baseTransitions = `transition-all ease-out`;
+    // Ultra-smooth spring-like cubic-bezier ease out with GPU acceleration
+    const baseTransitions = `transition-all ease-[cubic-bezier(0.16,1,0.3,1)] transform-gpu`;
 
     if (!isVisible) {
       switch (animation) {
         case "fade-up":
-          return `${baseTransitions} opacity-0 translate-y-8`;
+          return `${baseTransitions} opacity-0 translate-y-10 scale-[0.98]`;
         case "fade-down":
-          return `${baseTransitions} opacity-0 -translate-y-8`;
+          return `${baseTransitions} opacity-0 -translate-y-10 scale-[0.98]`;
         case "fade-left":
-          return `${baseTransitions} opacity-0 translate-x-8`;
+          return `${baseTransitions} opacity-0 translate-x-10 scale-[0.99]`;
         case "fade-right":
-          return `${baseTransitions} opacity-0 -translate-x-8`;
+          return `${baseTransitions} opacity-0 -translate-x-10 scale-[0.99]`;
         case "scale-up":
-          return `${baseTransitions} opacity-0 scale-95 translate-y-4`;
+          return `${baseTransitions} opacity-0 scale-90 translate-y-6`;
         case "fade":
         default:
           return `${baseTransitions} opacity-0`;
@@ -75,8 +78,9 @@ export function RevealOnScroll({
     <div
       ref={ref}
       style={{
-        transitionDelay: `${delay}ms`,
-        transitionDuration: `${duration}ms`,
+        // Use delay only when entering into view; reset quickly (200ms) with 0 delay when exiting offscreen
+        transitionDelay: isVisible ? `${delay}ms` : "0ms",
+        transitionDuration: isVisible ? `${duration}ms` : "200ms",
       }}
       className={`${getAnimationStyles()} ${className}`}
     >
@@ -84,4 +88,3 @@ export function RevealOnScroll({
     </div>
   );
 }
-

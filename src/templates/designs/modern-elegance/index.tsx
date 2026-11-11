@@ -44,6 +44,7 @@ export default function ModernEleganceTemplate({
       <FloatingControls
         audioUrl={audioUrl || data.custom_music_url}
         autoPlayTrigger={isOpened}
+        isPreview={isPreview}
       />
 
       {/* 3. Hero Header Section */}
