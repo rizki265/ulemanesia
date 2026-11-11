@@ -370,5 +370,295 @@ export const MOCK_INVITATION_EDITORIAL: InvitationDataPayload = {
   custom_music_url: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-acoustic-guitar-112191.mp3",
 };
 
+export const MOCK_INVITATION_ISLAMIC: InvitationDataPayload = {
+  bride: {
+    name: "Zhafira Medina, S.Farm.",
+    nickname: "Zhafira",
+    father_name: "Bpk. H. Ahmad Fauzi",
+    mother_name: "Ibu Hj. Siti Nurhaliza",
+    child_order: "Putri kedua dari",
+    photo_url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80",
+    instagram: "zhafiramedina",
+  },
+  groom: {
+    name: "M. Farhan Al-Ghifari, S.Kom.",
+    nickname: "Farhan",
+    father_name: "Bpk. Drs. H. Usman Malik",
+    mother_name: "Ibu Hj. Aminah Rahmah",
+    child_order: "Putra pertama dari",
+    photo_url: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80",
+    instagram: "farhanghifari",
+  },
+  quote: {
+    text: "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir.",
+    source: "QS. Ar-Rum: 21",
+  },
+  countdown_target: new Date(Date.now() + 1000 * 60 * 60 * 24 * 35).toISOString(),
+  events: [
+    {
+      title: "Akad Nikah Syar'i",
+      date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 35).toISOString(),
+      start_time: "08:00",
+      end_time: "10:00",
+      timezone: "WIB",
+      location_name: "Masjid Raya Pondok Indah",
+      address: "Jl. Sultan Iskandar Muda No.1, Kebayoran Lama, Jakarta Selatan",
+      google_maps_url: "https://maps.google.com/?q=Masjid+Raya+Pondok+Indah",
+    },
+    {
+      title: "Walimatul 'Ursy (Resepsi)",
+      date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 35).toISOString(),
+      start_time: "11:00",
+      end_time: "14:00",
+      timezone: "WIB",
+      location_name: "Ballroom Grand Syahid",
+      address: "Jl. Jenderal Sudirman Kav. 86, Jakarta Pusat",
+      google_maps_url: "https://maps.google.com/?q=Hotel+Grand+Sahid+Jaya",
+    },
+  ],
+  gallery: [
+    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=80",
+  ],
+  bank_accounts: [
+    {
+      bank_name: "BSI (Bank Syariah Indonesia)",
+      account_number: "7128910283",
+      account_holder: "Zhafira Medina",
+    },
+  ],
+  gift_address: {
+    recipient_name: "Farhan & Zhafira",
+    phone: "081388992211",
+    address: "Komp. Perumahan Muslim No. 12, Cilandak, Jakarta Selatan",
+  },
+  custom_music_url: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-acoustic-guitar-112191.mp3",
+  theme_config: {
+    cover_tagline: "WALIMATUL 'URSY",
+    greeting_title: "Assalamu'alaikum Warahmatullahi Wabarakatuh",
+  },
+};
+
+export const MOCK_INVITATION_BALI: InvitationDataPayload = {
+  bride: {
+    name: "Ni Putu Sekar Kirana, S.E.",
+    nickname: "Sekar",
+    father_name: "I Wayan Suardana",
+    mother_name: "Ni Made Ariani",
+    child_order: "Pradana Putri dari",
+    photo_url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80",
+    instagram: "sekarkirana",
+  },
+  groom: {
+    name: "I Gede Bayu Pratama, S.T.",
+    nickname: "Bayu",
+    father_name: "I Nyoman Dharma",
+    mother_name: "Ni Ketut Wardani",
+    child_order: "Purusa Putra dari",
+    photo_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80",
+    instagram: "bayupratama",
+  },
+  quote: {
+    text: "Mogi Ida Sang Hyang Widhi Wasa ngicenin karahajengan lan kerahayuan ring sang kalih sane mamargi saking tresna suci tumuju genah palakrama.",
+    source: "Dewata Sacred Blessing",
+  },
+  countdown_target: new Date(Date.now() + 1000 * 60 * 60 * 24 * 45).toISOString(),
+  events: [
+    {
+      title: "Upacara Pawikahan",
+      date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 45).toISOString(),
+      start_time: "09:00",
+      end_time: "11:00",
+      timezone: "WITA",
+      location_name: "Griya Agung Suardana",
+      address: "Jl. Danau Tamblingan No. 88, Sanur, Denpasar Selatan, Bali",
+      google_maps_url: "https://maps.google.com/?q=Sanur+Denpasar",
+    },
+    {
+      title: "Resepsi Sunset Beach",
+      date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 45).toISOString(),
+      start_time: "17:00",
+      end_time: "20:00",
+      timezone: "WITA",
+      location_name: "The Royal Cliff Jimbaran",
+      address: "Jl. Pantai Balangan, Jimbaran, Kuta Selatan, Badung, Bali",
+      google_maps_url: "https://maps.google.com/?q=Jimbaran+Bali",
+    },
+  ],
+  gallery: [
+    "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
+  ],
+  bank_accounts: [
+    {
+      bank_name: "BCA",
+      account_number: "7720192841",
+      account_holder: "Ni Putu Sekar Kirana",
+    },
+    {
+      bank_name: "Bank BPD Bali",
+      account_number: "0102938475",
+      account_holder: "I Gede Bayu Pratama",
+    },
+  ],
+  gift_address: {
+    recipient_name: "Sekar & Bayu",
+    phone: "081999887766",
+    address: "Villa Jimbaran Breeze No. 4, Jimbaran, Badung, Bali",
+  },
+  custom_music_url: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-acoustic-guitar-112191.mp3",
+  theme_config: {
+    cover_tagline: "SENJA KEEMASAN BALI DI TEPI LAUT",
+    greeting_title: "OM SWASTYASTU / SALAM HANGAT",
+  },
+};
+
+export const MOCK_INVITATION_BOHO: InvitationDataPayload = {
+  bride: {
+    name: "Alyssa Danira, S.Sn.",
+    nickname: "Alyssa",
+    father_name: "Bpk. Ferry Setiawan",
+    mother_name: "Ibu Marsha Permata",
+    child_order: "Putri sulung dari",
+    photo_url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80",
+    instagram: "alyssadanira",
+  },
+  groom: {
+    name: "Julian Dananjaya, B.Arch.",
+    nickname: "Julian",
+    father_name: "Bpk. Haris Dananjaya",
+    mother_name: "Ibu Linda Pratiwi",
+    child_order: "Putra tunggal dari",
+    photo_url: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80",
+    instagram: "juliandananjaya",
+  },
+  quote: {
+    text: "I have found the one whom my soul loves. In all the world, there is no heart for me like yours. In all the world, there is no love for you like mine.",
+    source: "Song of Solomon 3:4",
+  },
+  countdown_target: new Date(Date.now() + 1000 * 60 * 60 * 24 * 50).toISOString(),
+  events: [
+    {
+      title: "Holy Matrimony (Pemberkatan)",
+      date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 50).toISOString(),
+      start_time: "10:00",
+      end_time: "12:00",
+      timezone: "WIB",
+      location_name: "Pine Forest Camp",
+      address: "Jl. Maribaya No. 120, Lembang, Bandung Barat",
+      google_maps_url: "https://maps.google.com/?q=Lembang+Bandung",
+    },
+    {
+      title: "Boho Twilight Party",
+      date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 50).toISOString(),
+      start_time: "16:30",
+      end_time: "20:00",
+      timezone: "WIB",
+      location_name: "The Glass Garden Hall",
+      address: "Jl. Maribaya Timur, Lembang, Bandung Barat",
+      google_maps_url: "https://maps.google.com/?q=Lembang+Bandung",
+    },
+  ],
+  gallery: [
+    "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
+  ],
+  bank_accounts: [
+    {
+      bank_name: "BCA",
+      account_number: "6820194821",
+      account_holder: "Alyssa Danira",
+    },
+  ],
+  gift_address: {
+    recipient_name: "Julian & Alyssa",
+    phone: "081233445566",
+    address: "Jl. Dago Asri No. 15, Bandung, Jawa Barat",
+  },
+  custom_music_url: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-acoustic-guitar-112191.mp3",
+  theme_config: {
+    cover_tagline: "RUSTIC BOTANICAL CELEBRATION",
+    greeting_title: "THE PROMISE OF LOVE",
+  },
+};
+
+export const MOCK_INVITATION_CHINESE: InvitationDataPayload = {
+  bride: {
+    name: "Michelle Wijaya (黃美玲)",
+    nickname: "Michelle",
+    father_name: "Bpk. Hendra Wijaya (黃明德)",
+    mother_name: "Ibu Liana Sari (陳麗華)",
+    child_order: "Daughter of",
+    photo_url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80",
+    instagram: "michellewijaya",
+  },
+  groom: {
+    name: "Kenji Tanoto (陳健智)",
+    nickname: "Kenji",
+    father_name: "Bpk. Victor Tanoto (陳家豪)",
+    mother_name: "Ibu Irene Susanto (林月英)",
+    child_order: "Son of",
+    photo_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80",
+    instagram: "kenjitanoto",
+  },
+  quote: {
+    text: "May your love grow stronger with each passing year, and may your home be filled with peace, joy, and endless prosperity. 百年偕老，永结同心，百年好合。",
+    source: "Traditional Chinese Wedding Proverb",
+  },
+  countdown_target: new Date(Date.now() + 1000 * 60 * 60 * 24 * 60).toISOString(),
+  events: [
+    {
+      title: "Tea Ceremony (敬茶仪式)",
+      date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 60).toISOString(),
+      start_time: "09:00",
+      end_time: "11:00",
+      timezone: "WIB",
+      location_name: "The Heritage Suite - Hotel Mulia",
+      address: "Jl. Asia Afrika Senayan, Gelora, Jakarta Pusat",
+      google_maps_url: "https://maps.google.com/?q=Hotel+Mulia+Senayan",
+    },
+    {
+      title: "Wedding Banquet (婚宴)",
+      date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 60).toISOString(),
+      start_time: "18:30",
+      end_time: "21:30",
+      timezone: "WIB",
+      location_name: "Grand Ballroom Hotel Mulia",
+      address: "Jl. Asia Afrika Senayan, Gelora, Jakarta Pusat",
+      google_maps_url: "https://maps.google.com/?q=Hotel+Mulia+Senayan",
+    },
+  ],
+  gallery: [
+    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
+  ],
+  bank_accounts: [
+    {
+      bank_name: "BCA",
+      account_number: "8890281920",
+      account_holder: "Michelle Wijaya",
+    },
+    {
+      bank_name: "BCA",
+      account_number: "8890281921",
+      account_holder: "Kenji Tanoto",
+    },
+  ],
+  gift_address: {
+    recipient_name: "Kenji & Michelle",
+    phone: "081188223344",
+    address: "Pakuwon Tower Unit 28A, Jl. Casablanca No. 88, Jakarta Selatan",
+  },
+  custom_music_url: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-acoustic-guitar-112191.mp3",
+  theme_config: {
+    cover_tagline: "DOUBLE HAPPINESS • 囍",
+    greeting_title: "BLESSINGS OF DOUBLE HAPPINESS",
+  },
+};
+
+
 
 

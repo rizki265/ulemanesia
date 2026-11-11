@@ -11,9 +11,10 @@ import {
   Trash2,
   ExternalLink,
   Eye,
+  Sparkles,
 } from "lucide-react";
 import { Invitation } from "@/types/database";
-import { getAllRegisteredTemplates } from "@/templates/registry";
+import { getAllRegisteredTemplates, getTemplateByKey } from "@/templates/registry";
 import { isValidSlug } from "@/lib/utils";
 import { MAX_GALLERY_PHOTOS } from "@/lib/constants";
 import { ImageUploader } from "@/components/admin/ImageUploader";
@@ -27,6 +28,21 @@ export function EditInvitationClient({ initialInvitation }: Props) {
   const templates = getAllRegisteredTemplates();
 
   const [templateKey, setTemplateKey] = useState(initialInvitation.template_key);
+  const [themeConfig, setThemeConfig] = useState<Record<string, any>>(
+    initialInvitation.data.theme_config || initialInvitation.data.theme_options || {}
+  );
+
+  const handleTemplateSelect = (key: string) => {
+    setTemplateKey(key);
+    const tpl = getTemplateByKey(key);
+    if (tpl.defaultThemeConfig) {
+      setThemeConfig((prev) => ({ ...tpl.defaultThemeConfig, ...prev }));
+    }
+  };
+
+  const handleThemeConfigChange = (key: string, value: any) => {
+    setThemeConfig((prev) => ({ ...prev, [key]: value }));
+  };
   const [slug, setSlug] = useState(initialInvitation.slug);
   const [customerName, setCustomerName] = useState(initialInvitation.customer_name);
   const [customerPhone, setCustomerPhone] = useState(initialInvitation.customer_phone);
@@ -160,6 +176,8 @@ export function EditInvitationClient({ initialInvitation }: Props) {
           bank_accounts: accountNumber
             ? [{ bank_name: bankName, account_number: accountNumber, account_holder: accountHolder }]
             : [],
+          theme_config: themeConfig,
+          theme_options: themeConfig,
         },
       };
 
@@ -242,7 +260,7 @@ export function EditInvitationClient({ initialInvitation }: Props) {
             </label>
             <select
               value={templateKey}
-              onChange={(e) => setTemplateKey(e.target.value)}
+              onChange={(e) => handleTemplateSelect(e.target.value)}
               className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-sm bg-white"
             >
               {templates.map((tpl) => (
@@ -268,6 +286,70 @@ export function EditInvitationClient({ initialInvitation }: Props) {
             </select>
           </div>
         </div>
+
+        {/* Dynamic Template-Specific Customizer for Edit */}
+        {(() => {
+          const currentTpl = getTemplateByKey(templateKey);
+          if (!currentTpl?.customFields || currentTpl.customFields.length === 0) return null;
+
+          return (
+            <div className="p-5 rounded-2xl bg-amber-50/80 border border-amber-200/90 space-y-4 shadow-xs">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-[#844307]" />
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-[#844307]">
+                    Kustomisasi Dinamis: {currentTpl.name}
+                  </h4>
+                </div>
+                <span className="text-[10px] font-semibold text-stone-500 bg-white px-2 py-0.5 rounded-full border border-stone-200">
+                  Dinamis per Template
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                {currentTpl.customFields.map((field) => (
+                  <div key={field.key} className={field.type === "textarea" ? "sm:col-span-2" : ""}>
+                    <label className="block text-xs font-medium text-stone-700 mb-1">
+                      {field.label}
+                    </label>
+
+                    {field.type === "select" ? (
+                      <select
+                        value={themeConfig[field.key] ?? field.defaultValue ?? ""}
+                        onChange={(e) => handleThemeConfigChange(field.key, e.target.value)}
+                        className="w-full px-3.5 py-2 rounded-xl border border-stone-200 bg-white text-xs text-stone-800 focus:outline-hidden focus:border-[#844307]"
+                      >
+                        {field.options?.map((opt) => (
+                          <option key={opt.value} value={opt.value}>
+                            {opt.label}
+                          </option>
+                        ))}
+                      </select>
+                    ) : field.type === "textarea" ? (
+                      <textarea
+                        rows={2}
+                        value={themeConfig[field.key] ?? field.defaultValue ?? ""}
+                        onChange={(e) => handleThemeConfigChange(field.key, e.target.value)}
+                        placeholder={field.placeholder}
+                        className="w-full px-3.5 py-2 rounded-xl border border-stone-200 bg-white text-xs text-stone-800 focus:outline-hidden focus:border-[#844307]"
+                      />
+                    ) : (
+                      <input
+                        type={field.type === "color" ? "color" : "text"}
+                        value={themeConfig[field.key] ?? field.defaultValue ?? ""}
+                        onChange={(e) => handleThemeConfigChange(field.key, e.target.value)}
+                        placeholder={field.placeholder}
+                        className={`w-full px-3.5 py-2 rounded-xl border border-stone-200 bg-white text-xs text-stone-800 focus:outline-hidden focus:border-[#844307] ${
+                          field.type === "color" ? "h-9 p-1 cursor-pointer" : ""
+                        }`}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
 
         {/* 2. Customer & Slug */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

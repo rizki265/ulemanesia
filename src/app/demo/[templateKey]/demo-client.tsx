@@ -58,6 +58,26 @@ export function DemoClient({
       detailedDescription:
         "Undangan sakral bernuansa adat Jawa Kraton berlatar hitam obsidian megah, berhiaskan Gunungan Wayang emas, kaligrafi anggun, serta alunan gending yang syahdu. Sempurna untuk menyambut keluarga besar dan para sahabat dalam sakralnya prosesi pernikahan adat Jawa yang agung.",
     },
+    "islamic-elegance": {
+      badge: "KEMULIAAN ISLAMI & ARABESQUE EMAS",
+      detailedDescription:
+        "Kemuliaan pernikahan syar'i berbalut hijau zamrud (emerald) dan kaligrafi emas. Dilengkapi Bismillah agung, lantunan ayat suci QS Ar-Rum 21, dan ornamen Arabesque memikat untuk menyempurnakan ibadah terpanjang Anda.",
+    },
+    "bali-breeze": {
+      badge: "SENJA KEEMASAN BALI DI TEPI LAUT",
+      detailedDescription:
+        "Undangan paralaks Bali yang fotorealistik — gerbang Candi Bentar, panorama laut dari tebing senja, dan kamboja yang melayang dalam cahaya temaram. Hangat, sinematik, dan begitu khas Pulau Dewata.",
+    },
+    "rustic-boho": {
+      badge: "BOHEMIAN EARTHY & PAMPAS KRAFT",
+      detailedDescription:
+        "Sentuhan estetik daun pampas kering, tekstur kertas kraft hangat, karangan bunga bohemian, dan kerlip lampu temaram yang romantis dan intim untuk momen pernikahan berkesan.",
+    },
+    "chinese-modern": {
+      badge: "ORIENTAL DOUBLE HAPPINESS & SANGJIT",
+      detailedDescription:
+        "Kemegahan ornamen Shuang Xi (囍) berbalut merah crimson kekaisaran dan emas murni. Didesain istimewa untuk prosesi Sangjit, Tea Ceremony (Teapai), dan resepsi pernikahan modern berkelas.",
+    },
     "minimalist-floral": {
       badge: "SENTUHAN BOTANIKAL PASTEL HANGAT",
       detailedDescription:

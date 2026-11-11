@@ -17,7 +17,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import Link from "next/link";
-import { getAllRegisteredTemplates } from "@/templates/registry";
+import { getAllRegisteredTemplates, getTemplateByKey } from "@/templates/registry";
 import { isValidSlug, slugify } from "@/lib/utils";
 import { compressImageToWebP } from "@/lib/image-compression";
 import { MAX_GALLERY_PHOTOS, MAX_COVER_PHOTOS } from "@/lib/constants";
@@ -36,10 +36,23 @@ export default function NewInvitationPage() {
   const [eventDate, setEventDate] = useState("");
   const [coverImageUrl, setCoverImageUrl] = useState("");
 
-  // Dynamic template-specific options
-  const [editorialTagline, setEditorialTagline] = useState("WE ARE GETTING MARRIED");
-  const [editorialOverlayStyle, setEditorialOverlayStyle] = useState("cinematic_dark");
-  const [javaneseSalamType, setJavaneseSalamType] = useState("bismillah_serat");
+  // Dynamic schema-driven template customizations
+  const [themeConfig, setThemeConfig] = useState<Record<string, any>>(() => {
+    const firstTpl = getTemplateByKey(templates[0]?.key || "editorial-photo");
+    return firstTpl.defaultThemeConfig || {};
+  });
+
+  const handleTemplateSelect = (key: string) => {
+    setTemplateKey(key);
+    const tpl = getTemplateByKey(key);
+    if (tpl.defaultThemeConfig) {
+      setThemeConfig((prev) => ({ ...tpl.defaultThemeConfig, ...prev }));
+    }
+  };
+
+  const handleThemeConfigChange = (key: string, value: any) => {
+    setThemeConfig((prev) => ({ ...prev, [key]: value }));
+  };
 
   // Groom
   const [groomName, setGroomName] = useState("");
@@ -184,11 +197,8 @@ export default function NewInvitationPage() {
           bank_accounts: accountNumber
             ? [{ bank_name: bankName, account_number: accountNumber, account_holder: accountHolder }]
             : [],
-          theme_options: {
-            editorial_tagline: editorialTagline,
-            editorial_overlay: editorialOverlayStyle,
-            javanese_salam: javaneseSalamType,
-          },
+          theme_config: themeConfig,
+          theme_options: themeConfig,
         },
       };
 
@@ -252,7 +262,7 @@ export default function NewInvitationPage() {
             {templates.map((tpl) => (
               <div
                 key={tpl.key}
-                onClick={() => setTemplateKey(tpl.key)}
+                onClick={() => handleTemplateSelect(tpl.key)}
                 className={`p-4 rounded-2xl border cursor-pointer transition-all ${
                   templateKey === tpl.key
                     ? "border-[#844307] bg-[#faf5ee] ring-2 ring-[#844307]/20"
@@ -270,78 +280,77 @@ export default function NewInvitationPage() {
             ))}
           </div>
 
-          {/* Pengaturan Khusus Berdasarkan Template yang Dipilih (Dynamic Template Settings) */}
-          {templateKey === "editorial-photo" && (
-            <div className="p-4 sm:p-5 rounded-2xl bg-amber-50/80 border border-amber-200/90 space-y-3">
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[#844307]" />
-                <h4 className="text-xs font-bold uppercase tracking-wider text-[#844307]">
-                  Pengaturan Khusus: Cinematic Editorial Full Photo
-                </h4>
-              </div>
-              <p className="text-xs text-stone-600">
-                Template ini menampilkan foto cover layar penuh dengan tipografi di atasnya:
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                <div>
-                  <label className="block text-xs text-stone-700 font-medium mb-1">
-                    Tagline Subtitle Cover
-                  </label>
-                  <input
-                    type="text"
-                    value={editorialTagline}
-                    onChange={(e) => setEditorialTagline(e.target.value)}
-                    placeholder="Contoh: WE ARE GETTING MARRIED"
-                    className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white text-xs"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs text-stone-700 font-medium mb-1">
-                    Gaya Vignette / Overlay Foto
-                  </label>
-                  <select
-                    value={editorialOverlayStyle}
-                    onChange={(e) => setEditorialOverlayStyle(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white text-xs"
-                  >
-                    <option value="cinematic_dark">Cinematic Vignette (Teks Lebih Jelas)</option>
-                    <option value="soft_golden">Warm Golden Sunset</option>
-                    <option value="monochrome_moody">Monochrome Moody</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          )}
+          {/* Dynamic Template-Specific Customizer */}
+          {(() => {
+            const currentTpl = getTemplateByKey(templateKey);
+            if (!currentTpl?.customFields || currentTpl.customFields.length === 0) return null;
 
-          {templateKey === "javanese-royal" && (
-            <div className="p-4 sm:p-5 rounded-2xl bg-stone-900 text-stone-100 border border-stone-800 space-y-3">
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-amber-400" />
-                <h4 className="text-xs font-bold uppercase tracking-wider text-amber-300">
-                  Pengaturan Khusus: Javanese Royal Heritage
-                </h4>
-              </div>
-              <p className="text-xs text-stone-400">
-                Sesuaikan format salam pembuka bernuansa adat Jawa pada amplop pembuka dan cover undangan:
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                <div>
-                  <label className="block text-xs text-stone-300 font-medium mb-1">
-                    Format Salam Pembuka
-                  </label>
-                  <select
-                    value={javaneseSalamType}
-                    onChange={(e) => setJavaneseSalamType(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-stone-700 bg-stone-800 text-xs text-stone-100"
-                  >
-                    <option value="bismillah_serat">Islami + Serat Kinanthi (Rekomendasi)</option>
-                    <option value="serat_murni">Serat Riyanta Murni</option>
-                    <option value="salam_rahayu">Salam Rahayu Nusantara</option>
-                  </select>
+            return (
+              <div className="p-5 rounded-2xl bg-amber-50/80 border border-amber-200/90 space-y-4 shadow-xs">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-[#844307]" />
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-[#844307]">
+                      Kustomisasi Dinamis: {currentTpl.name}
+                    </h4>
+                  </div>
+                  <span className="text-[10px] font-semibold text-stone-500 bg-white px-2 py-0.5 rounded-full border border-stone-200">
+                    Dinamis per Template
+                  </span>
+                </div>
+
+                <p className="text-xs text-stone-600">
+                  Sesuaikan teks, gambar latar, ornamen, atau gaya visual khusus untuk template ini:
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                  {currentTpl.customFields.map((field) => (
+                    <div key={field.key} className={field.type === "textarea" ? "sm:col-span-2" : ""}>
+                      <label className="block text-xs font-medium text-stone-700 mb-1">
+                        {field.label}
+                      </label>
+
+                      {field.type === "select" ? (
+                        <select
+                          value={themeConfig[field.key] ?? field.defaultValue ?? ""}
+                          onChange={(e) => handleThemeConfigChange(field.key, e.target.value)}
+                          className="w-full px-3.5 py-2 rounded-xl border border-stone-200 bg-white text-xs text-stone-800 focus:outline-hidden focus:border-[#844307]"
+                        >
+                          {field.options?.map((opt) => (
+                            <option key={opt.value} value={opt.value}>
+                              {opt.label}
+                            </option>
+                          ))}
+                        </select>
+                      ) : field.type === "textarea" ? (
+                        <textarea
+                          rows={2}
+                          value={themeConfig[field.key] ?? field.defaultValue ?? ""}
+                          onChange={(e) => handleThemeConfigChange(field.key, e.target.value)}
+                          placeholder={field.placeholder}
+                          className="w-full px-3.5 py-2 rounded-xl border border-stone-200 bg-white text-xs text-stone-800 focus:outline-hidden focus:border-[#844307]"
+                        />
+                      ) : (
+                        <input
+                          type={field.type === "color" ? "color" : "text"}
+                          value={themeConfig[field.key] ?? field.defaultValue ?? ""}
+                          onChange={(e) => handleThemeConfigChange(field.key, e.target.value)}
+                          placeholder={field.placeholder}
+                          className={`w-full px-3.5 py-2 rounded-xl border border-stone-200 bg-white text-xs text-stone-800 focus:outline-hidden focus:border-[#844307] ${
+                            field.type === "color" ? "h-9 p-1 cursor-pointer" : ""
+                          }`}
+                        />
+                      )}
+
+                      {field.description && (
+                        <p className="text-[10px] text-stone-400 mt-1">{field.description}</p>
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
         </section>
 
         {/* 2. Customer & Slug Info */}

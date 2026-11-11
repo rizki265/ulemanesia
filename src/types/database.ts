@@ -77,6 +77,8 @@ export interface InvitationDataPayload {
     address: string;
   };
   custom_music_url?: string;
+  theme_config?: Record<string, any>;
+  theme_options?: Record<string, any>;
 }
 
 export interface Invitation {

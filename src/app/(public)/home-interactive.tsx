@@ -30,7 +30,11 @@ export function HomeInteractive({ templates }: HomeInteractiveProps) {
   const categories = [
     { id: "all", label: "Semua Desain" },
     { id: "Editorial", label: "Editorial Full Photo" },
-    { id: "Adat Jawa", label: "Adat Jawa & Tradisional" },
+    { id: "Adat Jawa", label: "Adat Jawa Keraton" },
+    { id: "Islami", label: "Islami & Kaligrafi" },
+    { id: "Bali", label: "Bali & Tropis" },
+    { id: "Rustic", label: "Rustic & Boho" },
+    { id: "Oriental", label: "Oriental Sangjit" },
     { id: "Modern", label: "Modern Luxury" },
     { id: "Floral", label: "Botanical Minimalist" },
   ];

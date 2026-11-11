@@ -7,6 +7,10 @@ import {
   MOCK_INVITATION_MODERN,
   MOCK_INVITATION_JAVANESE,
   MOCK_INVITATION_EDITORIAL,
+  MOCK_INVITATION_ISLAMIC,
+  MOCK_INVITATION_BALI,
+  MOCK_INVITATION_BOHO,
+  MOCK_INVITATION_CHINESE,
   MOCK_WISHES,
 } from "@/lib/mock-data";
 import { getWhatsAppOrderUrl } from "@/lib/whatsapp";
@@ -46,6 +50,14 @@ export default async function DemoPage({ params, searchParams }: DemoPageProps) 
       ? MOCK_INVITATION_EDITORIAL
       : templateKey === "javanese-royal"
       ? MOCK_INVITATION_JAVANESE
+      : templateKey === "islamic-elegance"
+      ? MOCK_INVITATION_ISLAMIC
+      : templateKey === "bali-breeze"
+      ? MOCK_INVITATION_BALI
+      : templateKey === "rustic-boho"
+      ? MOCK_INVITATION_BOHO
+      : templateKey === "chinese-modern"
+      ? MOCK_INVITATION_CHINESE
       : templateKey === "modern-elegance"
       ? MOCK_INVITATION_MODERN
       : MOCK_INVITATION_FLORAL;

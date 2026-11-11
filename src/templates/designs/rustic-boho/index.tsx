@@ -1,0 +1,481 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import { TemplateProps } from "@/templates/types";
+import { BohoOrnament } from "@/components/invitation/BohoOrnament";
+import { AudioPlayer } from "@/components/invitation/AudioPlayer";
+import { CountdownTimer } from "@/components/invitation/CountdownTimer";
+import { RsvpAndWishes } from "@/components/invitation/RsvpAndWishes";
+import { GiftSection } from "@/components/invitation/GiftSection";
+import { formatDate } from "@/lib/utils";
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  ExternalLink,
+  Instagram,
+  Heart,
+  MailOpen,
+  Sparkles,
+  ChevronDown,
+} from "lucide-react";
+
+export default function RusticBohoTemplate({
+  slug,
+  guestName,
+  title,
+  coverImageUrl,
+  audioUrl,
+  audioTitle,
+  data,
+  wishes,
+  isPreview = false,
+  onSendWish,
+}: TemplateProps) {
+  const [isOpened, setIsOpened] = useState(false);
+  const [isClosingCover, setIsClosingCover] = useState(false);
+  const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
+
+  const themeConfig = data.theme_config || data.theme_options || {};
+  const coverBg =
+    themeConfig.cover_bg_url ||
+    coverImageUrl ||
+    data.gallery[0] ||
+    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80";
+
+  const coupleNames = `${data.groom.nickname} & ${data.bride.nickname}`;
+  const firstEventDate = data.events[0]?.date ? new Date(data.events[0].date) : new Date();
+
+  useEffect(() => {
+    if (!isOpened) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpened]);
+
+  const handleOpen = () => {
+    setIsClosingCover(true);
+    setTimeout(() => {
+      setIsOpened(true);
+    }, 700);
+  };
+
+  return (
+    <div className="min-h-screen bg-[#fcf9f5] text-stone-900 font-sans selection:bg-[#b08968]/20 selection:text-[#7f5539] relative overflow-x-hidden">
+      {/* ======================================================== */}
+      {/* 1. COVER SCREEN: RUSTIC PAMPAS & KRAFT PAPER              */}
+      {/* ======================================================== */}
+      {!isOpened && (
+        <div
+          className={`fixed inset-0 z-50 flex flex-col justify-between py-10 px-6 sm:px-10 transition-all duration-700 ease-in-out select-none overflow-hidden ${
+            isClosingCover
+              ? "-translate-y-full opacity-0 pointer-events-none"
+              : "translate-y-0 opacity-100"
+          }`}
+        >
+          {/* Background Photo */}
+          <div className="absolute inset-0 z-0">
+            <Image
+              src={coverBg}
+              alt={title || coupleNames}
+              fill
+              priority
+              className="object-cover scale-105"
+              sizes="100vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#3a2e2b]/85 via-[#3a2e2b]/55 to-[#3a2e2b]/90" />
+          </div>
+
+          {/* Top: Header Badge */}
+          <div className="relative z-10 text-center pt-2">
+            <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-amber-100 text-[10px] sm:text-xs font-semibold tracking-[0.25em] uppercase shadow-lg">
+              <Sparkles className="w-3.5 h-3.5 text-amber-200" />
+              <span>{themeConfig.cover_tagline || "RUSTIC BOTANICAL CELEBRATION"}</span>
+            </div>
+          </div>
+
+          {/* Center: Wreath Ornament & Names */}
+          <div className="relative z-10 text-center space-y-4 my-auto py-8">
+            <div className="mx-auto flex justify-center mb-1">
+              <BohoOrnament size={65} color="#e6ccb2" />
+            </div>
+            <p className="text-xs font-light uppercase tracking-[0.3em] text-stone-200">
+              WE ARE TYING THE KNOT
+            </p>
+            <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl font-bold text-white tracking-tight drop-shadow-xl">
+              {coupleNames}
+            </h1>
+            <p className="text-sm font-serif italic text-amber-200/90 tracking-wider">
+              {formatDate(firstEventDate.toISOString())}
+            </p>
+          </div>
+
+          {/* Bottom: Guest Box & Open Button */}
+          <div className="relative z-10 w-full max-w-sm mx-auto space-y-4 text-center pb-2">
+            <div className="p-3.5 sm:p-4 rounded-2xl bg-black/60 backdrop-blur-xl border border-white/20 text-white shadow-2xl">
+              <p className="text-[10px] uppercase tracking-widest text-amber-200 font-medium mb-1">
+                KEPADA YTH. TAMU UNDANGAN:
+              </p>
+              <h3 className="font-serif font-bold text-base sm:text-lg text-white capitalize">
+                {guestName || "Tamu Undangan"}
+              </h3>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleOpen}
+              className="w-full py-3.5 px-6 rounded-full bg-gradient-to-r from-[#b08968] via-[#936639] to-[#7f5539] hover:opacity-95 text-white font-semibold text-xs sm:text-sm shadow-xl flex items-center justify-center gap-2 transition-all duration-300 hover:scale-[1.03] active:scale-95 cursor-pointer ring-2 ring-amber-200/30"
+            >
+              <MailOpen className="w-4 h-4 text-white" />
+              <span>Buka Undangan</span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ======================================================== */}
+      {/* 2. AUDIO BACKGROUND CONTROLLER                            */}
+      {/* ======================================================== */}
+      {isOpened && (
+        <AudioPlayer
+          audioUrl={audioUrl || data.custom_music_url}
+          autoPlayTrigger={true}
+        />
+      )}
+
+      {/* ======================================================== */}
+      {/* 3. HERO BANNER: RUSTIC BOHO                              */}
+      {/* ======================================================== */}
+      <section className="relative min-h-[92vh] flex flex-col items-center justify-center text-center px-4 sm:px-6 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src={coverBg}
+            alt={coupleNames}
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#3a2e2b]/85 via-[#3a2e2b]/60 to-[#fcf9f5]" />
+        </div>
+
+        <div className="relative z-10 max-w-2xl mx-auto space-y-6 pt-16 pb-12">
+          <div className="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-amber-100 text-xs tracking-[0.25em] uppercase font-serif">
+            TOGETHER FOREVER
+          </div>
+
+          <h2 className="font-serif text-5xl sm:text-6xl md:text-7xl font-bold text-white tracking-tight drop-shadow-md">
+            {coupleNames}
+          </h2>
+
+          <p className="font-serif italic text-lg sm:text-xl text-amber-100">
+            {formatDate(firstEventDate.toISOString())}
+          </p>
+
+          <div className="pt-4 max-w-md mx-auto">
+            <div className="p-5 rounded-3xl bg-black/60 backdrop-blur-xl border border-white/20 text-white shadow-2xl">
+              <CountdownTimer targetDate={data.countdown_target || firstEventDate.toISOString()} />
+            </div>
+          </div>
+        </div>
+
+        <div className="relative z-10 pb-6 animate-bounce text-stone-300">
+          <ChevronDown className="w-6 h-6 mx-auto opacity-70" />
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* 4. RUSTIC QUOTE                                          */}
+      {/* ======================================================== */}
+      <section className="py-20 px-4 sm:px-6 relative overflow-hidden bg-[#fcf9f5]">
+        <div className="max-w-3xl mx-auto text-center space-y-6 relative z-10">
+          <BohoOrnament size={56} color="#b08968" className="mx-auto" />
+          <p className="text-xs uppercase font-serif tracking-[0.25em] text-[#7f5539] font-bold">
+            {themeConfig.greeting_title || "THE PROMISE OF LOVE"}
+          </p>
+          <blockquote className="font-serif italic text-base sm:text-xl text-stone-700 leading-relaxed font-light px-4">
+            &ldquo;{data.quote?.text ||
+              "I have found the one whom my soul loves. In all the world, there is no heart for me like yours. In all the world, there is no love for you like mine."}&rdquo;
+          </blockquote>
+          <p className="text-xs sm:text-sm font-semibold tracking-widest uppercase text-[#7f5539] font-serif">
+            — {data.quote?.source || "Song of Solomon 3:4"}
+          </p>
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* 5. COUPLE SHOWCASE                                       */}
+      {/* ======================================================== */}
+      <section className="py-24 px-4 sm:px-6 bg-[#f5ede3] relative">
+        <div className="max-w-4xl mx-auto space-y-16">
+          <div className="text-center space-y-3">
+            <span className="text-xs uppercase font-serif tracking-[0.25em] text-[#7f5539] font-bold">
+              THE BRIDE &amp; GROOM
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-stone-900 tracking-tight">
+              Mempelai Bahagia
+            </h2>
+            <p className="text-xs sm:text-sm text-stone-600 max-w-lg mx-auto">
+              Dengan penuh syukur dan kebahagiaan, kami mengundang Anda untuk merayakan cinta kami:
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14">
+            {/* Pria */}
+            <div className="p-8 rounded-3xl bg-white border border-[#e6ccb2] hover:border-[#b08968] transition-all text-center space-y-5 group shadow-sm hover:shadow-xl">
+              <div className="relative w-36 h-36 sm:w-44 sm:h-44 mx-auto rounded-full overflow-hidden border-4 border-[#b08968]/30 shadow-lg group-hover:scale-105 transition-transform duration-500">
+                <Image
+                  src={
+                    data.groom.photo_url ||
+                    "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80"
+                  }
+                  alt={data.groom.name}
+                  fill
+                  className="object-cover"
+                  sizes="180px"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <h3 className="font-serif font-bold text-2xl sm:text-3xl text-stone-900">
+                  {data.groom.name}
+                </h3>
+                <p className="text-xs text-[#7f5539] font-semibold">
+                  {data.groom.child_order || "Putra dari"}
+                </p>
+                <p className="text-xs sm:text-sm text-stone-600">
+                  {data.groom.father_name} &amp; {data.groom.mother_name}
+                </p>
+              </div>
+
+              {data.groom.instagram && (
+                <div className="pt-2">
+                  <a
+                    href={`https://instagram.com/${data.groom.instagram.replace("@", "")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-stone-100 hover:bg-stone-200 text-xs font-medium text-stone-800 transition-colors"
+                  >
+                    <Instagram className="w-3.5 h-3.5 text-[#7f5539]" />
+                    <span>@{data.groom.instagram.replace("@", "")}</span>
+                  </a>
+                </div>
+              )}
+            </div>
+
+            {/* Wanita */}
+            <div className="p-8 rounded-3xl bg-white border border-[#e6ccb2] hover:border-[#b08968] transition-all text-center space-y-5 group shadow-sm hover:shadow-xl">
+              <div className="relative w-36 h-36 sm:w-44 sm:h-44 mx-auto rounded-full overflow-hidden border-4 border-[#b08968]/30 shadow-lg group-hover:scale-105 transition-transform duration-500">
+                <Image
+                  src={
+                    data.bride.photo_url ||
+                    "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80"
+                  }
+                  alt={data.bride.name}
+                  fill
+                  className="object-cover"
+                  sizes="180px"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <h3 className="font-serif font-bold text-2xl sm:text-3xl text-stone-900">
+                  {data.bride.name}
+                </h3>
+                <p className="text-xs text-[#7f5539] font-semibold">
+                  {data.bride.child_order || "Putri dari"}
+                </p>
+                <p className="text-xs sm:text-sm text-stone-600">
+                  {data.bride.father_name} &amp; {data.bride.mother_name}
+                </p>
+              </div>
+
+              {data.bride.instagram && (
+                <div className="pt-2">
+                  <a
+                    href={`https://instagram.com/${data.bride.instagram.replace("@", "")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-stone-100 hover:bg-stone-200 text-xs font-medium text-stone-800 transition-colors"
+                  >
+                    <Instagram className="w-3.5 h-3.5 text-[#7f5539]" />
+                    <span>@{data.bride.instagram.replace("@", "")}</span>
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* 6. RANGKAIAN ACARA                                       */}
+      {/* ======================================================== */}
+      <section className="py-24 px-4 sm:px-6 bg-[#fcf9f5] border-t border-stone-200/80">
+        <div className="max-w-4xl mx-auto space-y-14">
+          <div className="text-center space-y-3">
+            <span className="text-xs uppercase font-serif tracking-[0.25em] text-[#7f5539] font-bold">
+              CELEBRATION DETAILS
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-stone-900 tracking-tight">
+              Rangkaian Acara
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {data.events.map((event, idx) => (
+              <div
+                key={idx}
+                className="p-8 rounded-3xl bg-white border border-[#e6ccb2] hover:border-[#b08968] transition-all space-y-6 shadow-sm hover:shadow-xl flex flex-col justify-between"
+              >
+                <div className="space-y-4">
+                  <div className="inline-block px-3 py-1 rounded-full bg-[#f5ede3] border border-[#e6ccb2] text-[#7f5539] text-xs font-semibold tracking-wider uppercase font-serif">
+                    {event.title}
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2.5 text-stone-800 text-sm">
+                      <Calendar className="w-4 h-4 text-[#7f5539] shrink-0" />
+                      <span className="font-semibold">{formatDate(event.date)}</span>
+                    </div>
+
+                    <div className="flex items-center gap-2.5 text-stone-600 text-xs">
+                      <Clock className="w-4 h-4 text-[#7f5539] shrink-0" />
+                      <span>
+                        {event.start_time} - {event.end_time} {event.timezone || "WIB"}
+                      </span>
+                    </div>
+
+                    <div className="flex items-start gap-2.5 text-stone-600 text-xs pt-1">
+                      <MapPin className="w-4 h-4 text-[#7f5539] shrink-0 mt-0.5" />
+                      <div>
+                        <p className="font-semibold text-stone-900">{event.location_name}</p>
+                        <p className="text-stone-500 text-[11px] leading-relaxed mt-0.5">
+                          {event.address}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {event.google_maps_url && (
+                  <div className="pt-4 border-t border-stone-100">
+                    <a
+                      href={event.google_maps_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#7f5539] hover:bg-[#68432b] text-white text-xs font-semibold transition-all hover:scale-[1.02] shadow-sm"
+                    >
+                      <MapPin className="w-3.5 h-3.5" />
+                      <span>Buka Google Maps</span>
+                      <ExternalLink className="w-3 h-3 opacity-60 ml-1" />
+                    </a>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* 7. GALERI KENANGAN                                       */}
+      {/* ======================================================== */}
+      {data.gallery && data.gallery.length > 0 && (
+        <section className="py-24 px-4 sm:px-6 bg-[#f5ede3]">
+          <div className="max-w-5xl mx-auto space-y-12">
+            <div className="text-center space-y-3">
+              <span className="text-xs uppercase font-serif tracking-[0.25em] text-[#7f5539] font-bold">
+                MEMORIES IN FRAMES
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-stone-900 tracking-tight">
+                Galeri Kenangan
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+              {data.gallery.map((imgUrl, i) => (
+                <div
+                  key={i}
+                  onClick={() => setSelectedPhoto(imgUrl)}
+                  className="relative aspect-4/5 rounded-2xl overflow-hidden cursor-pointer group bg-stone-200 border border-[#e6ccb2]"
+                >
+                  <Image
+                    src={imgUrl}
+                    alt={`Galeri ${i + 1}`}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-700"
+                    sizes="(max-width: 768px) 50vw, 33vw"
+                  />
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Lightbox Modal */}
+      {selectedPhoto && (
+        <div
+          onClick={() => setSelectedPhoto(null)}
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 cursor-pointer"
+        >
+          <div className="relative max-w-3xl max-h-[85vh] w-full h-full">
+            <Image
+              src={selectedPhoto}
+              alt="Foto Pilihan"
+              fill
+              className="object-contain"
+              sizes="90vw"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* ======================================================== */}
+      {/* 8. DIGITAL ENVELOPE                                      */}
+      {/* ======================================================== */}
+      {data.bank_accounts && data.bank_accounts.length > 0 && (
+        <section className="py-20 px-4 sm:px-6 bg-[#fcf9f5] border-t border-stone-200/80">
+          <div className="max-w-2xl mx-auto">
+            <GiftSection bankAccounts={data.bank_accounts} giftAddress={data.gift_address} />
+          </div>
+        </section>
+      )}
+
+      {/* ======================================================== */}
+      {/* 9. RSVP & DOA RESTU                                      */}
+      {/* ======================================================== */}
+      <section className="py-24 px-4 sm:px-6 bg-[#f5ede3] border-t border-stone-200/80">
+        <div className="max-w-3xl mx-auto">
+          <RsvpAndWishes
+            invitationId={slug}
+            defaultGuestName={guestName}
+            wishes={wishes}
+            onSendWish={onSendWish}
+          />
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* 10. PENUTUP                                              */}
+      {/* ======================================================== */}
+      <footer className="py-16 px-4 text-center space-y-4 bg-[#3a2e2b] text-stone-300 text-xs">
+        <p className="font-serif italic text-sm text-amber-100">
+          Thank you for sharing in our joy and blessing our union.
+        </p>
+        <p className="font-serif font-bold text-base text-white">{coupleNames}</p>
+        <p className="text-[11px] text-stone-500 pt-4">
+          Powered by <span className="font-semibold text-stone-400">Ulemanesia</span> — Undangan Digital Eksklusif
+        </p>
+      </footer>
+    </div>
+  );
+}
+

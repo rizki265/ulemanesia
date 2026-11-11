@@ -6,6 +6,10 @@ import Image from "next/image";
 import { MessageCircle, Eye, Heart, MailOpen } from "lucide-react";
 import { RegisteredTemplate } from "@/templates/types";
 import { GununganOrnament } from "./GununganOrnament";
+import { IslamicOrnament } from "./IslamicOrnament";
+import { BaliOrnament } from "./BaliOrnament";
+import { BohoOrnament } from "./BohoOrnament";
+import { ShuangXiOrnament } from "./ShuangXiOrnament";
 
 interface TemplatePhoneCardProps {
   template: RegisteredTemplate;
@@ -20,17 +24,21 @@ export function TemplatePhoneCard({
 }: TemplatePhoneCardProps) {
   const isEditorial = template.key === "editorial-photo";
   const isJavanese = template.key === "javanese-royal";
+  const isIslamic = template.key === "islamic-elegance";
+  const isBali = template.key === "bali-breeze";
+  const isBoho = template.key === "rustic-boho";
+  const isChinese = template.key === "chinese-modern";
   const isModern = template.key === "modern-elegance";
 
   return (
     <div className="bg-white rounded-3xl p-4 sm:p-5 border border-stone-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center justify-between group w-full max-w-[270px]">
-      {/* 1. Realistic Smartphone Handphone Mockup (iPhone proportion ~9:19.5 like reference image) */}
+      {/* 1. Realistic Smartphone Handphone Mockup (iPhone proportion ~9:19.5) */}
       <Link
         href={`/demo/${template.key}`}
         className="w-[205px] sm:w-[218px] h-[435px] sm:h-[465px] rounded-[38px] sm:rounded-[42px] border-[4px] sm:border-[5px] border-[#18181b] shadow-[0_10px_25px_rgba(0,0,0,0.14)] group-hover:shadow-[0_20px_40px_rgba(132,67,7,0.25)] transition-all duration-300 relative overflow-hidden bg-black flex flex-col cursor-pointer ring-1 ring-black/25 select-none shrink-0"
         title={`Coba Demo ${template.name}`}
       >
-        {/* Realistic iPhone Top Notch with Speaker Earphone Slit & Camera */}
+        {/* Realistic iPhone Top Notch */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-4 bg-[#18181b] rounded-b-2xl z-30 pointer-events-none flex items-center justify-center gap-1.5 shadow-xs">
           <div className="w-8 h-1 bg-stone-700/80 rounded-full" />
           <div className="w-2 h-2 rounded-full bg-stone-900 ring-1 ring-stone-700/60" />
@@ -42,7 +50,7 @@ export function TemplatePhoneCard({
         {/* Screen Area with Realistic Inner Bezel */}
         <div className="w-full h-full rounded-[33px] sm:rounded-[37px] overflow-hidden relative flex flex-col justify-between">
           {isEditorial ? (
-            /* Cinematic Editorial Romance Phone Cover Preview */
+            /* 1. Cinematic Editorial Romance */
             <div className="w-full h-full relative flex flex-col justify-between py-7 px-3.5 text-center">
               <Image
                 src={template.thumbnailUrl}
@@ -54,7 +62,6 @@ export function TemplatePhoneCard({
               />
               <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/40 to-black/90" />
 
-              {/* Top Tagline */}
               <div className="relative z-10 pt-4 space-y-1.5">
                 <span className="inline-block px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-amber-200 text-[8px] uppercase tracking-[0.2em] font-medium border border-white/20">
                   THE WEDDING INVITATION
@@ -70,7 +77,6 @@ export function TemplatePhoneCard({
                 </p>
               </div>
 
-              {/* Bottom Actions */}
               <div className="relative z-10 pb-2 space-y-2 flex flex-col items-center">
                 <div className="px-3 py-1.5 rounded-xl bg-black/60 backdrop-blur-md border border-white/20 text-white w-full max-w-[170px] shadow-lg">
                   <p className="text-[8px] uppercase tracking-wider text-amber-300/90 mb-0.5">Kepada Yth:</p>
@@ -84,9 +90,8 @@ export function TemplatePhoneCard({
               </div>
             </div>
           ) : isJavanese ? (
-            /* Javanese Royal Heritage Phone Cover Preview */
+            /* 2. Javanese Royal Heritage */
             <div className="w-full h-full bg-[#0d0d0f] text-center flex flex-col justify-between py-7 px-3.5 relative overflow-hidden">
-              {/* Subtle side kayon ornaments */}
               <div className="absolute -left-6 top-1/3 opacity-20 pointer-events-none scale-75">
                 <GununganOrnament size={46} />
               </div>
@@ -94,7 +99,6 @@ export function TemplatePhoneCard({
                 <GununganOrnament size={46} />
               </div>
 
-              {/* Top: Gunungan & Title */}
               <div className="space-y-2 pt-4 relative z-10 flex flex-col items-center">
                 <div className="transform group-hover:scale-105 transition-transform duration-500">
                   <GununganOrnament size={56} />
@@ -110,7 +114,6 @@ export function TemplatePhoneCard({
                 </p>
               </div>
 
-              {/* Bottom: Guest pill & Open button */}
               <div className="space-y-2 pb-2 relative z-10 flex flex-col items-center">
                 <div className="px-3 py-1 rounded-full bg-stone-900/90 border border-amber-500/40 text-[10px] font-serif text-amber-200">
                   Tamu Undangan
@@ -124,8 +127,133 @@ export function TemplatePhoneCard({
                 </div>
               </div>
             </div>
+          ) : isIslamic ? (
+            /* 3. Islamic Madinah Grace */
+            <div className="w-full h-full bg-[#071d16] text-center flex flex-col justify-between py-7 px-3.5 relative overflow-hidden">
+              <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-48 h-48 bg-emerald-600/10 rounded-full blur-2xl pointer-events-none" />
+
+              <div className="space-y-2 pt-4 relative z-10 flex flex-col items-center">
+                <div className="transform group-hover:scale-105 transition-transform duration-500">
+                  <IslamicOrnament size={46} color="#d4af37" />
+                </div>
+                <p className="text-[9px] tracking-[0.22em] uppercase font-serif text-amber-400 font-medium">
+                  WALIMATUL &lsquo;URSY
+                </p>
+                <p className="text-[10px] font-serif text-amber-200">بِسْمِ اللَّهِ</p>
+                <h4 className="font-serif text-2xl sm:text-3xl text-white font-bold tracking-tight">
+                  Farhan &amp; Zhafira
+                </h4>
+                <p className="text-[9px] text-stone-300">QS. Ar-Rum: 21</p>
+              </div>
+
+              <div className="space-y-2 pb-2 relative z-10 flex flex-col items-center">
+                <div className="px-3 py-1 rounded-full bg-[#0b281f] border border-amber-500/40 text-[10px] font-serif text-amber-200">
+                  Tamu Undangan
+                </div>
+                <div className="w-full max-w-[170px] py-1.5 px-3 rounded-full bg-gradient-to-r from-amber-600 via-amber-700 to-[#844307] text-white font-semibold text-[10px] shadow-lg flex items-center justify-center gap-1.5 ring-1 ring-amber-400/40">
+                  <MailOpen className="w-3 h-3 text-white" />
+                  <span>Buka Undangan</span>
+                </div>
+              </div>
+            </div>
+          ) : isBali ? (
+            /* 4. Bali Tropical Sunset */
+            <div className="w-full h-full relative flex flex-col justify-between py-7 px-3.5 text-center">
+              <Image
+                src={template.thumbnailUrl}
+                alt={template.name}
+                fill
+                priority={priority}
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                sizes="220px"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#291a13]/85 via-[#291a13]/50 to-[#291a13]/90" />
+
+              <div className="relative z-10 pt-4 space-y-1.5 flex flex-col items-center">
+                <BaliOrnament size={46} color="#e5c07b" />
+                <span className="inline-block px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-amber-200 text-[8px] uppercase tracking-[0.2em] font-medium border border-white/20">
+                  BALI TROPICAL
+                </span>
+                <h4 className="font-serif text-2xl sm:text-3xl font-bold text-white tracking-tight drop-shadow-md">
+                  Sekar &amp; Bayu
+                </h4>
+                <p className="text-[10px] text-amber-200/90 font-serif italic">Om Swastyastu</p>
+              </div>
+
+              <div className="relative z-10 pb-2 space-y-2 flex flex-col items-center">
+                <div className="px-3 py-1.5 rounded-xl bg-black/60 backdrop-blur-md border border-white/20 text-white w-full max-w-[170px] shadow-lg">
+                  <p className="text-[8px] uppercase tracking-wider text-amber-300 mb-0.5">Kepada Yth:</p>
+                  <p className="text-[11px] font-serif font-bold text-white">Tamu Kehormatan</p>
+                </div>
+                <div className="w-full max-w-[170px] py-1.5 px-3 rounded-full bg-gradient-to-r from-[#b45309] to-[#873e23] text-white font-semibold text-[10px] shadow-lg flex items-center justify-center gap-1.5 ring-1 ring-amber-400/40">
+                  <MailOpen className="w-3 h-3 text-white" />
+                  <span>Buka Undangan</span>
+                </div>
+              </div>
+            </div>
+          ) : isBoho ? (
+            /* 5. Rustic Boho */
+            <div className="w-full h-full relative flex flex-col justify-between py-7 px-3.5 text-center">
+              <Image
+                src={template.thumbnailUrl}
+                alt={template.name}
+                fill
+                priority={priority}
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                sizes="220px"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#3a2e2b]/85 via-[#3a2e2b]/50 to-[#3a2e2b]/90" />
+
+              <div className="relative z-10 pt-4 space-y-1.5 flex flex-col items-center">
+                <BohoOrnament size={46} color="#e6ccb2" />
+                <span className="inline-block px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-amber-100 text-[8px] uppercase tracking-[0.2em] font-medium border border-white/20">
+                  RUSTIC PAMPAS
+                </span>
+                <h4 className="font-serif text-2xl sm:text-3xl font-bold text-white tracking-tight drop-shadow-md">
+                  Julian &amp; Alyssa
+                </h4>
+                <p className="text-[10px] text-amber-100 font-serif italic">Together Forever</p>
+              </div>
+
+              <div className="relative z-10 pb-2 space-y-2 flex flex-col items-center">
+                <div className="px-3 py-1.5 rounded-xl bg-black/60 backdrop-blur-md border border-white/20 text-white w-full max-w-[170px] shadow-lg">
+                  <p className="text-[8px] uppercase tracking-wider text-amber-200 mb-0.5">Kepada Yth:</p>
+                  <p className="text-[11px] font-serif font-bold text-white">Tamu Undangan</p>
+                </div>
+                <div className="w-full max-w-[170px] py-1.5 px-3 rounded-full bg-gradient-to-r from-[#b08968] to-[#7f5539] text-white font-semibold text-[10px] shadow-lg flex items-center justify-center gap-1.5 ring-1 ring-amber-200/40">
+                  <MailOpen className="w-3 h-3 text-white" />
+                  <span>Buka Undangan</span>
+                </div>
+              </div>
+            </div>
+          ) : isChinese ? (
+            /* 6. Chinese Modern */
+            <div className="w-full h-full bg-[#1c080b] text-center flex flex-col justify-between py-7 px-3.5 relative overflow-hidden">
+              <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-48 h-48 bg-red-600/10 rounded-full blur-2xl pointer-events-none" />
+
+              <div className="space-y-2 pt-4 relative z-10 flex flex-col items-center">
+                <ShuangXiOrnament size={48} color="#e5c07b" />
+                <p className="text-[8px] tracking-[0.22em] uppercase font-serif text-amber-300 font-medium">
+                  DOUBLE HAPPINESS • 囍
+                </p>
+                <h4 className="font-serif text-2xl sm:text-3xl text-amber-100 font-bold tracking-tight">
+                  Kenji &amp; Michelle
+                </h4>
+                <p className="text-[9px] text-stone-300 font-serif">百年好合</p>
+              </div>
+
+              <div className="space-y-2 pb-2 relative z-10 flex flex-col items-center">
+                <div className="px-3 py-1 rounded-full bg-[#2e0e13] border border-amber-500/40 text-[10px] font-serif text-amber-200">
+                  Special Guest
+                </div>
+                <div className="w-full max-w-[170px] py-1.5 px-3 rounded-full bg-gradient-to-r from-[#a4161a] to-[#660708] text-white font-semibold text-[10px] shadow-lg flex items-center justify-center gap-1.5 ring-1 ring-amber-400/40">
+                  <MailOpen className="w-3 h-3 text-white" />
+                  <span>Open Invitation</span>
+                </div>
+              </div>
+            </div>
           ) : isModern ? (
-            /* Modern Monochrome Elegance Phone Cover Preview */
+            /* 7. Modern Monochrome Elegance */
             <div className="w-full h-full relative flex flex-col justify-between py-7 px-3.5 text-center">
               <Image
                 src={template.thumbnailUrl}
@@ -137,7 +265,6 @@ export function TemplatePhoneCard({
               />
               <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/35 to-black/85" />
 
-              {/* Top Info */}
               <div className="relative z-10 pt-4 space-y-1.5">
                 <span className="inline-block px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-amber-300 text-[9px] uppercase tracking-widest font-medium">
                   The Wedding Of
@@ -150,7 +277,6 @@ export function TemplatePhoneCard({
                 </p>
               </div>
 
-              {/* Bottom Actions */}
               <div className="relative z-10 pb-2 space-y-2 flex flex-col items-center">
                 <div className="px-3 py-1.5 rounded-xl bg-black/55 backdrop-blur-md border border-white/20 text-white w-full max-w-[170px]">
                   <p className="text-[8px] uppercase tracking-wider text-amber-200 mb-0.5">Kepada Yth:</p>
@@ -164,7 +290,7 @@ export function TemplatePhoneCard({
               </div>
             </div>
           ) : (
-            /* Floral Botanical Minimalist Phone Cover Preview */
+            /* 8. Floral Botanical Minimalist */
             <div className="w-full h-full relative flex flex-col justify-between py-7 px-3.5 text-center">
               <Image
                 src={template.thumbnailUrl}
@@ -176,7 +302,6 @@ export function TemplatePhoneCard({
               />
               <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/20 to-black/85" />
 
-              {/* Top Info */}
               <div className="relative z-10 pt-4 space-y-1.5">
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-rose-200 text-[9px] uppercase tracking-widest font-medium">
                   <Heart className="w-2.5 h-2.5 text-rose-300 fill-rose-300" />
@@ -190,7 +315,6 @@ export function TemplatePhoneCard({
                 </p>
               </div>
 
-              {/* Bottom Actions */}
               <div className="relative z-10 pb-2 space-y-2 flex flex-col items-center">
                 <div className="px-3 py-1.5 rounded-xl bg-black/50 backdrop-blur-md border border-white/25 text-white w-full max-w-[170px]">
                   <p className="text-[8px] uppercase tracking-wider text-rose-200 mb-0.5">Kepada Yth:</p>
@@ -217,12 +341,11 @@ export function TemplatePhoneCard({
 
       {/* 2. Di Bawah Handphone: HANYA Nama Template dan Tombol Demo & Pesan */}
       <div className="w-full mt-4 text-center space-y-3">
-        <h3 className="font-serif font-bold text-stone-900 text-base sm:text-lg group-hover:text-[#844307] transition-colors leading-tight">
+        <h3 className="font-serif font-bold text-stone-900 text-base sm:text-lg group-hover:text-[#844307] transition-colors leading-tight line-clamp-1">
           {template.name}
         </h3>
 
         <div className="grid grid-cols-2 gap-2 w-full pt-1">
-          {/* Tombol Demo */}
           <Link
             href={`/demo/${template.key}`}
             className="w-full py-2 px-2 bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-semibold rounded-xl border border-stone-200/90 transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs hover:scale-[1.02] active:scale-98"
@@ -231,7 +354,6 @@ export function TemplatePhoneCard({
             <span>Lihat Demo</span>
           </Link>
 
-          {/* Tombol Pesan */}
           <a
             href={whatsappUrl}
             target="_blank"
