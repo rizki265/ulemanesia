@@ -73,6 +73,9 @@ export default async function DemoPage({ params, searchParams }: DemoPageProps) 
         groom: { ...mockData.groom, ...(preset.groom || {}) },
         bride: { ...mockData.bride, ...(preset.bride || {}) },
         quote: preset.quote || mockData.quote,
+        stories: preset.stories || mockData.stories,
+        bank_accounts: preset.bank_accounts || mockData.bank_accounts,
+        qris_image_url: preset.qris_image_url || (mockData as any).qris_image_url,
         theme_config: { ...mockData.theme_config, ...(preset.theme_config || {}) },
         theme_options: { ...mockData.theme_options, ...(preset.theme_config || {}) },
       }

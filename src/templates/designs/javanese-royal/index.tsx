@@ -467,7 +467,7 @@ export default function JavaneseRoyalTemplate({
         )}
 
         {/* Tanda Kasih / Kado Digital */}
-        {((data.bank_accounts && data.bank_accounts.length > 0) || data.gift_address) && (
+        {((data.bank_accounts && data.bank_accounts.length > 0) || data.qris_image_url || data.gift_address) && (
           <section className="space-y-6">
             <div className="text-center space-y-2">
               <p className="text-xs uppercase tracking-widest text-amber-500 font-serif">
@@ -481,7 +481,11 @@ export default function JavaneseRoyalTemplate({
               </p>
             </div>
 
-            <GiftSection bankAccounts={data.bank_accounts} giftAddress={data.gift_address} />
+            <GiftSection
+              bankAccounts={data.bank_accounts}
+              qrisImageUrl={data.qris_image_url}
+              giftAddress={data.gift_address}
+            />
           </section>
         )}
 

@@ -6,6 +6,7 @@ import { Calendar, MapPin, ExternalLink, Instagram, Sparkles, Clock } from "luci
 import { TemplateProps } from "../../types";
 import { EnvelopeModal } from "@/components/invitation/EnvelopeModal";
 import { FloatingControls } from "@/components/invitation/FloatingControls";
+import { LoveStorySection } from "@/components/invitation/LoveStorySection";
 import { RevealOnScroll } from "@/components/invitation/RevealOnScroll";
 import { CountdownTimer } from "@/components/invitation/CountdownTimer";
 import { RsvpAndWishes } from "@/components/invitation/RsvpAndWishes";
@@ -288,10 +289,24 @@ export default function ModernEleganceTemplate({
         </section>
       )}
 
-      {/* 8. Gifts */}
+      {/* 8. Love Story */}
+      {data.stories && data.stories.length > 0 && (
+        <LoveStorySection
+          stories={data.stories}
+          theme="dark"
+          title="Kisah Kasih Kami"
+          subtitle="OUR LOVE STORY"
+        />
+      )}
+
+      {/* 9. Gifts */}
       <RevealOnScroll animation="fade-up">
         <div className="text-stone-900">
-          <GiftSection bankAccounts={data.bank_accounts} giftAddress={data.gift_address} />
+          <GiftSection
+            bankAccounts={data.bank_accounts}
+            qrisImageUrl={data.qris_image_url}
+            giftAddress={data.gift_address}
+          />
         </div>
       </RevealOnScroll>
 

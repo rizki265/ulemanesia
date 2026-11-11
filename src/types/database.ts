@@ -65,12 +65,14 @@ export interface InvitationDataPayload {
   quote?: {
     text: string;
     source: string;
+    arabic_text?: string;
   };
   events: EventDetail[];
   countdown_target: string; // ISO format e.g. "2026-12-25T09:00:00+07:00"
   gallery: string[]; // max 10 photos
   stories?: LoveStory[];
   bank_accounts?: BankAccount[];
+  qris_image_url?: string;
   gift_address?: {
     recipient_name: string;
     phone: string;

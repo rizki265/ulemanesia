@@ -324,7 +324,11 @@ export default function MinimalistFloralTemplate({
 
       {/* 9. Tanda Kasih / Wedding Gift */}
       <RevealOnScroll animation="fade-up">
-        <GiftSection bankAccounts={data.bank_accounts} giftAddress={data.gift_address} />
+        <GiftSection
+          bankAccounts={data.bank_accounts}
+          qrisImageUrl={data.qris_image_url}
+          giftAddress={data.gift_address}
+        />
       </RevealOnScroll>
 
       {/* 10. RSVP & Ucapan */}

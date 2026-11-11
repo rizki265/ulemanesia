@@ -24,12 +24,16 @@ import {
   Layers,
   Search,
   Check,
+  BookOpen,
+  QrCode,
+  Gift,
 } from "lucide-react";
 import { getAllRegisteredTemplates, getTemplateByKey } from "@/templates/registry";
 import { isValidSlug, slugify } from "@/lib/utils";
 import { MAX_GALLERY_PHOTOS } from "@/lib/constants";
 import { ImageUploader } from "@/components/admin/ImageUploader";
 import templatePresetsData from "@/data/template-presets.json";
+import { BankAccount, LoveStory } from "@/types/database";
 
 function NewInvitationContent() {
   const router = useRouter();
@@ -74,9 +78,36 @@ function NewInvitationContent() {
   const [brideInstagram, setBrideInstagram] = useState("");
   const [bridePhotoUrl, setBridePhotoUrl] = useState("");
 
-  // Quote
-  const [quoteText, setQuoteText] = useState("");
-  const [quoteSource, setQuoteSource] = useState("");
+  // Quote / Surat Ar-Rum / Ayat Suci
+  const [quoteArabic, setQuoteArabic] = useState(
+    "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ"
+  );
+  const [quoteText, setQuoteText] = useState(
+    "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berpikir."
+  );
+  const [quoteSource, setQuoteSource] = useState("QS. Ar-Rum: 21");
+
+  // Kisah Perjalanan Cinta (Love Story Timeline)
+  const [stories, setStories] = useState<LoveStory[]>([
+    {
+      year: "2021",
+      title: "Pertama Kali Bertemu",
+      description: "Awal perjumpaan kami di bangku perkuliahan, berawal dari tatapan ramah dan obrolan hangat yang menumbuhkan rasa ketertarikan satu sama lain.",
+      image_url: "",
+    },
+    {
+      year: "2023",
+      title: "Menjalin Komitmen",
+      description: "Setelah saling memahami karakter dan saling mendukung impian masing-masing, kami sepakat melangkah bersama dalam jalinan komitmen yang serius.",
+      image_url: "",
+    },
+    {
+      year: "2026",
+      title: "Lamaran & Menuju Hari Bahagia",
+      description: "Dengan memohon doa restu kedua orang tua dan keluarga besar, kami mengikat janji suci untuk melangkah bersama mengarungi bahtera rumah tangga.",
+      image_url: "",
+    },
+  ]);
 
   // Events
   const [akadLocation, setAkadLocation] = useState("");
@@ -89,14 +120,27 @@ function NewInvitationContent() {
   const [resepsiTime, setResepsiTime] = useState("11:00 - 14:00 WIB");
   const [resepsiMaps, setResepsiMaps] = useState("");
 
-  // Bank Account
-  const [bankName, setBankName] = useState("BCA");
-  const [accountNumber, setAccountNumber] = useState("");
-  const [accountHolder, setAccountHolder] = useState("");
+  // Bank Accounts (Bisa lebih dari satu)
+  const [bankAccounts, setBankAccounts] = useState<BankAccount[]>([
+    {
+      bank_name: "BCA",
+      account_number: "8830192810",
+      account_holder: "Kayla Anandita",
+      qr_code_url: "",
+    },
+    {
+      bank_name: "Bank Mandiri",
+      account_number: "1370019283912",
+      account_holder: "Arka Dananjaya",
+      qr_code_url: "",
+    },
+  ]);
+
+  // QRIS Pembayaran Digital Utama
+  const [qrisImageUrl, setQrisImageUrl] = useState("");
 
   // Gallery URLs (up to 10)
   const [galleryUrls, setGalleryUrls] = useState<string[]>([]);
-  const [newGalleryInput, setNewGalleryInput] = useState("");
 
   // Feedback states
   const [submittingAction, setSubmittingAction] = useState<"template_preset" | "draft" | "published" | null>(null);
@@ -139,6 +183,19 @@ function NewInvitationContent() {
       if (preset.quote) {
         setQuoteText(preset.quote.text || "");
         setQuoteSource(preset.quote.source || "");
+        setQuoteArabic(preset.quote.arabic_text || "");
+      }
+
+      if (preset.stories && Array.isArray(preset.stories) && preset.stories.length > 0) {
+        setStories(preset.stories);
+      }
+
+      if (preset.bank_accounts && Array.isArray(preset.bank_accounts) && preset.bank_accounts.length > 0) {
+        setBankAccounts(preset.bank_accounts);
+      }
+
+      if (preset.qris_image_url) {
+        setQrisImageUrl(preset.qris_image_url);
       }
 
       // Default sample date 30 days ahead
@@ -155,9 +212,6 @@ function NewInvitationContent() {
       setAkadAddress("Jl. Taman Mini I No.3, Jakarta Timur");
       setResepsiLocation("Grand Ballroom Hotel Kempinski");
       setResepsiAddress("Jl. M.H. Thamrin No.1, Menteng, Jakarta Pusat");
-      setBankName("BCA");
-      setAccountNumber("8830192810");
-      setAccountHolder(preset.bride?.name || "Mempelai");
 
       // Default sample gallery photos
       setGalleryUrls([
@@ -196,18 +250,85 @@ function NewInvitationContent() {
     }
   };
 
-  const addGalleryUrl = () => {
-    if (!newGalleryInput.trim()) return;
-    if (galleryUrls.length >= MAX_GALLERY_PHOTOS) {
-      alert(`Maksimal ${MAX_GALLERY_PHOTOS} foto galeri.`);
-      return;
-    }
-    setGalleryUrls([...galleryUrls, newGalleryInput.trim()]);
-    setNewGalleryInput("");
-  };
-
   const removeGalleryUrl = (idx: number) => {
     setGalleryUrls(galleryUrls.filter((_, i) => i !== idx));
+  };
+
+  // Story management
+  const addStory = () => {
+    setStories([
+      ...stories,
+      {
+        year: new Date().getFullYear().toString(),
+        title: "",
+        description: "",
+        image_url: "",
+      },
+    ]);
+  };
+
+  const updateStory = (index: number, field: keyof LoveStory, value: string) => {
+    setStories(
+      stories.map((s, i) => (i === index ? { ...s, [field]: value } : s))
+    );
+  };
+
+  const removeStory = (index: number) => {
+    setStories(stories.filter((_, i) => i !== index));
+  };
+
+  // Bank accounts management
+  const addBankAccount = () => {
+    setBankAccounts([
+      ...bankAccounts,
+      {
+        bank_name: "BCA",
+        account_number: "",
+        account_holder: brideName || "Mempelai",
+        qr_code_url: "",
+      },
+    ]);
+  };
+
+  const updateBankAccount = (index: number, field: keyof BankAccount, value: string) => {
+    setBankAccounts(
+      bankAccounts.map((b, i) => (i === index ? { ...b, [field]: value } : b))
+    );
+  };
+
+  const removeBankAccount = (index: number) => {
+    if (bankAccounts.length <= 1) {
+      alert("Minimal satu akun bank/e-wallet.");
+      return;
+    }
+    setBankAccounts(bankAccounts.filter((_, i) => i !== index));
+  };
+
+  // Quote preset helpers
+  const setArRumPreset = () => {
+    setQuoteArabic(
+      "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ"
+    );
+    setQuoteText(
+      "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berpikir."
+    );
+    setQuoteSource("QS. Ar-Rum: 21");
+  };
+
+  const setBiblicalPreset = () => {
+    setQuoteArabic("");
+    setQuoteText(
+      "Kasih itu sabar; kasih itu murah hati; ia tidak cemburu. Ia tidak memegahkan diri dan tidak sombong. Demikianlah tinggal ketiga hal ini, yaitu iman, pengharapan dan kasih, dan yang paling besar di antaranya ialah kasih."
+    );
+    setQuoteSource("1 Korintus 13:4, 13");
+  };
+
+  const setJavanesePreset = () => {
+    setQuoteArabic("");
+    setQuoteText(
+      "Ngluruk tanpa bala, menang tanpa ngasorake, sekti tanpa aji-aji, sugih tanpa bandha. Memayu hayuning bawana, tresna asih ing salaminya."
+    );
+    setQuoteSource("Serat Kalatidha & Pitutur Luhur");
   };
 
   const handleThemeConfigChange = (key: string, value: any) => {
@@ -251,7 +372,11 @@ function NewInvitationContent() {
           quote: {
             text: quoteText,
             source: quoteSource,
+            arabic_text: quoteArabic,
           },
+          stories: stories,
+          bank_accounts: bankAccounts,
+          qris_image_url: qrisImageUrl || null,
         },
       };
 
@@ -329,7 +454,9 @@ function NewInvitationContent() {
             photo_url: bridePhotoUrl,
             child_order: "Putri dari",
           },
-          quote: quoteText ? { text: quoteText, source: quoteSource || "The Holy Vows" } : undefined,
+          quote: quoteText
+            ? { text: quoteText, source: quoteSource || "QS. Ar-Rum: 21", arabic_text: quoteArabic }
+            : undefined,
           countdown_target: new Date(eventDate).toISOString(),
           events: [
             {
@@ -352,9 +479,9 @@ function NewInvitationContent() {
             },
           ],
           gallery: galleryUrls,
-          bank_accounts: accountNumber
-            ? [{ bank_name: bankName, account_number: accountNumber, account_holder: accountHolder }]
-            : [],
+          stories: stories.filter((s) => s.title.trim() || s.description.trim()),
+          bank_accounts: bankAccounts.filter((b) => b.account_number.trim()),
+          qris_image_url: qrisImageUrl || null,
           theme_config: themeConfig,
           theme_options: themeConfig,
         },
@@ -687,6 +814,19 @@ function NewInvitationContent() {
                       placeholder={field.placeholder}
                       className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 bg-white text-xs text-stone-800 focus:outline-hidden focus:border-[#844307]"
                     />
+                  ) : field.type === "image" ? (
+                    <ImageUploader
+                      label={field.label}
+                      bucket="covers"
+                      value={themeConfig[field.key] ?? ""}
+                      onChange={(val) =>
+                        handleThemeConfigChange(
+                          field.key,
+                          typeof val === "string" ? val : val[0] || ""
+                        )
+                      }
+                      helperText="Pilih file gambar dari laptop/HP Anda. Otomatis dikompresi ke WebP."
+                    />
                   ) : (
                     <input
                       type="text"
@@ -901,12 +1041,90 @@ function NewInvitationContent() {
         </div>
 
         {/* ======================================================== */}
-        {/* SECTION 4: RANGKAIAN ACARA                              */}
+        {/* SECTION 4: AYAT SUCI & KUTIPAN UNDANGAN (SURAT AR-RUM)   */}
+        {/* ======================================================== */}
+        <div className="p-6 sm:p-8 bg-white rounded-3xl border border-stone-200/90 shadow-xs space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-stone-100 pb-3 gap-2">
+            <h3 className="font-serif font-bold text-base text-stone-900 flex items-center gap-2">
+              <BookOpen className="w-4 h-4 text-[#844307]" />
+              <span>4. Ayat Suci &amp; Kutipan Undangan (Surat Ar-Rum / Doa)</span>
+            </h3>
+            {/* Quick Presets */}
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span className="text-[11px] text-stone-500 font-medium mr-1">Pilih Preset:</span>
+              <button
+                type="button"
+                onClick={setArRumPreset}
+                className="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 text-[11px] font-semibold hover:bg-emerald-100 border border-emerald-200 cursor-pointer"
+              >
+                QS. Ar-Rum: 21 (Islami)
+              </button>
+              <button
+                type="button"
+                onClick={setBiblicalPreset}
+                className="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-800 text-[11px] font-semibold hover:bg-rose-100 border border-rose-200 cursor-pointer"
+              >
+                1 Korintus 13 (Nasrani)
+              </button>
+              <button
+                type="button"
+                onClick={setJavanesePreset}
+                className="px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 text-[11px] font-semibold hover:bg-amber-100 border border-amber-200 cursor-pointer"
+              >
+                Pitutur Luhur (Jawa)
+              </button>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <div>
+              <label className="block text-xs font-semibold text-stone-700 mb-1">
+                Lafadz / Teks Arab (Opsional)
+              </label>
+              <textarea
+                rows={2}
+                placeholder="وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا..."
+                value={quoteArabic}
+                onChange={(e) => setQuoteArabic(e.target.value)}
+                className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs text-right font-serif focus:border-[#844307]"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-stone-700 mb-1">
+                Terjemahan / Teks Kutipan Pernikahan
+              </label>
+              <textarea
+                rows={3}
+                placeholder="Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu..."
+                value={quoteText}
+                onChange={(e) => setQuoteText(e.target.value)}
+                className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 text-xs focus:border-[#844307]"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-stone-700 mb-1">
+                Sumber / Nama Surat (Contoh: QS. Ar-Rum: 21)
+              </label>
+              <input
+                type="text"
+                placeholder="QS. Ar-Rum: 21"
+                value={quoteSource}
+                onChange={(e) => setQuoteSource(e.target.value)}
+                className="w-full sm:w-80 px-3.5 py-2 rounded-xl border border-stone-300 text-xs focus:border-[#844307]"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* ======================================================== */}
+        {/* SECTION 5: RANGKAIAN ACARA                              */}
         {/* ======================================================== */}
         <div className="p-6 sm:p-8 bg-white rounded-3xl border border-stone-200/90 shadow-xs space-y-6">
           <h3 className="font-serif font-bold text-base text-stone-900 border-b border-stone-100 pb-3 flex items-center gap-2">
             <Calendar className="w-4 h-4 text-[#844307]" />
-            <span>4. Rangkaian Acara (Waktu &amp; Lokasi)</span>
+            <span>5. Rangkaian Acara (Waktu &amp; Lokasi)</span>
           </h3>
 
           <div className="space-y-4">
@@ -1011,92 +1229,318 @@ function NewInvitationContent() {
         </div>
 
         {/* ======================================================== */}
-        {/* SECTION 5: GALERI & KADO DIGITAL                        */}
+        {/* SECTION 6: KISAH PERJALANAN CINTA (LOVE STORY TIMELINE)  */}
         {/* ======================================================== */}
         <div className="p-6 sm:p-8 bg-white rounded-3xl border border-stone-200/90 shadow-xs space-y-6">
-          <h3 className="font-serif font-bold text-base text-stone-900 border-b border-stone-100 pb-3 flex items-center gap-2">
-            <ImageIcon className="w-4 h-4 text-[#844307]" />
-            <span>5. Galeri Foto &amp; Amplop Digital</span>
-          </h3>
+          <div className="flex items-center justify-between border-b border-stone-100 pb-3">
+            <h3 className="font-serif font-bold text-base text-stone-900 flex items-center gap-2">
+              <Heart className="w-4 h-4 text-rose-500" />
+              <span>6. Kisah Perjalanan Cinta (Love Story Timeline)</span>
+            </h3>
+            <button
+              type="button"
+              onClick={addStory}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-900 text-white text-xs font-semibold hover:bg-black transition-colors cursor-pointer"
+            >
+              <Plus className="w-3.5 h-3.5" />
+              <span>Tambah Momen Cinta</span>
+            </button>
+          </div>
 
-          <div className="space-y-4">
-            <div>
-              <label className="block text-xs font-semibold text-stone-700 mb-2">
-                Foto Galeri Prewedding (Maksimal 10)
-              </label>
-              <div className="flex gap-2 mb-3">
-                <input
-                  type="text"
-                  placeholder="Tempel URL Foto Vertikal/Horizontal..."
-                  value={newGalleryInput}
-                  onChange={(e) => setNewGalleryInput(e.target.value)}
-                  className="flex-1 px-3.5 py-2 rounded-xl border border-stone-300 text-xs"
-                />
+          <p className="text-xs text-stone-600">
+            Ceritakan perjalanan cinta kedua mempelai (misal: Pertama Bertemu, Menjalin Komitmen, hingga Lamaran). Foto momen menggunakan fitur Choose File.
+          </p>
+
+          <div className="space-y-6">
+            {stories.map((story, idx) => (
+              <div
+                key={idx}
+                className="p-5 rounded-2xl bg-stone-50 border border-stone-200/90 space-y-4 relative"
+              >
+                <div className="flex items-center justify-between border-b border-stone-200/70 pb-2">
+                  <span className="text-xs font-bold text-[#844307]">
+                    Momen Cinta #{idx + 1}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => removeStory(idx)}
+                    className="text-stone-400 hover:text-red-600 transition-colors p-1"
+                    title="Hapus Momen Ini"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-[11px] font-medium text-stone-700 mb-1">
+                      Tahun / Waktu
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Contoh: 2021 / 14 Feb 2021"
+                      value={story.year}
+                      onChange={(e) => updateStory(idx, "year", e.target.value)}
+                      className="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white text-xs focus:border-[#844307]"
+                    />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="block text-[11px] font-medium text-stone-700 mb-1">
+                      Judul Momen
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Contoh: Pertama Kali Bertemu"
+                      value={story.title}
+                      onChange={(e) => updateStory(idx, "title", e.target.value)}
+                      className="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white text-xs focus:border-[#844307]"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-medium text-stone-700 mb-1">
+                    Cerita / Narasi Singkat
+                  </label>
+                  <textarea
+                    rows={2}
+                    placeholder="Tuliskan cerita singkat momen berkesan ini..."
+                    value={story.description}
+                    onChange={(e) => updateStory(idx, "description", e.target.value)}
+                    className="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white text-xs focus:border-[#844307]"
+                  />
+                </div>
+
+                <div>
+                  <ImageUploader
+                    label="Foto Momen Ini (Choose File / Unggah)"
+                    bucket="galleries"
+                    value={story.image_url || ""}
+                    onChange={(val) =>
+                      updateStory(idx, "image_url", typeof val === "string" ? val : val[0] || "")
+                    }
+                    helperText="Pilih foto kenangan untuk momen ini (otomatis kompresi WebP)."
+                  />
+                </div>
+              </div>
+            ))}
+
+            {stories.length === 0 && (
+              <div className="text-center py-8 border-2 border-dashed border-stone-200 rounded-2xl">
+                <p className="text-xs text-stone-500 mb-2">Belum ada kisah cinta yang ditambahkan.</p>
                 <button
                   type="button"
-                  onClick={addGalleryUrl}
-                  className="px-4 py-2 bg-stone-900 text-white rounded-xl text-xs font-semibold hover:bg-black cursor-pointer"
+                  onClick={addStory}
+                  className="px-4 py-2 bg-[#844307] text-white text-xs font-semibold rounded-xl hover:bg-[#6d3505]"
                 >
-                  Tambah Foto
+                  + Tambah Momen Sekarang
                 </button>
               </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {galleryUrls.map((url, i) => (
-                  <div key={i} className="relative aspect-square rounded-xl overflow-hidden border border-stone-200 group">
-                    <Image src={url} alt={`Galeri ${i + 1}`} fill className="object-cover" />
-                    <button
-                      type="button"
-                      onClick={() => removeGalleryUrl(i)}
-                      className="absolute top-1.5 right-1.5 p-1 rounded-full bg-red-600/90 text-white opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      <Trash2 className="w-3 h-3" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="pt-4 border-t border-stone-100">
-              <label className="block text-xs font-semibold text-stone-700 mb-2">
-                Rekening Kado / Hadiah Digital
-              </label>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <input
-                  type="text"
-                  placeholder="Nama Bank (BCA / Mandiri / BSI)"
-                  value={bankName}
-                  onChange={(e) => setBankName(e.target.value)}
-                  className="px-3 py-2 rounded-xl border border-stone-300 text-xs"
-                />
-                <input
-                  type="text"
-                  placeholder="Nomor Rekening"
-                  value={accountNumber}
-                  onChange={(e) => setAccountNumber(e.target.value)}
-                  className="px-3 py-2 rounded-xl border border-stone-300 text-xs"
-                />
-                <input
-                  type="text"
-                  placeholder="Atas Nama"
-                  value={accountHolder}
-                  onChange={(e) => setAccountHolder(e.target.value)}
-                  className="px-3 py-2 rounded-xl border border-stone-300 text-xs"
-                />
-              </div>
-            </div>
+            )}
           </div>
         </div>
 
         {/* ======================================================== */}
-        {/* SECTION 6: DATA KLIEN & SLUG (KHUSUS UNDANGAN KLIEN)    */}
+        {/* SECTION 7: GALERI FOTO PREWEDDING (CHOOSE FILE)          */}
+        {/* ======================================================== */}
+        <div className="p-6 sm:p-8 bg-white rounded-3xl border border-stone-200/90 shadow-xs space-y-6">
+          <h3 className="font-serif font-bold text-base text-stone-900 border-b border-stone-100 pb-3 flex items-center gap-2">
+            <ImageIcon className="w-4 h-4 text-[#844307]" />
+            <span>7. Galeri Foto Prewedding (Pilih File / Choose File)</span>
+          </h3>
+
+          <div className="space-y-4">
+            <ImageUploader
+              label={`Unggah Foto Galeri Prewedding (Maksimal ${MAX_GALLERY_PHOTOS} Foto)`}
+              bucket="galleries"
+              multiple={true}
+              maxFiles={MAX_GALLERY_PHOTOS}
+              value={galleryUrls}
+              onChange={setGalleryUrls}
+              helperText="Klik tombol di atas untuk memilih foto galeri dari laptop atau HP Anda (bisa pilih banyak foto sekaligus). Foto otomatis dikompresi ke format WebP berkualitas tinggi."
+            />
+
+            {galleryUrls.length > 0 && (
+              <div className="pt-2">
+                <p className="text-xs font-semibold text-stone-700 mb-2">
+                  Foto yang Terunggah ({galleryUrls.length}/{MAX_GALLERY_PHOTOS}):
+                </p>
+                <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-3">
+                  {galleryUrls.map((url, i) => (
+                    <div
+                      key={i}
+                      className="relative aspect-square rounded-xl overflow-hidden border border-stone-200 group shadow-xs"
+                    >
+                      <Image src={url} alt={`Galeri ${i + 1}`} fill className="object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => removeGalleryUrl(i)}
+                        className="absolute top-1.5 right-1.5 p-1.5 rounded-full bg-red-600/90 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-700"
+                        title="Hapus foto ini"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* ======================================================== */}
+        {/* SECTION 8: REKENING TANDA KASIH & BARCODE QRIS          */}
+        {/* ======================================================== */}
+        <div className="p-6 sm:p-8 bg-white rounded-3xl border border-stone-200/90 shadow-xs space-y-6">
+          <div className="flex items-center justify-between border-b border-stone-100 pb-3">
+            <h3 className="font-serif font-bold text-base text-stone-900 flex items-center gap-2">
+              <Gift className="w-4 h-4 text-[#844307]" />
+              <span>8. Amplop Digital: Rekening Bank &amp; Gambar QRIS</span>
+            </h3>
+            <button
+              type="button"
+              onClick={addBankAccount}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-900 text-white text-xs font-semibold hover:bg-black transition-colors cursor-pointer"
+            >
+              <Plus className="w-3.5 h-3.5" />
+              <span>Tambah Rekening</span>
+            </button>
+          </div>
+
+          <p className="text-xs text-stone-600">
+            Dukung lebih dari satu nomor rekening bank/e-wallet untuk memudahkan para tamu, serta upload gambar barcode QRIS.
+          </p>
+
+          {/* 1. Barcode QRIS Utama */}
+          <div className="p-5 rounded-2xl bg-amber-50/50 border border-amber-200/80 space-y-3">
+            <div className="flex items-center gap-2">
+              <QrCode className="w-4 h-4 text-[#844307]" />
+              <h4 className="text-xs font-bold text-[#844307] uppercase">
+                Barcode QRIS Pembayaran Digital Utama (All Bank &amp; E-Wallet)
+              </h4>
+            </div>
+            <ImageUploader
+              label="Pilih File Gambar Barcode QRIS (Choose File)"
+              bucket="covers"
+              value={qrisImageUrl}
+              onChange={(val) => setQrisImageUrl(typeof val === "string" ? val : val[0] || "")}
+              helperText="Unggah gambar screenshot atau file QRIS (BCA, Mandiri, GoPay, OVO, ShopeePay, DANA). Tamu dapat scan langsung dari HP."
+            />
+          </div>
+
+          {/* 2. Daftar Nomor Rekening Bank */}
+          <div className="space-y-4">
+            <label className="block text-xs font-semibold text-stone-800">
+              Daftar Rekening Bank &amp; Dompet Digital ({bankAccounts.length})
+            </label>
+
+            {bankAccounts.map((acc, idx) => (
+              <div
+                key={idx}
+                className="p-5 rounded-2xl bg-stone-50 border border-stone-200/90 space-y-3 relative"
+              >
+                <div className="flex items-center justify-between border-b border-stone-200/70 pb-2">
+                  <span className="text-xs font-bold text-stone-800">
+                    Rekening #{idx + 1}
+                  </span>
+                  {bankAccounts.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeBankAccount(idx)}
+                      className="text-stone-400 hover:text-red-600 transition-colors p-1"
+                      title="Hapus Rekening Ini"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div>
+                    <label className="block text-[11px] font-medium text-stone-700 mb-1">
+                      Nama Bank / E-Wallet
+                    </label>
+                    <input
+                      type="text"
+                      list="bank-options"
+                      placeholder="Pilih atau ketik (BCA / Mandiri / BRI / DANA)"
+                      value={acc.bank_name}
+                      onChange={(e) => updateBankAccount(idx, "bank_name", e.target.value)}
+                      className="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white text-xs focus:border-[#844307]"
+                    />
+                    <datalist id="bank-options">
+                      <option value="BCA" />
+                      <option value="Bank Mandiri" />
+                      <option value="BRI" />
+                      <option value="BNI" />
+                      <option value="BSI (Bank Syariah Indonesia)" />
+                      <option value="CIMB Niaga" />
+                      <option value="Bank Permata" />
+                      <option value="Bank Danamon" />
+                      <option value="Bank BPD Bali" />
+                      <option value="GoPay" />
+                      <option value="OVO" />
+                      <option value="DANA" />
+                      <option value="ShopeePay" />
+                    </datalist>
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-medium text-stone-700 mb-1">
+                      Nomor Rekening / No. HP
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Contoh: 8830192810"
+                      value={acc.account_number}
+                      onChange={(e) => updateBankAccount(idx, "account_number", e.target.value)}
+                      className="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white text-xs font-mono focus:border-[#844307]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-medium text-stone-700 mb-1">
+                      Atas Nama (Pemilik Rekening)
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Contoh: Arka Dananjaya"
+                      value={acc.account_holder}
+                      onChange={(e) => updateBankAccount(idx, "account_holder", e.target.value)}
+                      className="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white text-xs focus:border-[#844307]"
+                    />
+                  </div>
+                </div>
+
+                <div className="pt-1">
+                  <ImageUploader
+                    label={`Upload QRIS Rekening Ini (Opsional - ${acc.bank_name || "Bank"})`}
+                    bucket="covers"
+                    value={acc.qr_code_url || ""}
+                    onChange={(val) =>
+                      updateBankAccount(
+                        idx,
+                        "qr_code_url",
+                        typeof val === "string" ? val : val[0] || ""
+                      )
+                    }
+                    helperText="Jika ada QRIS khusus untuk rekening bank ini, silakan unggah gambarnya (Choose File)."
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ======================================================== */}
+        {/* SECTION 9: DATA KLIEN & SLUG (KHUSUS UNDANGAN KLIEN)    */}
         {/* ======================================================== */}
         <div className="p-6 sm:p-8 bg-white rounded-3xl border border-stone-200/90 shadow-xs space-y-6">
           <div className="flex items-center justify-between border-b border-stone-100 pb-3">
             <div className="flex items-center gap-2">
               <Globe className="w-4 h-4 text-emerald-600" />
               <h3 className="font-serif font-bold text-base text-stone-900">
-                6. Data Klien &amp; Tautan Undangan (Khusus Penerbitan Klien)
+                9. Data Klien &amp; Tautan Undangan (Khusus Penerbitan Klien)
               </h3>
             </div>
             <span className="text-[10px] bg-stone-100 text-stone-500 px-2.5 py-0.5 rounded-full">

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { TemplateProps } from "@/templates/types";
 import { IslamicOrnament, BismillahCalligraphy } from "@/components/invitation/IslamicOrnament";
 import { FloatingControls } from "@/components/invitation/FloatingControls";
+import { LoveStorySection } from "@/components/invitation/LoveStorySection";
 import { RevealOnScroll } from "@/components/invitation/RevealOnScroll";
 import { CountdownTimer } from "@/components/invitation/CountdownTimer";
 import { RsvpAndWishes } from "@/components/invitation/RsvpAndWishes";
@@ -200,6 +201,11 @@ export default function IslamicEleganceTemplate({
       <section className="py-20 px-4 sm:px-6 relative overflow-hidden bg-[#061812] border-y border-amber-500/20">
         <div className="max-w-3xl mx-auto text-center space-y-6 relative z-10">
           <IslamicOrnament size={48} color="#d4af37" className="mx-auto opacity-80" />
+          {data.quote?.arabic_text && (
+            <p className="font-serif text-lg sm:text-2xl text-amber-200 leading-loose dir-rtl tracking-wide">
+              {data.quote.arabic_text}
+            </p>
+          )}
           <blockquote className="font-serif italic text-base sm:text-xl text-stone-200 leading-relaxed font-light px-4">
             &ldquo;{data.quote?.text ||
               "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang."}&rdquo;
@@ -444,12 +450,30 @@ export default function IslamicEleganceTemplate({
       )}
 
       {/* ======================================================== */}
-      {/* 8. DIGITAL ENVELOPE / TANDA KASIH                        */}
+      {/* 8. LOVE STORY TIMELINE                                   */}
       {/* ======================================================== */}
-      {data.bank_accounts && data.bank_accounts.length > 0 && (
+      {data.stories && data.stories.length > 0 && (
+        <section className="bg-[#061812] border-t border-amber-500/20">
+          <LoveStorySection
+            stories={data.stories}
+            theme="gold"
+            title="Kisah Kasih Menuju Halal"
+            subtitle="OUR SACRED JOURNEY"
+          />
+        </section>
+      )}
+
+      {/* ======================================================== */}
+      {/* 9. DIGITAL ENVELOPE / TANDA KASIH                        */}
+      {/* ======================================================== */}
+      {((data.bank_accounts && data.bank_accounts.length > 0) || data.qris_image_url || data.gift_address) && (
         <section className="py-20 px-4 sm:px-6 bg-[#061812] border-t border-amber-500/20">
           <div className="max-w-2xl mx-auto">
-            <GiftSection bankAccounts={data.bank_accounts} giftAddress={data.gift_address} />
+            <GiftSection
+              bankAccounts={data.bank_accounts}
+              qrisImageUrl={data.qris_image_url}
+              giftAddress={data.gift_address}
+            />
           </div>
         </section>
       )}

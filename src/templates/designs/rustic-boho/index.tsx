@@ -5,6 +5,7 @@ import Image from "next/image";
 import { TemplateProps } from "@/templates/types";
 import { BohoOrnament } from "@/components/invitation/BohoOrnament";
 import { FloatingControls } from "@/components/invitation/FloatingControls";
+import { LoveStorySection } from "@/components/invitation/LoveStorySection";
 import { RevealOnScroll } from "@/components/invitation/RevealOnScroll";
 import { CountdownTimer } from "@/components/invitation/CountdownTimer";
 import { RsvpAndWishes } from "@/components/invitation/RsvpAndWishes";
@@ -455,13 +456,31 @@ export default function RusticBohoTemplate({
       )}
 
       {/* ======================================================== */}
-      {/* 8. DIGITAL ENVELOPE                                      */}
+      {/* 8. LOVE STORY TIMELINE                                   */}
       {/* ======================================================== */}
-      {data.bank_accounts && data.bank_accounts.length > 0 && (
+      {data.stories && data.stories.length > 0 && (
+        <section className="bg-[#fcf9f5] border-t border-stone-200/80">
+          <LoveStorySection
+            stories={data.stories}
+            theme="rose"
+            title="Kisah Kasih Kami"
+            subtitle="OUR RUSTIC STORY"
+          />
+        </section>
+      )}
+
+      {/* ======================================================== */}
+      {/* 9. DIGITAL ENVELOPE                                      */}
+      {/* ======================================================== */}
+      {((data.bank_accounts && data.bank_accounts.length > 0) || data.qris_image_url || data.gift_address) && (
         <section className="py-20 px-4 sm:px-6 bg-[#fcf9f5] border-t border-stone-200/80">
           <div className="max-w-2xl mx-auto">
             <RevealOnScroll animation="fade-up">
-              <GiftSection bankAccounts={data.bank_accounts} giftAddress={data.gift_address} />
+              <GiftSection
+                bankAccounts={data.bank_accounts}
+                qrisImageUrl={data.qris_image_url}
+                giftAddress={data.gift_address}
+              />
             </RevealOnScroll>
           </div>
         </section>

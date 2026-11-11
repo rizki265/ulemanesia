@@ -5,6 +5,7 @@ import Image from "next/image";
 import { TemplateProps } from "@/templates/types";
 import { ShuangXiOrnament } from "@/components/invitation/ShuangXiOrnament";
 import { FloatingControls } from "@/components/invitation/FloatingControls";
+import { LoveStorySection } from "@/components/invitation/LoveStorySection";
 import { RevealOnScroll } from "@/components/invitation/RevealOnScroll";
 import { CountdownTimer } from "@/components/invitation/CountdownTimer";
 import { RsvpAndWishes } from "@/components/invitation/RsvpAndWishes";
@@ -444,13 +445,31 @@ export default function ChineseModernTemplate({
       )}
 
       {/* ======================================================== */}
-      {/* 8. DIGITAL ANGPAO / ENVELOPE                             */}
+      {/* 8. LOVE STORY TIMELINE                                   */}
       {/* ======================================================== */}
-      {data.bank_accounts && data.bank_accounts.length > 0 && (
+      {data.stories && data.stories.length > 0 && (
+        <section className="bg-[#160608] border-t border-amber-500/20">
+          <LoveStorySection
+            stories={data.stories}
+            theme="dark"
+            title="Kisah Kasih Abadi"
+            subtitle="DOUBLE HAPPINESS STORY"
+          />
+        </section>
+      )}
+
+      {/* ======================================================== */}
+      {/* 9. DIGITAL ANGPAO / ENVELOPE                             */}
+      {/* ======================================================== */}
+      {((data.bank_accounts && data.bank_accounts.length > 0) || data.qris_image_url || data.gift_address) && (
         <section className="py-20 px-4 sm:px-6 bg-[#160608] border-t border-amber-500/20">
           <div className="max-w-2xl mx-auto">
             <RevealOnScroll animation="fade-up">
-              <GiftSection bankAccounts={data.bank_accounts} giftAddress={data.gift_address} />
+              <GiftSection
+                bankAccounts={data.bank_accounts}
+                qrisImageUrl={data.qris_image_url}
+                giftAddress={data.gift_address}
+              />
             </RevealOnScroll>
           </div>
         </section>
