@@ -26,22 +26,25 @@ import {
   Compass,
   Sparkles,
   ExternalLink,
+  Search,
+  ZoomIn,
 } from "lucide-react";
 import { TemplateProps } from "@/templates/types";
 import { Wish } from "@/types/database";
 
 /**
- * Reusable Polaroid Frame Component with Washi Tape & Gold Heart Badge
+ * Reusable Polaroid Frame Component with Washi Tape, Center Zoom Badge, & Gold Heart Seal
  */
 function PolaroidCard({
   src,
   alt,
   caption,
   className = "",
-  aspect = "aspect-4/5",
+  aspect = "aspect-[4/5]",
   onZoom,
   hasTape = true,
   hasHeart = true,
+  showCenterZoomIcon = false,
 }: {
   src: string;
   alt: string;
@@ -51,7 +54,25 @@ function PolaroidCard({
   onZoom?: () => void;
   hasTape?: boolean;
   hasHeart?: boolean;
+  showCenterZoomIcon?: boolean;
 }) {
+  const safeSrc =
+    src && src.trim() !== ""
+      ? src
+      : "https://stmoqifvjwlpchfjbcog.supabase.co/storage/v1/object/public/covers/uploads/1794462967675-a7c3fv-prewed-2.webp";
+
+  const numericAspect = aspect.includes("16/10")
+    ? "16 / 10"
+    : aspect.includes("4/5")
+    ? "4 / 5"
+    : aspect.includes("4/3")
+    ? "4 / 3"
+    : aspect.includes("square")
+    ? "1 / 1"
+    : aspect.includes("video")
+    ? "16 / 9"
+    : "4 / 5";
+
   return (
     <div
       className={`relative bg-white p-3 pb-7 sm:p-3.5 sm:pb-8 shadow-[0_15px_35px_rgba(0,0,0,0.55)] rounded-xs border border-stone-100/90 transition-transform duration-300 hover:scale-[1.02] ${className}`}
@@ -69,17 +90,29 @@ function PolaroidCard({
 
       {/* Photo Frame */}
       <div
-        className={`relative w-full ${aspect} bg-stone-900 overflow-hidden cursor-pointer group`}
+        className={`relative w-full ${aspect} bg-stone-900 overflow-hidden cursor-pointer group min-h-[160px]`}
+        style={{ aspectRatio: numericAspect }}
         onClick={onZoom}
       >
         <Image
-          src={src}
+          src={safeSrc}
           alt={alt}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-700"
           sizes="(max-width: 640px) 90vw, 450px"
         />
-        {onZoom && (
+
+        {/* Center Zoom Magnifying Badge (matches user's reference Image 8) */}
+        {showCenterZoomIcon && (
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="w-10 h-10 rounded-full bg-black/60 backdrop-blur-xs border border-amber-500/50 flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform">
+              <Search className="w-4 h-4 text-amber-300" />
+            </div>
+          </div>
+        )}
+
+        {/* Standard Hover overlay if not showCenterZoomIcon */}
+        {!showCenterZoomIcon && onZoom && (
           <div className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs gap-1.5 backdrop-blur-[1px]">
             <Eye className="w-4 h-4 text-amber-300" />
             <span className="font-medium">Perbesar Foto</span>
@@ -191,7 +224,9 @@ export default function LuxuryPolaroidTemplate({
 
   // Real-time Countdown Timer
   useEffect(() => {
-    const targetDate = new Date(data.countdown_target || data.events[0]?.date || "2029-12-13T08:00:00+07:00").getTime();
+    const targetDate = new Date(
+      data.countdown_target || data.events?.[0]?.date || "2029-12-13T08:00:00+07:00"
+    ).getTime();
 
     const updateTimer = () => {
       const now = new Date().getTime();
@@ -285,13 +320,15 @@ export default function LuxuryPolaroidTemplate({
   // Format Event Date string
   const formattedEventDate = (() => {
     try {
-      const dateObj = new Date(data.events[0]?.date || "2029-12-13");
-      return dateObj.toLocaleDateString("id-ID", {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      }).toUpperCase();
+      const dateObj = new Date(data.events?.[0]?.date || "2029-12-13");
+      return dateObj
+        .toLocaleDateString("id-ID", {
+          weekday: "long",
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        })
+        .toUpperCase();
     } catch {
       return "KAMIS, 13 DESEMBER 2029";
     }
@@ -299,16 +336,60 @@ export default function LuxuryPolaroidTemplate({
 
   const mainCoupleCover =
     coverImageUrl ||
-    data.gallery[0] ||
-    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80";
+    data.cover_image_url ||
+    data.gallery?.[0] ||
+    "https://stmoqifvjwlpchfjbcog.supabase.co/storage/v1/object/public/covers/uploads/1794462967675-a7c3fv-prewed-2.webp";
 
   const groomPhoto =
-    data.groom.photo_url ||
-    "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80";
+    data.groom?.photo_url ||
+    "https://stmoqifvjwlpchfjbcog.supabase.co/storage/v1/object/public/covers/uploads/1794463015653-x0oxia-pengantin-pria.webp";
 
   const bridePhoto =
-    data.bride.photo_url ||
-    "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80";
+    data.bride?.photo_url ||
+    "https://stmoqifvjwlpchfjbcog.supabase.co/storage/v1/object/public/covers/uploads/1794463075542-0f4o8f-pengantin-wanita.webp";
+
+  const groomNickname = data.groom?.nickname || "Ozy";
+  const brideNickname = data.bride?.nickname || "Zelda";
+  const groomFullName = data.groom?.name || "Ozy Zulkarnain";
+  const brideFullName = data.bride?.name || "Zelda Wulandari";
+
+  const defaultPresetStories = [
+    {
+      year: "RABU, 12 FEBRUARI 2025",
+      title: "Pertemuan Pertama",
+      image_url:
+        "https://stmoqifvjwlpchfjbcog.supabase.co/storage/v1/object/public/covers/uploads/1794463085574-cghjx0-prewed-3.webp",
+      description:
+        "Takdir mempertemukan kami untuk pertama kalinya. Dari sebuah pertemuan sederhana, tumbuh rasa nyaman yang tak terduga. Sejak hari itu, kami mulai saling mengenal dan berbagi cerita.",
+    },
+    {
+      year: "SELASA, 25 MARET 2025",
+      title: "Menjalin Hubungan",
+      image_url:
+        "https://stmoqifvjwlpchfjbcog.supabase.co/storage/v1/object/public/covers/uploads/1794463089206-awqzhj-prewed-2.webp",
+      description:
+        "Hari demi hari kami lewati bersama. Tawa, doa, dan dukungan menjadi bagian dari perjalanan kami. Di tanggal ini, kami resmi berkomitmen untuk berjalan beriringan.",
+    },
+    {
+      year: "SELASA, 10 JUNI 2025",
+      title: "Menguatkan Cinta",
+      image_url:
+        "https://stmoqifvjwlpchfjbcog.supabase.co/storage/v1/object/public/covers/uploads/1794463093599-0m6gtz-prewed-1.webp",
+      description:
+        "Berbagai tantangan kami hadapi bersama. Dari setiap perbedaan, kami belajar saling memahami. Cinta kami semakin kuat dan penuh makna.",
+    },
+    {
+      year: "SABTU, 20 SEPTEMBER 2025",
+      title: "Lamaran 💍",
+      image_url:
+        "https://stmoqifvjwlpchfjbcog.supabase.co/storage/v1/object/public/covers/uploads/1794463097018-uyxz4f-prewed.webp",
+      description:
+        "Dengan penuh keyakinan dan cinta, kami melangkah ke tahap yang lebih serius. Disaksikan keluarga tercinta, momen lamaran ini menjadi awal perjalanan menuju hidup bersama.",
+    },
+  ];
+
+  const storiesList =
+    data.stories && data.stories.length > 0 ? data.stories : defaultPresetStories;
 
   return (
     <div className="min-h-screen bg-[#120905] text-[#f7eee4] font-sans relative selection:bg-amber-600/30 selection:text-white overflow-x-hidden">
@@ -332,8 +413,8 @@ export default function LuxuryPolaroidTemplate({
             <div className="w-56 sm:w-60 transform hover:rotate-1 transition-transform">
               <PolaroidCard
                 src={mainCoupleCover}
-                alt={`${data.groom.nickname} & ${data.bride.nickname}`}
-                aspect="aspect-4/5"
+                alt={`${groomNickname} & ${brideNickname}`}
+                aspect="aspect-[4/5]"
                 hasTape={true}
                 hasHeart={true}
               />
@@ -345,7 +426,7 @@ export default function LuxuryPolaroidTemplate({
                 THE WEDDING <span className="font-serif italic lowercase text-xs">of</span>
               </p>
               <h1 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-white drop-shadow-sm">
-                {data.groom.nickname} &amp; {data.bride.nickname}
+                {groomNickname} &amp; {brideNickname}
               </h1>
               <div className="w-16 h-px bg-gradient-to-r from-transparent via-amber-500/60 to-transparent mx-auto my-1.5" />
               <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-stone-300 font-medium">
@@ -490,8 +571,8 @@ export default function LuxuryPolaroidTemplate({
           <div className="w-64 sm:w-72 mx-auto">
             <PolaroidCard
               src={mainCoupleCover}
-              alt={`${data.groom.nickname} & ${data.bride.nickname}`}
-              aspect="aspect-4/5"
+              alt={`${groomNickname} & ${brideNickname}`}
+              aspect="aspect-[4/5]"
               hasTape={true}
               hasHeart={true}
               onZoom={() => setZoomedImage(mainCoupleCover)}
@@ -504,7 +585,7 @@ export default function LuxuryPolaroidTemplate({
               SAVE <span className="font-serif italic lowercase text-sm sm:text-base">the</span> DATE
             </p>
             <h1 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-white drop-shadow-md">
-              {data.groom.nickname} &amp; {data.bride.nickname}
+              {groomNickname} &amp; {brideNickname}
             </h1>
             <p className="text-xs uppercase tracking-[0.2em] text-stone-300 font-medium">
               {formattedEventDate}
@@ -589,8 +670,8 @@ export default function LuxuryPolaroidTemplate({
             <div className="w-56 sm:w-64">
               <PolaroidCard
                 src={groomPhoto}
-                alt={data.groom.name}
-                aspect="aspect-4/5"
+                alt={groomFullName}
+                aspect="aspect-[4/5]"
                 onZoom={() => setZoomedImage(groomPhoto)}
               />
             </div>
@@ -600,13 +681,13 @@ export default function LuxuryPolaroidTemplate({
                 THE GROOM
               </span>
               <h3 className="font-serif text-xl sm:text-2xl font-bold text-white tracking-wide">
-                {data.groom.name}
+                {groomFullName}
               </h3>
               <p className="text-xs text-stone-300 leading-relaxed">
-                Putra dari {data.groom.father_name} &amp; {data.groom.mother_name}
+                Putra dari {data.groom?.father_name || "Bpk. Hendra Wibowo"} &amp; {data.groom?.mother_name || "Ibu Wirda Wahyuni"}
               </p>
 
-              {data.groom.instagram && (
+              {data.groom?.instagram && (
                 <div className="pt-2">
                   <a
                     href={`https://instagram.com/${data.groom.instagram.replace("@", "")}`}
@@ -628,8 +709,8 @@ export default function LuxuryPolaroidTemplate({
             <div className="w-56 sm:w-64">
               <PolaroidCard
                 src={bridePhoto}
-                alt={data.bride.name}
-                aspect="aspect-4/5"
+                alt={brideFullName}
+                aspect="aspect-[4/5]"
                 onZoom={() => setZoomedImage(bridePhoto)}
               />
             </div>
@@ -639,13 +720,13 @@ export default function LuxuryPolaroidTemplate({
                 THE BRIDE
               </span>
               <h3 className="font-serif text-xl sm:text-2xl font-bold text-white tracking-wide">
-                {data.bride.name}
+                {brideFullName}
               </h3>
               <p className="text-xs text-stone-300 leading-relaxed">
-                Putri dari {data.bride.father_name} &amp; {data.bride.mother_name}
+                Putri dari {data.bride?.father_name || "Bpk. Daniswara Permadi"} &amp; {data.bride?.mother_name || "Ibu Yuliana Lestari"}
               </p>
 
-              {data.bride.instagram && (
+              {data.bride?.instagram && (
                 <div className="pt-2">
                   <a
                     href={`https://instagram.com/${data.bride.instagram.replace("@", "")}`}
@@ -678,7 +759,7 @@ export default function LuxuryPolaroidTemplate({
           </div>
 
           <div className="space-y-5">
-            {data.events.map((evt, idx) => {
+            {(data.events && data.events.length > 0 ? data.events : []).map((evt, idx) => {
               const eventDateObj = new Date(evt.date);
               const dayNumber = eventDateObj.getDate();
               const monthShort = eventDateObj.toLocaleDateString("id-ID", { month: "short" }).toUpperCase();
@@ -747,60 +828,66 @@ export default function LuxuryPolaroidTemplate({
         </section>
 
         {/* ======================================================== */}
-        {/* SECTION 5: KISAH PERJALANAN CINTA (Images 8, 9, 10)      */}
+        {/* SECTION 5: KISAH PERJALANAN CINTA (Images 7, 8, 9, 10)   */}
         {/* ======================================================== */}
-        {data.stories && data.stories.length > 0 && (
-          <section id="story" className="space-y-8">
-            <div className="text-center space-y-1">
-              <p className="text-[10px] tracking-[0.25em] uppercase text-amber-400 font-medium">
-                KILAS BALIK
-              </p>
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-white tracking-wide">
-                CERITA PERJALANAN CINTA
-              </h2>
-            </div>
+        <section id="story" className="space-y-8">
+          <div className="text-center space-y-1">
+            <p className="text-[10px] tracking-[0.25em] uppercase text-amber-400 font-medium">
+              KILAS BALIK
+            </p>
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-white tracking-wide">
+              CERITA PERJALANAN CINTA
+            </h2>
+            <div className="w-16 h-px bg-amber-600/40 mx-auto my-3" />
+          </div>
 
-            <div className="space-y-10">
-              {data.stories.map((story, idx) => (
-                <div key={idx} className="space-y-4 flex flex-col items-center text-center">
-                  {/* Polaroid Photo if available */}
-                  {story.image_url ? (
-                    <div className="w-60 sm:w-64">
-                      <PolaroidCard
-                        src={story.image_url}
-                        alt={story.title}
-                        aspect="aspect-16/10"
-                        onZoom={() => setZoomedImage(story.image_url || null)}
-                      />
-                    </div>
-                  ) : (
-                    <div className="w-60 sm:w-64">
-                      <PolaroidCard
-                        src={mainCoupleCover}
-                        alt={story.title}
-                        aspect="aspect-16/10"
-                        onZoom={() => setZoomedImage(mainCoupleCover)}
-                      />
-                    </div>
-                  )}
+          {/* Lead Photo: Couple Sitting Together (Image 7) */}
+          <div className="w-64 sm:w-72 mx-auto">
+            <PolaroidCard
+              src={mainCoupleCover}
+              alt="Kilas Balik Perjalanan Cinta"
+              aspect="aspect-[4/3]"
+              hasTape={true}
+              hasHeart={false}
+              showCenterZoomIcon={false}
+              onZoom={() => setZoomedImage(mainCoupleCover)}
+            />
+          </div>
 
-                  {/* Story Text */}
-                  <div className="space-y-1.5 max-w-sm px-2">
-                    <p className="text-[10px] uppercase tracking-[0.2em] text-amber-400 font-semibold">
-                      {story.year}
-                    </p>
-                    <h3 className="font-serif text-lg sm:text-xl font-bold text-white uppercase tracking-wide">
-                      {story.title}
-                    </h3>
-                    <p className="text-xs text-stone-300 leading-relaxed font-light">
-                      {story.description}
-                    </p>
-                  </div>
+          {/* Stories List (Images 8, 9, 10) */}
+          <div className="space-y-12 pt-4">
+            {storiesList.map((story, idx) => (
+              <div key={idx} className="space-y-4 flex flex-col items-center text-center">
+                {/* Story Text: Date, Title, Description (Above the Photo, exactly like reference) */}
+                <div className="space-y-1.5 max-w-sm px-2">
+                  <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-amber-400 font-semibold">
+                    {story.year}
+                  </p>
+                  <h3 className="font-serif text-lg sm:text-xl font-bold text-white uppercase tracking-wide">
+                    {story.title}
+                  </h3>
+                  <p className="text-xs sm:text-[13px] text-stone-300 leading-relaxed font-light">
+                    {story.description}
+                  </p>
+                  <div className="w-12 h-0.5 bg-amber-700/50 my-3 mx-auto" />
                 </div>
-              ))}
-            </div>
-          </section>
-        )}
+
+                {/* Polaroid Photo of Story with Center Zoom Badge (Image 8) */}
+                <div className="w-64 sm:w-72">
+                  <PolaroidCard
+                    src={story.image_url || mainCoupleCover}
+                    alt={story.title}
+                    aspect="aspect-[16/10]"
+                    hasTape={true}
+                    hasHeart={false}
+                    showCenterZoomIcon={true}
+                    onZoom={() => setZoomedImage(story.image_url || mainCoupleCover)}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
 
         {/* ======================================================== */}
         {/* SECTION 6: GALERI KENANGAN & VIDEO (Image 11)            */}
@@ -836,7 +923,7 @@ export default function LuxuryPolaroidTemplate({
 
           {/* Polaroid Photo Grid */}
           <div className="grid grid-cols-2 gap-4 sm:gap-6 pt-2">
-            {data.gallery.map((photoUrl, idx) => (
+            {(data.gallery && data.gallery.length > 0 ? data.gallery : [mainCoupleCover]).map((photoUrl, idx) => (
               <div
                 key={idx}
                 className={idx % 2 === 0 ? "rotate-[-1.5deg]" : "rotate-[1.5deg]"}
@@ -844,7 +931,7 @@ export default function LuxuryPolaroidTemplate({
                 <PolaroidCard
                   src={photoUrl}
                   alt={`Momen Bahagia ${idx + 1}`}
-                  aspect="aspect-square sm:aspect-4/5"
+                  aspect="aspect-square sm:aspect-[4/5]"
                   onZoom={() => setZoomedImage(photoUrl)}
                   hasTape={true}
                   hasHeart={idx === 0}
@@ -1137,7 +1224,7 @@ export default function LuxuryPolaroidTemplate({
             TERIMA KASIH ATAS DOA RESTU BAPAK/IBU/SAUDARA/I
           </p>
           <p className="font-serif italic text-2xl sm:text-3xl text-amber-400">
-            {data.groom.nickname} &amp; {data.bride.nickname}
+            {groomNickname} &amp; {brideNickname}
           </p>
           <p className="text-[10px] text-stone-500 pt-3">
             Made with love by{" "}
@@ -1165,7 +1252,7 @@ export default function LuxuryPolaroidTemplate({
             >
               <X className="w-4 h-4" />
             </button>
-            <div className="relative w-full aspect-4/5 bg-black">
+            <div className="relative w-full aspect-[4/5] bg-black min-h-[250px]">
               <Image
                 src={zoomedImage}
                 alt="Zoomed Photo"
