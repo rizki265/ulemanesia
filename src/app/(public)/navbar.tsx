@@ -23,11 +23,6 @@ export function PublicNavbar() {
 
   return (
     <>
-      {/* Top micro-announcement banner */}
-      <div className="bg-gradient-to-r from-[#5a2e05] via-[#844307] to-[#b45309] text-white text-[11px] sm:text-xs py-2 px-4 text-center font-medium tracking-wide flex items-center justify-center gap-2">
-        <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-pulse" />
-        <span>Sambut Hari Bahagiamu dengan Undangan Digital Eksklusif — Jadi dalam &lt; 30 Menit!</span>
-      </div>
 
       {/* Main Glassmorphic Sticky Header */}
       <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-stone-200/80 shadow-xs transition-all duration-300">
@@ -59,11 +54,10 @@ export function PublicNavbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`px-3.5 py-2 rounded-full transition-all duration-200 ${
-                    isActive
+                  className={`px-3.5 py-2 rounded-full transition-all duration-200 ${isActive
                       ? "text-[#844307] font-semibold bg-amber-50/80 shadow-xs"
                       : "text-stone-600 hover:text-[#844307] hover:bg-stone-50"
-                  }`}
+                    }`}
                 >
                   {link.label}
                 </Link>
@@ -113,11 +107,10 @@ export function PublicNavbar() {
                     key={link.href}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-medium transition-all ${
-                      isActive
+                    className={`flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-medium transition-all ${isActive
                         ? "bg-amber-50 text-[#844307] font-semibold"
                         : "text-stone-700 hover:bg-stone-50"
-                    }`}
+                      }`}
                   >
                     <span>{link.label}</span>
                     <ChevronRight className="w-4 h-4 text-stone-400" />

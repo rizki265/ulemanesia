@@ -48,23 +48,8 @@ export default async function DemoPage({ params, searchParams }: DemoPageProps) 
     return notFound();
   }
 
-  // Choose appropriate mock data for each template design
-  const mockData =
-    templateKey === "editorial-photo"
-      ? MOCK_INVITATION_EDITORIAL
-      : templateKey === "javanese-royal"
-      ? MOCK_INVITATION_JAVANESE
-      : templateKey === "islamic-elegance"
-      ? MOCK_INVITATION_ISLAMIC
-      : templateKey === "bali-breeze"
-      ? MOCK_INVITATION_BALI
-      : templateKey === "rustic-boho"
-      ? MOCK_INVITATION_BOHO
-      : templateKey === "chinese-modern"
-      ? MOCK_INVITATION_CHINESE
-      : templateKey === "modern-elegance"
-      ? MOCK_INVITATION_MODERN
-      : MOCK_INVITATION_FLORAL;
+  // Choose appropriate mock data for template design
+  const mockData = MOCK_INVITATION_FLORAL;
 
   const TemplateComponent = template.component;
 

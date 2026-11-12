@@ -73,18 +73,8 @@ export default function PublicLayout({
                   </Link>
                 </li>
                 <li>
-                  <Link href="/demo/javanese-royal" className="hover:text-amber-200 transition-colors">
-                    Demo Adat Jawa (Royal Heritage)
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/demo/minimalist-floral" className="hover:text-amber-200 transition-colors">
-                    Demo Floral Botanical
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/demo/modern-elegance" className="hover:text-amber-200 transition-colors">
-                    Demo Modern Elegance
+                  <Link href="/demo/luxury-polaroid" className="hover:text-amber-200 transition-colors">
+                    Demo Luxury Chocolate &amp; Gold
                   </Link>
                 </li>
               </ul>

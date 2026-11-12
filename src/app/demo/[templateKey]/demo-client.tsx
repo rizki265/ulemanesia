@@ -54,46 +54,6 @@ export function DemoClient({
       detailedDescription:
         "Desain flagship eksklusif bernuansa cokelat hangat dan aksen emas mewah dengan bingkai polaroid washi tape, floating dock navigasi bawah, amplop pembuka interaktif, live countdown, galeri video, amplop digital QRIS, dan alunan musik romantis dinamis.",
     },
-    "editorial-photo": {
-      badge: "FOTO EDITORIAL SINEMATIK KONTEMPORER",
-      detailedDescription:
-        "Desain tren modern bergaya majalah editorial dengan latar belakang foto pengantin layar penuh, tipografi mewah di atas background, dan transisi sinematik. Menghadirkan kesan visual intim, berkelas, dan memikat di layar smartphone para tamu.",
-    },
-    "javanese-royal": {
-      badge: "KOSMOLOGI SAKRAL ADAT JAWA KRATON",
-      detailedDescription:
-        "Undangan sakral bernuansa adat Jawa Kraton berlatar hitam obsidian megah, berhiaskan Gunungan Wayang emas, kaligrafi anggun, serta alunan gending yang syahdu. Sempurna untuk menyambut keluarga besar dan para sahabat dalam sakralnya prosesi pernikahan adat Jawa yang agung.",
-    },
-    "islamic-elegance": {
-      badge: "KEMULIAAN ISLAMI & ARABESQUE EMAS",
-      detailedDescription:
-        "Kemuliaan pernikahan syar'i berbalut hijau zamrud (emerald) dan kaligrafi emas. Dilengkapi Bismillah agung, lantunan ayat suci QS Ar-Rum 21, dan ornamen Arabesque memikat untuk menyempurnakan ibadah terpanjang Anda.",
-    },
-    "bali-breeze": {
-      badge: "SENJA KEEMASAN BALI DI TEPI LAUT",
-      detailedDescription:
-        "Undangan paralaks Bali yang fotorealistik — gerbang Candi Bentar, panorama laut dari tebing senja, dan kamboja yang melayang dalam cahaya temaram. Hangat, sinematik, dan begitu khas Pulau Dewata.",
-    },
-    "rustic-boho": {
-      badge: "BOHEMIAN EARTHY & PAMPAS KRAFT",
-      detailedDescription:
-        "Sentuhan estetik daun pampas kering, tekstur kertas kraft hangat, karangan bunga bohemian, dan kerlip lampu temaram yang romantis dan intim untuk momen pernikahan berkesan.",
-    },
-    "chinese-modern": {
-      badge: "ORIENTAL DOUBLE HAPPINESS & SANGJIT",
-      detailedDescription:
-        "Kemegahan ornamen Shuang Xi (囍) berbalut merah crimson kekaisaran dan emas murni. Didesain istimewa untuk prosesi Sangjit, Tea Ceremony (Teapai), dan resepsi pernikahan modern berkelas.",
-    },
-    "minimalist-floral": {
-      badge: "SENTUHAN BOTANIKAL PASTEL HANGAT",
-      detailedDescription:
-        "Undangan bernuansa botanical dengan ilustrasi bunga lembut, aksen pastel hangat, dan tipografi minimalis kontemporer. Menghadirkan atmosfer romantis, intim, dan memikat untuk momen terindah hari bahagia Anda.",
-    },
-    "modern-elegance": {
-      badge: "ELEGANSI MONOKROM KONTEMPORER MEWAH",
-      detailedDescription:
-        "Kemewahan kontemporer monokrom berpadu aksen emas temaram. Kontras tajam yang berkarakter, tipografi modern berkelas, dan animasi halus yang memukau di layar smartphone para tamu kehormatan.",
-    },
   };
 
   const currentMeta = templateMeta[templateKey] || {

@@ -28,9 +28,167 @@ import {
   ExternalLink,
   Search,
   ZoomIn,
+  ChevronDown,
+  CheckCircle2,
+  XCircle,
+  HelpCircle,
+  Users,
+  Music,
+  Disc3,
 } from "lucide-react";
 import { TemplateProps } from "@/templates/types";
 import { Wish } from "@/types/database";
+
+/**
+ * Luxury Gold Custom Dropdown Component
+ * Replaces standard native HTML <select> with a rich glassmorphic gold component
+ */
+interface LuxuryDropdownOption {
+  value: string;
+  label: string;
+  badge?: string;
+  badgeColor?: string;
+  icon?: React.ReactNode;
+  description?: string;
+}
+
+function LuxuryDropdown({
+  label,
+  value,
+  onChange,
+  options,
+  icon,
+}: {
+  label?: string;
+  value: string;
+  onChange: (val: string) => void;
+  options: LuxuryDropdownOption[];
+  icon?: React.ReactNode;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const selectedOption = options.find((opt) => opt.value === value) || options[0];
+
+  // Close on outside click
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
+  return (
+    <div className="relative w-full text-left" ref={dropdownRef}>
+      {label && (
+        <label className="block text-[11px] font-semibold text-amber-300 uppercase tracking-wider mb-1.5">
+          {label}
+        </label>
+      )}
+
+      {/* Trigger Button */}
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className={`w-full px-3.5 py-3 rounded-xl bg-gradient-to-b from-[#1c0f08] to-[#120804] border ${
+          isOpen
+            ? "border-amber-400 shadow-[0_0_15px_rgba(217,119,6,0.3)] ring-1 ring-amber-400/50"
+            : "border-amber-600/35 hover:border-amber-500/60"
+        } text-white flex items-center justify-between transition-all duration-200 cursor-pointer shadow-md group`}
+      >
+        <div className="flex items-center gap-2.5 truncate">
+          {selectedOption?.icon || icon}
+          <div className="text-left">
+            <span className="text-xs font-medium text-stone-100 block truncate">
+              {selectedOption?.label}
+            </span>
+            {selectedOption?.description && (
+              <span className="text-[10px] text-stone-400 block truncate font-light">
+                {selectedOption.description}
+              </span>
+            )}
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 shrink-0 ml-2">
+          {selectedOption?.badge && (
+            <span
+              className={`text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${
+                selectedOption.badgeColor ||
+                "bg-amber-500/20 text-amber-300 border border-amber-500/30"
+              }`}
+            >
+              {selectedOption.badge}
+            </span>
+          )}
+          <ChevronDown
+            className={`w-4 h-4 text-amber-400 transition-transform duration-300 ${
+              isOpen ? "rotate-180 text-amber-300" : "group-hover:translate-y-0.5"
+            }`}
+          />
+        </div>
+      </button>
+
+      {/* Dropdown Menu Popover */}
+      {isOpen && (
+        <div className="absolute left-0 right-0 top-full mt-2 z-40 bg-[#160b06] border border-amber-500/40 rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.9)] overflow-hidden py-1.5 backdrop-blur-md">
+          <div className="max-h-60 overflow-y-auto divide-y divide-amber-500/10">
+            {options.map((opt) => {
+              const isSelected = opt.value === value;
+              return (
+                <div
+                  key={opt.value}
+                  onClick={() => {
+                    onChange(opt.value);
+                    setIsOpen(false);
+                  }}
+                  className={`px-3.5 py-2.5 flex items-center justify-between text-xs cursor-pointer transition-all ${
+                    isSelected
+                      ? "bg-amber-600/20 text-amber-200 font-semibold border-l-2 border-amber-400"
+                      : "text-stone-300 hover:bg-black/50 hover:text-white"
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5 truncate">
+                    {opt.icon}
+                    <div>
+                      <p className="text-xs">{opt.label}</p>
+                      {opt.description && (
+                        <p className="text-[10px] text-stone-400 font-light truncate">
+                          {opt.description}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 shrink-0 ml-2">
+                    {opt.badge && (
+                      <span
+                        className={`text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${
+                          opt.badgeColor ||
+                          "bg-amber-500/20 text-amber-300 border border-amber-500/30"
+                        }`}
+                      >
+                        {opt.badge}
+                      </span>
+                    )}
+                    {isSelected && <Check className="w-4 h-4 text-amber-400 shrink-0" />}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 /**
  * Reusable Polaroid Frame Component with Washi Tape, Center Zoom Badge, & Gold Heart Seal
@@ -143,6 +301,7 @@ export default function LuxuryPolaroidTemplate({
   title,
   coverImageUrl,
   audioUrl,
+  audioTitle,
   data,
   wishes: initialWishes = [],
   isPreview = false,
@@ -176,21 +335,68 @@ export default function LuxuryPolaroidTemplate({
   const [wishes, setWishes] = useState<Wish[]>(initialWishes);
   const [senderName, setSenderName] = useState(guestName !== "Tamu Undangan" ? guestName : "");
   const [attendance, setAttendance] = useState<"attending" | "not_attending" | "maybe">("attending");
+  const [pax, setPax] = useState<number>(1);
   const [wishMessage, setWishMessage] = useState("");
   const [isSendingWish, setIsSendingWish] = useState(false);
   const [wishSuccess, setWishSuccess] = useState(false);
 
-  // Effective Music URL (uses uploaded music or custom or fallback)
+  // Attendance & Pax Options for Luxury Custom Dropdowns
+  const attendanceOptions: LuxuryDropdownOption[] = [
+    {
+      value: "attending",
+      label: "Hadir Memenuhi Undangan",
+      description: "Dengan senang hati akan hadir di hari bahagia",
+      badge: "Pasti Hadir",
+      badgeColor: "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30",
+      icon: <CheckCircle2 className="w-4 h-4 text-emerald-400" />,
+    },
+    {
+      value: "not_attending",
+      label: "Maaf, Berhalangan Hadir",
+      description: "Turut berbahagia & mendoakan dari kejauhan",
+      badge: "Berhalangan",
+      badgeColor: "bg-rose-500/20 text-rose-300 border border-rose-500/30",
+      icon: <XCircle className="w-4 h-4 text-rose-400" />,
+    },
+    {
+      value: "maybe",
+      label: "Masih Ragu / Belum Pasti",
+      description: "Akan mengonfirmasi kembali mendekati hari acara",
+      badge: "Belum Pasti",
+      badgeColor: "bg-amber-500/20 text-amber-300 border border-amber-500/30",
+      icon: <HelpCircle className="w-4 h-4 text-amber-400" />,
+    },
+  ];
+
+  const paxOptions: LuxuryDropdownOption[] = [
+    { value: "1", label: "1 Orang", description: "Hadir sendiri", icon: <Users className="w-4 h-4 text-amber-400" /> },
+    { value: "2", label: "2 Orang", description: "Bersama pasangan / partner", icon: <Users className="w-4 h-4 text-amber-400" /> },
+    { value: "3", label: "3 Orang", description: "Bersama keluarga kecil", icon: <Users className="w-4 h-4 text-amber-400" /> },
+    { value: "4", label: "4 Orang", description: "Bersama keluarga", icon: <Users className="w-4 h-4 text-amber-400" /> },
+    { value: "5", label: "5 Orang", description: "Rombongan keluarga", icon: <Users className="w-4 h-4 text-amber-400" /> },
+  ];
+
+  // Effective Music URL (uses uploaded music or custom or reliable local canon-in-d)
   const effectiveAudioUrl =
     audioUrl ||
     data.custom_music_url ||
-    "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-acoustic-guitar-112191.mp3";
+    "/music/canon-in-d.mp3";
 
-  // Audio Initialization
+  // Audio Initialization with graceful fallback
   useEffect(() => {
     if (!effectiveAudioUrl) return;
     const audio = new Audio(effectiveAudioUrl);
     audio.loop = true;
+    audio.preload = "auto";
+
+    audio.onerror = () => {
+      console.warn("Audio failed to load, falling back to /music/canon-in-d.mp3");
+      if (!audio.src.endsWith("/music/canon-in-d.mp3")) {
+        audio.src = "/music/canon-in-d.mp3";
+        audio.load();
+      }
+    };
+
     audioRef.current = audio;
 
     return () => {
@@ -208,7 +414,10 @@ export default function LuxuryPolaroidTemplate({
       audioRef.current
         .play()
         .then(() => setIsPlayingAudio(true))
-        .catch(() => setIsPlayingAudio(false));
+        .catch((err) => {
+          console.warn("Audio play error:", err);
+          setIsPlayingAudio(false);
+        });
     }
   };
 
@@ -218,7 +427,9 @@ export default function LuxuryPolaroidTemplate({
       audioRef.current
         .play()
         .then(() => setIsPlayingAudio(true))
-        .catch(() => console.log("Autoplay blocked"));
+        .catch((err) => {
+          console.log("Autoplay waiting for touch:", err);
+        });
     }
   };
 
@@ -277,7 +488,7 @@ export default function LuxuryPolaroidTemplate({
         await onSendWish({
           guest_name: senderName,
           attendance,
-          pax: 1,
+          pax,
           message: wishMessage,
         });
       } else {
@@ -289,7 +500,7 @@ export default function LuxuryPolaroidTemplate({
             invitation_id: slug,
             guest_name: senderName,
             attendance,
-            pax: 1,
+            pax,
             message: wishMessage,
           }),
         });
@@ -301,7 +512,7 @@ export default function LuxuryPolaroidTemplate({
         invitation_id: slug,
         guest_name: senderName,
         attendance,
-        pax: 1,
+        pax,
         message: wishMessage,
         is_hidden: false,
         created_at: new Date().toISOString(),
@@ -458,24 +669,70 @@ export default function LuxuryPolaroidTemplate({
       )}
 
       {/* ======================================================== */}
-      {/* 2. FLOATING AUDIO BUTTON (Bottom-Left)                   */}
+      {/* 2. FLOATING LUXURY AUDIO PLAYER (Bottom-Left)            */}
       {/* ======================================================== */}
       {isEnvelopeOpen && (
-        <button
-          type="button"
-          onClick={toggleAudio}
-          className="fixed bottom-5 left-4 sm:left-6 z-40 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#1e1008]/90 hover:bg-[#2b170c] border border-amber-500/40 text-amber-300 shadow-[0_8px_25px_rgba(0,0,0,0.6)] flex items-center justify-center cursor-pointer transition-all hover:scale-110 active:scale-95"
-          title={isPlayingAudio ? "Jeda Musik" : "Putar Musik"}
-        >
-          {isPlayingAudio ? (
-            <div className="relative flex items-center justify-center">
-              <Volume2 className="w-5 h-5 text-amber-400" />
-              <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+        <div className="fixed bottom-5 left-3 sm:left-6 z-40 flex items-center gap-2">
+          <button
+            type="button"
+            onClick={toggleAudio}
+            className={`group relative w-12 h-12 rounded-full bg-gradient-to-br from-[#241209] via-[#1a0c06] to-black border ${
+              isPlayingAudio
+                ? "border-amber-400 shadow-[0_0_20px_rgba(217,119,6,0.5)] ring-1 ring-amber-300/40"
+                : "border-amber-600/40 opacity-80 hover:opacity-100"
+            } shadow-[0_10px_30px_rgba(0,0,0,0.8)] flex items-center justify-center cursor-pointer transition-all hover:scale-105 active:scale-95`}
+            title={isPlayingAudio ? "Jeda Musik" : "Putar Musik"}
+          >
+            {/* Spinning Golden Grooves Vinyl Effect */}
+            <div
+              className={`absolute inset-1 rounded-full border border-amber-500/25 flex items-center justify-center ${
+                isPlayingAudio ? "animate-spin" : ""
+              }`}
+              style={{ animationDuration: "5s" }}
+            >
+              <div className="w-4 h-4 rounded-full bg-gradient-to-br from-amber-300 via-amber-500 to-amber-700 flex items-center justify-center shadow-xs">
+                <div className="w-1.5 h-1.5 rounded-full bg-black" />
+              </div>
             </div>
-          ) : (
-            <VolumeX className="w-5 h-5 text-stone-400" />
-          )}
-        </button>
+
+            {/* Center Play/Pause Indicator Icon */}
+            <div className="relative z-10 flex items-center justify-center text-amber-300">
+              {isPlayingAudio ? (
+                <Volume2 className="w-4 h-4 text-white drop-shadow-md" />
+              ) : (
+                <VolumeX className="w-4 h-4 text-stone-400 drop-shadow-md" />
+              )}
+            </div>
+
+            {/* Glowing Soundwave bars when playing */}
+            {isPlayingAudio && (
+              <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-500" />
+              </span>
+            )}
+          </button>
+
+          {/* Mini Track Title Capsule (Desktop / Tablet) */}
+          <div
+            onClick={toggleAudio}
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#180e08]/92 border border-amber-600/30 text-stone-200 text-[11px] shadow-lg backdrop-blur-md cursor-pointer hover:border-amber-500/50 transition-colors"
+          >
+            <Music className="w-3 h-3 text-amber-400 shrink-0" />
+            <span className="truncate max-w-[130px] font-medium text-stone-300">
+              {audioTitle || "Canon in D Major"}
+            </span>
+            <span
+              className={`text-[9px] uppercase font-bold px-1.5 py-0.2 rounded-full ${
+                isPlayingAudio
+                  ? "text-emerald-300 bg-emerald-500/15 border border-emerald-500/30"
+                  : "text-stone-400 bg-black/40"
+              }`}
+            >
+              {isPlayingAudio ? "Playing" : "Paused"}
+            </span>
+          </div>
+        </div>
       )}
 
       {/* ======================================================== */}
@@ -1102,28 +1359,26 @@ export default function LuxuryPolaroidTemplate({
               />
             </div>
 
-            <div>
-              <label className="block text-[11px] font-semibold text-amber-300 uppercase tracking-wider mb-1">
-                KONFIRMASI KEHADIRAN
-              </label>
-              <select
-                value={attendance}
-                onChange={(e) =>
-                  setAttendance(e.target.value as "attending" | "not_attending" | "maybe")
-                }
-                className="w-full px-3.5 py-2.5 rounded-xl border border-amber-500/25 bg-black/50 text-xs text-white focus:outline-hidden focus:border-amber-400"
-              >
-                <option value="attending" className="bg-stone-900 text-white">
-                  Hadir
-                </option>
-                <option value="not_attending" className="bg-stone-900 text-white">
-                  Tidak Hadir
-                </option>
-                <option value="maybe" className="bg-stone-900 text-white">
-                  Masih Ragu / Belum Pasti
-                </option>
-              </select>
-            </div>
+            {/* Custom Luxury Attendance Dropdown */}
+            <LuxuryDropdown
+              label="KONFIRMASI KEHADIRAN"
+              value={attendance}
+              onChange={(val) =>
+                setAttendance(val as "attending" | "not_attending" | "maybe")
+              }
+              options={attendanceOptions}
+            />
+
+            {/* Custom Luxury Pax (Jumlah Tamu) Dropdown */}
+            {attendance === "attending" && (
+              <LuxuryDropdown
+                label="JUMLAH TAMU YANG HADIR"
+                value={String(pax)}
+                onChange={(val) => setPax(Number(val))}
+                options={paxOptions}
+                icon={<Users className="w-4 h-4 text-amber-400" />}
+              />
+            )}
 
             <div>
               <label className="block text-[11px] font-semibold text-amber-300 uppercase tracking-wider mb-1">

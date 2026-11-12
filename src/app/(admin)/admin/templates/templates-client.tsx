@@ -38,15 +38,7 @@ export function AdminTemplatesClient({ templates }: Props) {
 
   const categories = [
     { key: "all", label: "Semua Desain" },
-    { key: "Polaroid", label: "Luxury Polaroid" },
-    { key: "Editorial Photo", label: "Editorial Photo" },
-    { key: "Adat Jawa", label: "Adat Jawa" },
-    { key: "Islami", label: "Islami" },
-    { key: "Bali & Tropis", label: "Bali & Tropis" },
-    { key: "Rustic Boho", label: "Rustic Boho" },
-    { key: "Oriental", label: "Oriental" },
     { key: "Modern", label: "Modern Luxury" },
-    { key: "Floral", label: "Botanical Floral" },
   ];
 
   const filteredTemplates = templates.filter((tpl) => {
