@@ -40,7 +40,10 @@ export default async function AdminDashboardPage() {
       .order("created_at", { ascending: false });
 
     if (!error && data) {
-      invitations = data as Invitation[];
+      // Exclude template preset records from customer invitations dashboard
+      invitations = (data as Invitation[]).filter(
+        (inv) => !inv.slug.startsWith("preset-") && !inv.slug.startsWith("template-preset-")
+      );
     }
   } catch (err) {
     console.error("Dashboard fetch error:", err);

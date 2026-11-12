@@ -15,6 +15,7 @@ import {
 } from "@/lib/mock-data";
 import { getWhatsAppOrderUrl } from "@/lib/whatsapp";
 import templatePresetsData from "@/data/template-presets.json";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { DemoClient } from "./demo-client";
 
 interface DemoPageProps {
@@ -65,8 +66,28 @@ export default async function DemoPage({ params, searchParams }: DemoPageProps) 
 
   const TemplateComponent = template.component;
 
-  // Check if an admin has saved a custom reference preset for this template
-  const preset = (templatePresetsData as Record<string, any>)[templateKey];
+  // Check if an admin has saved a custom reference preset in Supabase database or JSON
+  let preset = (templatePresetsData as Record<string, any>)[templateKey];
+  try {
+    const adminSupabase = createAdminClient();
+    const { data: dbPreset } = await adminSupabase
+      .from("invitations")
+      .select("data, cover_image_url, title")
+      .eq("slug", `preset-${templateKey}`)
+      .maybeSingle();
+
+    if (dbPreset?.data && Object.keys(dbPreset.data).length > 0) {
+      preset = {
+        ...preset,
+        ...dbPreset.data,
+        cover_image_url: dbPreset.cover_image_url || dbPreset.data.cover_image_url,
+        title: dbPreset.title || dbPreset.data.title,
+      };
+    }
+  } catch (e) {
+    // Non-critical: Fallback to template-presets.json
+  }
+
   const effectiveData: typeof mockData = preset
     ? {
         ...mockData,

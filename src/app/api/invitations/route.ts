@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { isValidSlug } from "@/lib/utils";
+import { getTemplateByKey } from "@/templates/registry";
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,9 +14,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: checkSlug.error }, { status: 400 });
     }
 
+    if (!customer_name || !customer_phone || !title || !event_date) {
+      return NextResponse.json(
+        { error: "Nama pelanggan, nomor telepon/WhatsApp, judul, dan tanggal acara wajib diisi." },
+        { status: 400 }
+      );
+    }
+
     const adminSupabase = createAdminClient();
 
-    // Check slug uniqueness
+    // 1. Check slug uniqueness
     const { data: existing } = await adminSupabase
       .from("invitations")
       .select("id")
@@ -27,6 +35,26 @@ export async function POST(req: NextRequest) {
         { error: `Slug '/${slug}' sudah digunakan oleh undangan lain. Silakan pilih variasi slug lainnya.` },
         { status: 400 }
       );
+    }
+
+    // 2. Ensure template exists in public.templates to prevent foreign key errors
+    const effectiveTemplateKey = template_key || "luxury-polaroid";
+    const { data: tplExists } = await adminSupabase
+      .from("templates")
+      .select("key")
+      .eq("key", effectiveTemplateKey)
+      .maybeSingle();
+
+    if (!tplExists) {
+      const tplMeta = getTemplateByKey(effectiveTemplateKey);
+      await adminSupabase.from("templates").insert({
+        key: effectiveTemplateKey,
+        name: tplMeta.name,
+        description: tplMeta.description,
+        thumbnail_url: tplMeta.thumbnailUrl,
+        tags: tplMeta.tags || [],
+        is_active: true,
+      });
     }
 
     let published_at = null;
@@ -44,7 +72,7 @@ export async function POST(req: NextRequest) {
       .from("invitations")
       .insert({
         slug,
-        template_key,
+        template_key: effectiveTemplateKey,
         customer_name,
         customer_phone,
         status: status || "draft",
@@ -59,6 +87,7 @@ export async function POST(req: NextRequest) {
       .single();
 
     if (error) {
+      console.error("Database insert invitation error:", error);
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
@@ -68,4 +97,3 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
-

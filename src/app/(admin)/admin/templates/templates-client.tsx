@@ -12,6 +12,8 @@ import {
   Sliders,
   Layers,
   ArrowRight,
+  Eye,
+  PlusCircle,
 } from "lucide-react";
 
 export interface AdminTemplateItem {
@@ -219,25 +221,39 @@ export function AdminTemplatesClient({ templates }: Props) {
                 </div>
               </div>
 
-              {/* Action Buttons */}
-              <div className="pt-4 border-t border-stone-100 flex items-center gap-2">
-                {/* 1. Sesuaikan Template Ini */}
+              {/* 3 Action Buttons per Template */}
+              <div className="pt-4 border-t border-stone-100 space-y-2">
+                <div className="grid grid-cols-2 gap-2">
+                  {/* Button 1: Edit Template (Sesuaikan untuk website customer) */}
+                  <Link
+                    href={`/admin/templates/${tpl.key}/edit`}
+                    className="inline-flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl border border-amber-300 bg-amber-50 hover:bg-amber-100 text-[#844307] text-xs font-semibold transition-all hover:scale-[1.02] active:scale-98 text-center"
+                    title="Sesuaikan data dan tampilan template untuk website customer"
+                  >
+                    <Paintbrush className="w-3.5 h-3.5 shrink-0 text-[#844307]" />
+                    <span className="truncate">Edit Template</span>
+                  </Link>
+
+                  {/* Button 2: Lihat Demo (Buka live demo) */}
+                  <Link
+                    href={`/demo/${tpl.key}`}
+                    target="_blank"
+                    className="inline-flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl border border-stone-200 bg-white hover:bg-stone-50 text-stone-700 text-xs font-semibold transition-all hover:scale-[1.02] active:scale-98 text-center shadow-2xs"
+                    title="Buka pratinjau live demo template di tab baru"
+                  >
+                    <Eye className="w-3.5 h-3.5 shrink-0 text-stone-500" />
+                    <span className="truncate">Lihat Demo</span>
+                  </Link>
+                </div>
+
+                {/* Button 3: Buat Undangan (Generate untuk dipublikasikan) */}
                 <Link
                   href={`/admin/invitations/new?template=${tpl.key}`}
-                  className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#844307] to-[#9e5108] hover:from-[#6d3505] hover:to-[#844307] text-white text-xs font-semibold shadow-xs hover:shadow-md transition-all hover:scale-[1.02] active:scale-98"
+                  className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#844307] via-[#9e5108] to-[#6d3505] hover:opacity-95 text-white text-xs font-bold shadow-xs hover:shadow-md transition-all hover:scale-[1.01] active:scale-98"
+                  title="Generate dan buat undangan baru untuk dipublikasikan ke klien"
                 >
-                  <Paintbrush className="w-3.5 h-3.5" />
-                  <span>Sesuaikan</span>
-                </Link>
-
-                {/* 2. Coba Demo Live */}
-                <Link
-                  href={`/demo/${tpl.key}`}
-                  target="_blank"
-                  className="inline-flex items-center justify-center gap-1 p-2.5 rounded-xl border border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50 text-stone-700 text-xs font-medium transition-all shadow-2xs hover:scale-105"
-                  title="Lihat Demo Interaktif di Tab Baru"
-                >
-                  <ExternalLink className="w-3.5 h-3.5 text-stone-500" />
+                  <PlusCircle className="w-3.5 h-3.5 text-amber-200 shrink-0" />
+                  <span>Buat Undangan</span>
                 </Link>
               </div>
             </div>

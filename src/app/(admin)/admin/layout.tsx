@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { LayoutDashboard, PlusCircle, Music, LogOut, ExternalLink } from "lucide-react";
+import { LayoutDashboard, Layers, LogOut, ExternalLink } from "lucide-react";
 
 export default function AdminLayout({
   children,
@@ -30,41 +30,22 @@ export default function AdminLayout({
             </span>
           </div>
 
-          {/* Navigation Links */}
+          {/* Navigation Links: Hanya Dashboard dan Katalog Template */}
           <nav className="space-y-1 text-sm font-medium">
             <Link
               href="/admin"
               className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-stone-300 hover:text-white hover:bg-stone-800 transition-colors"
             >
               <LayoutDashboard className="w-4 h-4 text-amber-400" />
-              <span>Dashboard Undangan</span>
+              <span>Dashboard</span>
             </Link>
 
             <Link
               href="/admin/templates"
               className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-stone-300 hover:text-white hover:bg-stone-800 transition-colors"
             >
-              <Music className="w-4 h-4 text-amber-300" />
-              <span>Katalog &amp; Master Template</span>
-            </Link>
-
-            <Link
-              href="/admin/invitations/new"
-              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-stone-300 hover:text-white hover:bg-stone-800 transition-colors"
-            >
-              <PlusCircle className="w-4 h-4 text-emerald-400" />
-              <span>Buat / Sesuaikan Undangan</span>
-            </Link>
-
-            <Link
-              href="/templates"
-              target="_blank"
-              className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-stone-400 hover:text-white hover:bg-stone-800 transition-colors"
-            >
-              <span className="flex items-center gap-2.5">
-                <ExternalLink className="w-4 h-4 text-stone-400" />
-                <span>Web Publik Customer</span>
-              </span>
+              <Layers className="w-4 h-4 text-amber-300" />
+              <span>Katalog Template</span>
             </Link>
           </nav>
         </div>
