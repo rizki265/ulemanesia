@@ -37,6 +37,8 @@ export async function generateMetadata({ params }: DemoPageProps): Promise<Metad
   };
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function DemoPage({ params, searchParams }: DemoPageProps) {
   const { templateKey } = await params;
   const { view } = await searchParams;
@@ -88,24 +90,35 @@ export default async function DemoPage({ params, searchParams }: DemoPageProps) 
     // Non-critical: Fallback to template-presets.json
   }
 
+  const effectiveCover =
+    preset?.cover_image_url ||
+    preset?.gallery?.[0] ||
+    mockData.gallery[0];
+
   const effectiveData: typeof mockData = preset
     ? {
         ...mockData,
         groom: { ...mockData.groom, ...(preset.groom || {}) },
         bride: { ...mockData.bride, ...(preset.bride || {}) },
         quote: preset.quote || mockData.quote,
-        stories: preset.stories || mockData.stories,
-        bank_accounts: preset.bank_accounts || mockData.bank_accounts,
+        stories: preset.stories && preset.stories.length > 0 ? preset.stories : mockData.stories,
+        gallery: preset.gallery && preset.gallery.length > 0 ? preset.gallery : mockData.gallery,
+        video_url: preset.video_url || (mockData as any).video_url,
+        custom_music_url: preset.custom_music_url || (mockData as any).custom_music_url,
+        bank_accounts:
+          preset.bank_accounts && preset.bank_accounts.length > 0
+            ? preset.bank_accounts
+            : mockData.bank_accounts,
         qris_image_url: preset.qris_image_url || (mockData as any).qris_image_url,
         theme_config: { ...mockData.theme_config, ...(preset.theme_config || {}) },
         theme_options: { ...mockData.theme_options, ...(preset.theme_config || {}) },
+        cover_image_url: effectiveCover,
       }
     : mockData;
 
-  const effectiveCover = preset?.cover_image_url || effectiveData.gallery[0] || mockData.gallery[0];
   const effectiveTitle =
     preset?.title ||
-    `The Wedding of ${effectiveData.groom.nickname} & ${effectiveData.bride.nickname}`;
+    `The Wedding of ${effectiveData.groom.nickname || "Groom"} & ${effectiveData.bride.nickname || "Bride"}`;
 
   // Jika dipanggil dari dalam iframe frame smartphone, render template secara langsung
   if (view === "raw") {
@@ -116,7 +129,10 @@ export default async function DemoPage({ params, searchParams }: DemoPageProps) 
         title={effectiveTitle}
         coverImageUrl={effectiveCover}
         audioUrl={effectiveData.custom_music_url}
-        data={effectiveData}
+        data={{
+          ...effectiveData,
+          cover_image_url: effectiveCover,
+        }}
         wishes={MOCK_WISHES}
         isPreview={true}
       />

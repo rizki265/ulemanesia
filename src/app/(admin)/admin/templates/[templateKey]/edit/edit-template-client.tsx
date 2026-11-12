@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
   Save,
@@ -35,6 +36,7 @@ interface Props {
 }
 
 export function EditTemplateClient({ template, initialPreset }: Props) {
+  const router = useRouter();
   // Preset Form States
   const [title, setTitle] = useState(
     initialPreset.title ||
@@ -231,6 +233,7 @@ export function EditTemplateClient({ template, initialPreset }: Props) {
         setSuccessToast(
           `✨ Berhasil! Perubahan template "${template.name}" telah tersimpan di Database Supabase dan langsung aktif pada website customer & demo.`
         );
+        router.refresh();
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
     } catch {

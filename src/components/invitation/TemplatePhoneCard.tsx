@@ -31,6 +31,12 @@ export function TemplatePhoneCard({
   const isChinese = template.key === "chinese-modern";
   const isModern = template.key === "modern-elegance";
 
+  const customNames =
+    (template as any).customNames ||
+    ((template as any).preset?.groom?.nickname && (template as any).preset?.bride?.nickname
+      ? `${(template as any).preset.groom.nickname} & ${(template as any).preset.bride.nickname}`
+      : null);
+
   return (
     <div className="bg-white rounded-3xl p-4 sm:p-5 border border-stone-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center justify-between group w-full max-w-[270px]">
       {/* 1. Realistic Smartphone Handphone Mockup (iPhone proportion ~9:19.5) */}
@@ -78,7 +84,7 @@ export function TemplatePhoneCard({
                     THE WEDDING OF
                   </p>
                   <h4 className="font-serif text-xs font-bold text-amber-100 tracking-wider">
-                    Ozy &amp; Zelda
+                    {customNames || "Ozy & Zelda"}
                   </h4>
                   <p className="text-[7px] tracking-wider text-amber-300/70 font-mono">
                     13 DESEMBER 2029
@@ -117,7 +123,7 @@ export function TemplatePhoneCard({
                   WE ARE GETTING MARRIED
                 </p>
                 <h4 className="font-serif text-2xl sm:text-3xl font-bold text-white tracking-tight drop-shadow-md">
-                  Dimas &amp; Clarissa
+                  {customNames || "Dimas & Clarissa"}
                 </h4>
                 <p className="text-[10px] font-serif italic text-amber-200/90">
                   12 &middot; 12 &middot; 2026

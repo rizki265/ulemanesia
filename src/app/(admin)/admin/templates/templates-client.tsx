@@ -25,6 +25,7 @@ export interface AdminTemplateItem {
   thumbnailUrl: string;
   tags: string[];
   customFieldsCount: number;
+  customNames?: string;
 }
 
 interface Props {
@@ -179,7 +180,7 @@ export function AdminTemplatesClient({ templates }: Props) {
                   {/* Bottom Text Inside Phone */}
                   <div className="absolute bottom-3 left-3 right-3 text-center text-white space-y-1 z-10">
                     <p className="text-[10px] font-medium text-amber-200 tracking-wider uppercase font-serif line-clamp-1">
-                      {tpl.subtitle || "Eksklusif"}
+                      {tpl.customNames || tpl.subtitle || "Eksklusif"}
                     </p>
                     <p className="font-serif font-bold text-sm text-white line-clamp-1">
                       {tpl.name}

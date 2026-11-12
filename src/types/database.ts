@@ -80,6 +80,7 @@ export interface InvitationDataPayload {
     address: string;
   };
   custom_music_url?: string;
+  cover_image_url?: string | null;
   theme_config?: Record<string, any>;
   theme_options?: Record<string, any>;
 }

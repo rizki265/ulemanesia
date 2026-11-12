@@ -18,6 +18,8 @@ import {
 import { getAllRegisteredTemplates } from "@/templates/registry";
 import { formatWhatsAppPhone } from "@/lib/whatsapp";
 import { DEFAULT_WHATSAPP_NUMBER } from "@/lib/constants";
+import { createAdminClient } from "@/lib/supabase/admin";
+import templatePresetsData from "@/data/template-presets.json";
 import { HomeInteractive } from "./home-interactive";
 
 export const metadata = {
@@ -26,8 +28,55 @@ export const metadata = {
     "Platform undangan pernikahan digital modern & adat Jawa eksklusif. Jadi kurang dari 30 menit, aktif 3 bulan penuh, responsif di HP, dan mudah disebar via WhatsApp dengan nama tamu personal.",
 };
 
-export default function HomePage() {
-  const templates = getAllRegisteredTemplates();
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  const registered = getAllRegisteredTemplates();
+  const presets = templatePresetsData as Record<string, any>;
+
+  // Fetch updated thumbnails & presets from Supabase database
+  let dbPresetsMap: Record<string, any> = {};
+  try {
+    const adminSupabase = createAdminClient();
+    const { data: dbPresets } = await adminSupabase
+      .from("invitations")
+      .select("template_key, cover_image_url, title, data")
+      .like("slug", "preset-%");
+
+    if (dbPresets && dbPresets.length > 0) {
+      dbPresets.forEach((p) => {
+        if (p.template_key) {
+          dbPresetsMap[p.template_key] = p;
+        }
+      });
+    }
+  } catch (e) {
+    // Non-critical fallback
+  }
+
+  // Merge database presets & JSON file presets
+  const templates = registered.map((tpl) => {
+    const dbPreset = dbPresetsMap[tpl.key];
+    const filePreset = presets[tpl.key];
+    const effectivePreset = dbPreset?.data || filePreset;
+    const effectiveCover =
+      dbPreset?.cover_image_url ||
+      dbPreset?.data?.cover_image_url ||
+      filePreset?.cover_image_url ||
+      tpl.thumbnailUrl;
+
+    return {
+      ...tpl,
+      thumbnailUrl: effectiveCover,
+      preset: effectivePreset,
+      customTitle: dbPreset?.title || effectivePreset?.title,
+      customNames:
+        effectivePreset?.groom?.nickname && effectivePreset?.bride?.nickname
+          ? `${effectivePreset.groom.nickname} & ${effectivePreset.bride.nickname}`
+          : undefined,
+    };
+  });
+
   const adminWhatsApp = formatWhatsAppPhone(DEFAULT_WHATSAPP_NUMBER);
 
   return (

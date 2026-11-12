@@ -36,6 +36,7 @@ export function DemoClient({
   allTemplates,
 }: DemoClientProps) {
   const phoneRef = useRef<HTMLDivElement>(null);
+  const [iframeKey] = React.useState(() => Date.now());
 
   const scrollToPhone = () => {
     if (phoneRef.current) {
@@ -220,7 +221,7 @@ export function DemoClient({
               {/* Inner Screen Area running the live interactive template */}
               <div className="w-full h-full rounded-[38px] sm:rounded-[44px] overflow-hidden bg-white relative">
                 <iframe
-                  src={`/demo/${templateKey}?view=raw`}
+                  src={`/demo/${templateKey}?view=raw&_t=${iframeKey}`}
                   title={`Live Preview ${templateName}`}
                   allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
                   loading="eager"

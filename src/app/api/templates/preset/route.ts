@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import fs from "fs";
 import path from "path";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -167,6 +168,17 @@ export async function POST(req: NextRequest) {
       updated_at: new Date().toISOString(),
     };
     writePresets(presets);
+
+    // 4. Invalidate Next.js cache so customer website, demo, and admin reflect the update immediately
+    try {
+      revalidatePath("/admin/templates");
+      revalidatePath(`/admin/templates/${template_key}/edit`);
+      revalidatePath(`/demo/${template_key}`);
+      revalidatePath("/templates");
+      revalidatePath("/");
+    } catch (revalErr) {
+      console.warn("Revalidate error (non-critical):", revalErr);
+    }
 
     return NextResponse.json({
       success: true,

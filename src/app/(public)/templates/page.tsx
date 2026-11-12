@@ -22,7 +22,7 @@ export default async function TemplatesPage() {
     const adminSupabase = createAdminClient();
     const { data: dbPresets } = await adminSupabase
       .from("invitations")
-      .select("template_key, cover_image_url, title")
+      .select("template_key, cover_image_url, title, data")
       .like("slug", "preset-%");
 
     if (dbPresets && dbPresets.length > 0) {
@@ -40,11 +40,23 @@ export default async function TemplatesPage() {
   const templates = registered.map((tpl) => {
     const dbPreset = dbPresetsMap[tpl.key];
     const filePreset = presets[tpl.key];
-    const effectiveCover = dbPreset?.cover_image_url || filePreset?.cover_image_url || tpl.thumbnailUrl;
+    const effectivePreset = dbPreset?.data || filePreset;
+    const effectiveCover =
+      dbPreset?.cover_image_url ||
+      dbPreset?.data?.cover_image_url ||
+      filePreset?.cover_image_url ||
+      tpl.thumbnailUrl;
+
+    const customNames =
+      effectivePreset?.groom?.nickname && effectivePreset?.bride?.nickname
+        ? `${effectivePreset.groom.nickname} & ${effectivePreset.bride.nickname}`
+        : undefined;
 
     return {
       ...tpl,
       thumbnailUrl: effectiveCover,
+      customNames,
+      customTitle: dbPreset?.title || effectivePreset?.title,
     };
   });
 

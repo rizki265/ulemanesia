@@ -23,7 +23,7 @@ export default async function AdminTemplatesPage() {
     const adminSupabase = createAdminClient();
     const { data: dbPresets } = await adminSupabase
       .from("invitations")
-      .select("template_key, cover_image_url, title")
+      .select("template_key, cover_image_url, title, data")
       .like("slug", "preset-%");
 
     if (dbPresets && dbPresets.length > 0) {
@@ -40,17 +40,28 @@ export default async function AdminTemplatesPage() {
   const templates = registered.map((tpl) => {
     const dbPreset = dbPresetsMap[tpl.key];
     const filePreset = presets[tpl.key];
-    const effectiveCover = dbPreset?.cover_image_url || filePreset?.cover_image_url || tpl.thumbnailUrl;
+    const effectivePreset = dbPreset?.data || filePreset;
+    const effectiveCover =
+      dbPreset?.cover_image_url ||
+      dbPreset?.data?.cover_image_url ||
+      filePreset?.cover_image_url ||
+      tpl.thumbnailUrl;
+
+    const customNames =
+      effectivePreset?.groom?.nickname && effectivePreset?.bride?.nickname
+        ? `${effectivePreset.groom.nickname} & ${effectivePreset.bride.nickname}`
+        : undefined;
 
     return {
       key: tpl.key,
       name: tpl.name,
-      subtitle: tpl.subtitle || "",
+      subtitle: effectivePreset?.title || tpl.subtitle || "",
       category: tpl.category || "Modern",
       description: tpl.description,
       thumbnailUrl: effectiveCover,
       tags: tpl.tags,
       customFieldsCount: tpl.customFields?.length || 0,
+      customNames,
     };
   });
 

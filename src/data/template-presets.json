@@ -5,29 +5,27 @@
     "title": "The Wedding of Ozy & Zelda",
     "customer_name": "Referensi Katalog Ulemanesia",
     "customer_phone": "08123456789",
-    "cover_image_url": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
+    "cover_image_url": "https://stmoqifvjwlpchfjbcog.supabase.co/storage/v1/object/public/covers/uploads/1794462967675-a7c3fv-prewed-2.webp",
     "theme_config": {
+      "accent_color": "#d4af37",
       "background_style": "warm_chocolate",
-      "washi_tape_color": "kraft_cream",
-      "accent_color": "#d4af37"
+      "washi_tape_color": "kraft_cream"
     },
     "groom": {
-      "name": "Ozy Zulkarnain, S.T",
-      "nickname": "Ozy",
-      "father_name": "Bpk. Hendra Wibowo",
-      "mother_name": "Ibu Wirda Wahyuni",
-      "child_order": "Putra pertama dari",
-      "instagram": "ozyzulkarnaincontoh",
-      "photo_url": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80"
+      "name": "Ozy Zulkarnain",
+      "nickname": "ozy",
+      "instagram": "@ozyxx",
+      "photo_url": "https://stmoqifvjwlpchfjbcog.supabase.co/storage/v1/object/public/covers/uploads/1794463015653-x0oxia-pengantin-pria.webp",
+      "father_name": "Bapak Hendra Kurniawan",
+      "mother_name": "Ibu Wirda Fatimah"
     },
     "bride": {
-      "name": "Zelda Wulandari, S.Ked",
+      "name": "Zelda Wulandari",
       "nickname": "Zelda",
-      "father_name": "Bpk. Daniswara Permadi",
-      "mother_name": "Ibu Yuliana Lestari",
-      "child_order": "Putri pertama dari",
-      "instagram": "zeldawulandaricontoh",
-      "photo_url": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80"
+      "instagram": "@zeldawan",
+      "photo_url": "https://stmoqifvjwlpchfjbcog.supabase.co/storage/v1/object/public/covers/uploads/1794463075542-0f4o8f-pengantin-wanita.webp",
+      "father_name": "Bapak Daniswara Permadi",
+      "mother_name": "Ibu Yuliana Sari"
     },
     "quote": {
       "text": "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.",
@@ -71,37 +69,57 @@
       {
         "year": "RABU, 12 FEBRUARI 2025",
         "title": "Pertemuan Pertama",
+        "image_url": "https://stmoqifvjwlpchfjbcog.supabase.co/storage/v1/object/public/covers/uploads/1794463085574-cghjx0-prewed-3.webp",
         "description": "Takdir mempertemukan kami untuk pertama kalinya. Dari sebuah pertemuan sederhana, tumbuh rasa nyaman yang tak terduga. Sejak hari itu, kami mulai saling mengenal dan berbagi cerita."
       },
       {
         "year": "SELASA, 25 MARET 2025",
         "title": "Menjalin Hubungan",
+        "image_url": "https://stmoqifvjwlpchfjbcog.supabase.co/storage/v1/object/public/covers/uploads/1794463089206-awqzhj-prewed-2.webp",
         "description": "Hari demi hari kami lewati bersama. Tawa, doa, dan dukungan menjadi bagian dari perjalanan kami. Di tanggal ini, kami resmi berkomitmen untuk berjalan beriringan."
       },
       {
         "year": "SELASA, 10 JUNI 2025",
         "title": "Menguatkan Cinta",
+        "image_url": "https://stmoqifvjwlpchfjbcog.supabase.co/storage/v1/object/public/covers/uploads/1794463093599-0m6gtz-prewed-1.webp",
         "description": "Berbagai tantangan kami hadapi bersama. Dari setiap perbedaan, kami belajar saling memahami. Cinta kami semakin kuat dan penuh makna."
       },
       {
         "year": "SABTU, 20 SEPTEMBER 2025",
         "title": "Lamaran 💍",
+        "image_url": "https://stmoqifvjwlpchfjbcog.supabase.co/storage/v1/object/public/covers/uploads/1794463097018-uyxz4f-prewed.webp",
         "description": "Dengan penuh keyakinan dan cinta, kami melangkah ke tahap yang lebih serius. Disaksikan keluarga tercinta, momen lamaran ini menjadi awal perjalanan menuju hidup bersama."
       }
     ],
     "bank_accounts": [
       {
         "bank_name": "BCA",
-        "account_number": "123456",
-        "account_holder": "Ozy Zulkarnain"
+        "account_holder": "Ozy Zulkarnain",
+        "account_number": "123456"
       },
       {
         "bank_name": "Mandiri",
-        "account_number": "567890",
-        "account_holder": "Zelda Wulandari"
+        "account_holder": "Zelda Wulandari",
+        "account_number": "567890"
+      },
+      {
+        "bank_name": "BRI",
+        "qr_code_url": "",
+        "account_holder": "Zelda Wulandari",
+        "account_number": "093872882"
       }
     ],
-    "custom_music_url": "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-acoustic-guitar-112191.mp3"
+    "custom_music_url": "https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f77c30.mp3?filename=warm-piano-123436.mp3",
+    "gallery": [
+      "https://stmoqifvjwlpchfjbcog.supabase.co/storage/v1/object/public/galleries/uploads/1794463110398-v0m2l7-pengantin-wanita.webp",
+      "https://stmoqifvjwlpchfjbcog.supabase.co/storage/v1/object/public/galleries/uploads/1794463111795-ontwjz-prewed-3.webp",
+      "https://stmoqifvjwlpchfjbcog.supabase.co/storage/v1/object/public/galleries/uploads/1794463112682-0pl7n5-prewed-2.webp",
+      "https://stmoqifvjwlpchfjbcog.supabase.co/storage/v1/object/public/galleries/uploads/1794463113996-n9dw70-prewed-1.webp",
+      "https://stmoqifvjwlpchfjbcog.supabase.co/storage/v1/object/public/galleries/uploads/1794463115262-ttgmne-prewed.webp",
+      "https://stmoqifvjwlpchfjbcog.supabase.co/storage/v1/object/public/galleries/uploads/1794463116432-iyvvnt-pengantin-pria.webp"
+    ],
+    "video_url": null,
+    "qris_image_url": "https://stmoqifvjwlpchfjbcog.supabase.co/storage/v1/object/public/covers/uploads/1794463160888-wl7zog-whatsapp-image-2026-10-31-at-12-19-19.webp"
   },
   "editorial-photo": {
     "key": "editorial-photo",
@@ -377,4 +395,3 @@
     }
   }
 }
-
