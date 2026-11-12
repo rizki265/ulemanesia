@@ -70,6 +70,7 @@ export interface InvitationDataPayload {
   events: EventDetail[];
   countdown_target: string; // ISO format e.g. "2026-12-25T09:00:00+07:00"
   gallery: string[]; // max 10 photos
+  video_url?: string; // YouTube or MP4 video URL
   stories?: LoveStory[];
   bank_accounts?: BankAccount[];
   qris_image_url?: string;

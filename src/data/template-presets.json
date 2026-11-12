@@ -1,4 +1,108 @@
 {
+  "luxury-polaroid": {
+    "key": "luxury-polaroid",
+    "name": "Luxury Chocolate & Gold Polaroid",
+    "title": "The Wedding of Ozy & Zelda",
+    "customer_name": "Referensi Katalog Ulemanesia",
+    "customer_phone": "08123456789",
+    "cover_image_url": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
+    "theme_config": {
+      "background_style": "warm_chocolate",
+      "washi_tape_color": "kraft_cream",
+      "accent_color": "#d4af37"
+    },
+    "groom": {
+      "name": "Ozy Zulkarnain, S.T",
+      "nickname": "Ozy",
+      "father_name": "Bpk. Hendra Wibowo",
+      "mother_name": "Ibu Wirda Wahyuni",
+      "child_order": "Putra pertama dari",
+      "instagram": "ozyzulkarnaincontoh",
+      "photo_url": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80"
+    },
+    "bride": {
+      "name": "Zelda Wulandari, S.Ked",
+      "nickname": "Zelda",
+      "father_name": "Bpk. Daniswara Permadi",
+      "mother_name": "Ibu Yuliana Lestari",
+      "child_order": "Putri pertama dari",
+      "instagram": "zeldawulandaricontoh",
+      "photo_url": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80"
+    },
+    "quote": {
+      "text": "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.",
+      "source": "QS. AR-RUM: 21",
+      "arabic_text": "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً"
+    },
+    "countdown_target": "2029-12-13T08:00:00+07:00",
+    "events": [
+      {
+        "title": "Akad Nikah",
+        "date": "2029-12-13T08:00:00+07:00",
+        "start_time": "08:00",
+        "end_time": "Selesai",
+        "timezone": "WIB",
+        "location_name": "KUA Bunga Wangi",
+        "address": "Jl. Bunga Wangi No.88, Kec. Harum, Kab. Indah",
+        "google_maps_url": "https://maps.google.com/?q=KUA+Bunga+Wangi"
+      },
+      {
+        "title": "Resepsi Pernikahan",
+        "date": "2029-12-14T08:00:00+07:00",
+        "start_time": "08:00",
+        "end_time": "Selesai",
+        "timezone": "WIB",
+        "location_name": "Rumah Zelda Wulandari",
+        "address": "Jl. Sangat Harum No.666, Kec. Segar, Kab. Sangat Segar",
+        "google_maps_url": "https://maps.google.com/?q=Rumah+Zelda+Wulandari"
+      },
+      {
+        "title": "Ngunduh Mantu",
+        "date": "2029-12-16T09:00:00+07:00",
+        "start_time": "09:00",
+        "end_time": "13:00",
+        "timezone": "WIB",
+        "location_name": "Kediaman Mempelai Pria (Ozy Zulkarnain)",
+        "address": "Jl. Merpati Putih No. 12, Kec. Jatiasih, Kota Bekasi",
+        "google_maps_url": "https://maps.google.com/?q=Kediaman+Mempelai+Pria"
+      }
+    ],
+    "stories": [
+      {
+        "year": "RABU, 12 FEBRUARI 2025",
+        "title": "Pertemuan Pertama",
+        "description": "Takdir mempertemukan kami untuk pertama kalinya. Dari sebuah pertemuan sederhana, tumbuh rasa nyaman yang tak terduga. Sejak hari itu, kami mulai saling mengenal dan berbagi cerita."
+      },
+      {
+        "year": "SELASA, 25 MARET 2025",
+        "title": "Menjalin Hubungan",
+        "description": "Hari demi hari kami lewati bersama. Tawa, doa, dan dukungan menjadi bagian dari perjalanan kami. Di tanggal ini, kami resmi berkomitmen untuk berjalan beriringan."
+      },
+      {
+        "year": "SELASA, 10 JUNI 2025",
+        "title": "Menguatkan Cinta",
+        "description": "Berbagai tantangan kami hadapi bersama. Dari setiap perbedaan, kami belajar saling memahami. Cinta kami semakin kuat dan penuh makna."
+      },
+      {
+        "year": "SABTU, 20 SEPTEMBER 2025",
+        "title": "Lamaran 💍",
+        "description": "Dengan penuh keyakinan dan cinta, kami melangkah ke tahap yang lebih serius. Disaksikan keluarga tercinta, momen lamaran ini menjadi awal perjalanan menuju hidup bersama."
+      }
+    ],
+    "bank_accounts": [
+      {
+        "bank_name": "BCA",
+        "account_number": "123456",
+        "account_holder": "Ozy Zulkarnain"
+      },
+      {
+        "bank_name": "Mandiri",
+        "account_number": "567890",
+        "account_holder": "Zelda Wulandari"
+      }
+    ],
+    "custom_music_url": "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-acoustic-guitar-112191.mp3"
+  },
   "editorial-photo": {
     "key": "editorial-photo",
     "name": "Cinematic Editorial Romance",

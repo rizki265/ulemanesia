@@ -22,6 +22,7 @@ export function TemplatePhoneCard({
   whatsappUrl,
   priority = false,
 }: TemplatePhoneCardProps) {
+  const isPolaroid = template.key === "luxury-polaroid";
   const isEditorial = template.key === "editorial-photo";
   const isJavanese = template.key === "javanese-royal";
   const isIslamic = template.key === "islamic-elegance";
@@ -49,7 +50,53 @@ export function TemplatePhoneCard({
 
         {/* Screen Area with Realistic Inner Bezel */}
         <div className="w-full h-full rounded-[33px] sm:rounded-[37px] overflow-hidden relative flex flex-col justify-between">
-          {isEditorial ? (
+          {isPolaroid ? (
+            /* Luxury Chocolate & Gold Polaroid */
+            <div className="w-full h-full bg-[#120a06] text-center flex flex-col justify-between py-5 px-3 relative overflow-hidden select-none">
+              <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-amber-600/10 rounded-full blur-2xl pointer-events-none" />
+
+              <div className="relative z-10 my-auto p-3 rounded-2xl bg-[#1c110a]/90 border border-amber-500/25 shadow-xl flex flex-col items-center">
+                <div className="relative bg-white p-2 pb-5 rounded-xs shadow-md border border-stone-200 w-32 mb-2">
+                  <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-10 h-2.5 bg-[#e8d5b5]/90 rounded-xs -rotate-2" />
+                  <div className="relative aspect-4/5 w-full bg-stone-900 overflow-hidden">
+                    <Image
+                      src={template.thumbnailUrl}
+                      alt={template.name}
+                      fill
+                      priority={priority}
+                      className="object-cover"
+                      sizes="140px"
+                    />
+                  </div>
+                  <div className="absolute -bottom-1.5 -right-1.5 w-4 h-4 rounded-full bg-gradient-to-br from-amber-300 via-amber-500 to-amber-700 shadow flex items-center justify-center text-white ring-1 ring-white">
+                    <Heart className="w-2.5 h-2.5 fill-white" />
+                  </div>
+                </div>
+
+                <div className="space-y-0.5 text-center my-1">
+                  <p className="text-[7px] uppercase tracking-[0.25em] text-amber-200/90 font-light">
+                    THE WEDDING OF
+                  </p>
+                  <h4 className="font-serif text-xs font-bold text-amber-100 tracking-wider">
+                    Ozy &amp; Zelda
+                  </h4>
+                  <p className="text-[7px] tracking-wider text-amber-300/70 font-mono">
+                    13 DESEMBER 2029
+                  </p>
+                </div>
+
+                <div className="mt-2 w-full py-1 px-2 rounded-lg bg-black/50 border border-amber-500/20 text-center">
+                  <p className="text-[6.5px] uppercase text-stone-400">Kepada Yth:</p>
+                  <p className="text-[9px] font-bold text-amber-100">Tamu Undangan</p>
+                </div>
+
+                <div className="mt-2.5 w-full py-1.5 px-3 rounded-full bg-gradient-to-r from-amber-600 via-amber-500 to-amber-700 text-stone-950 font-bold text-[9px] shadow flex items-center justify-center gap-1">
+                  <MailOpen className="w-2.5 h-2.5" />
+                  <span>BUKA UNDANGAN</span>
+                </div>
+              </div>
+            </div>
+          ) : isEditorial ? (
             /* 1. Cinematic Editorial Romance */
             <div className="w-full h-full relative flex flex-col justify-between py-7 px-3.5 text-center">
               <Image
@@ -361,7 +408,9 @@ export function TemplatePhoneCard({
         </div>
 
         <p className="text-[11px] text-stone-500 font-medium">
-          {isEditorial
+          {isPolaroid
+            ? "Polaroid Luxury"
+            : isEditorial
             ? "Editorial Photo"
             : isJavanese
             ? "Adat Tradisional"

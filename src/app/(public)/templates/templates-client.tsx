@@ -27,6 +27,7 @@ export function TemplatesClient({ templates }: TemplatesClientProps) {
 
   const categories = [
     { id: "all", label: "Semua Desain" },
+    { id: "Polaroid", label: "Luxury Polaroid" },
     { id: "Editorial", label: "Editorial Full Photo" },
     { id: "Adat Jawa", label: "Adat Jawa Keraton" },
     { id: "Islami", label: "Islami & Kaligrafi" },

@@ -35,6 +35,7 @@ export function AdminTemplatesClient({ templates }: Props) {
 
   const categories = [
     { key: "all", label: "Semua Desain" },
+    { key: "Polaroid", label: "Luxury Polaroid" },
     { key: "Editorial Photo", label: "Editorial Photo" },
     { key: "Adat Jawa", label: "Adat Jawa" },
     { key: "Islami", label: "Islami" },

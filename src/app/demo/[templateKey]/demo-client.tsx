@@ -48,6 +48,11 @@ export function DemoClient({
     string,
     { badge: string; detailedDescription: string }
   > = {
+    "luxury-polaroid": {
+      badge: "POLAROID LUXURY & CHOCOLATE GOLD",
+      detailedDescription:
+        "Desain flagship eksklusif bernuansa cokelat hangat dan aksen emas mewah dengan bingkai polaroid washi tape, floating dock navigasi bawah, amplop pembuka interaktif, live countdown, galeri video, amplop digital QRIS, dan alunan musik romantis dinamis.",
+    },
     "editorial-photo": {
       badge: "FOTO EDITORIAL SINEMATIK KONTEMPORER",
       detailedDescription:

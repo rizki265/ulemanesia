@@ -17,12 +17,15 @@ import {
   QrCode,
   Gift,
   Heart,
+  Music,
+  Video,
 } from "lucide-react";
 import { Invitation, BankAccount, LoveStory } from "@/types/database";
 import { getAllRegisteredTemplates, getTemplateByKey } from "@/templates/registry";
 import { isValidSlug } from "@/lib/utils";
 import { MAX_GALLERY_PHOTOS } from "@/lib/constants";
 import { ImageUploader } from "@/components/admin/ImageUploader";
+import { AudioUploader } from "@/components/admin/AudioUploader";
 
 interface Props {
   initialInvitation: Invitation;
@@ -119,6 +122,16 @@ export function EditInvitationClient({ initialInvitation }: Props) {
   );
   const [qrisImageUrl, setQrisImageUrl] = useState<string>(
     initialInvitation.data.qris_image_url || ""
+  );
+
+  // Video Prewedding (YouTube / Direct Video Link)
+  const [videoUrl, setVideoUrl] = useState<string>(
+    initialInvitation.data.video_url || ""
+  );
+
+  // Background Music
+  const [customMusicUrl, setCustomMusicUrl] = useState<string>(
+    initialInvitation.data.custom_music_url || ""
   );
 
   // Gallery
@@ -238,6 +251,8 @@ export function EditInvitationClient({ initialInvitation }: Props) {
             },
           ],
           gallery: galleryUrls,
+          video_url: videoUrl || null,
+          custom_music_url: customMusicUrl || null,
           quote: quoteText
             ? { text: quoteText, source: quoteSource || "QS. Ar-Rum: 21", arabic_text: quoteArabic }
             : undefined,
@@ -572,6 +587,39 @@ export function EditInvitationClient({ initialInvitation }: Props) {
             onChange={setGalleryUrls}
             helperText="Klik 'Pilih File Foto' untuk mengunggah dari komputer/HP. Foto otomatis dikompresi ke WebP ~300KB."
           />
+
+          {/* Video Prewedding */}
+          <div className="space-y-1.5">
+            <label className="block text-xs font-semibold text-stone-700 flex items-center gap-1.5">
+              <Video className="w-3.5 h-3.5 text-red-600" />
+              <span>Tautan Video Prewedding (YouTube - Opsional)</span>
+            </label>
+            <input
+              type="url"
+              placeholder="https://www.youtube.com/watch?v=... atau https://youtu.be/..."
+              value={videoUrl}
+              onChange={(e) => setVideoUrl(e.target.value)}
+              className="w-full px-3 py-2 rounded-lg border border-stone-200 text-xs"
+            />
+            <p className="text-[11px] text-stone-500">
+              Video momen kenangan akan disematkan di galeri undangan.
+            </p>
+          </div>
+
+          {/* Musik Latar Undangan */}
+          <div className="space-y-2 pt-2">
+            <div className="flex items-center gap-1.5">
+              <Music className="w-4 h-4 text-[#844307]" />
+              <span className="text-xs font-bold text-stone-900">
+                Musik Latar Undangan (Upload File Musik / Preset)
+              </span>
+            </div>
+            <AudioUploader
+              value={customMusicUrl}
+              onChange={setCustomMusicUrl}
+              label="File Audio Musik Undangan (Upload MP3 / Audio)"
+            />
+          </div>
         </div>
 
         {/* 5. Ayat Suci & Kutipan (Surat Ar-Rum) */}

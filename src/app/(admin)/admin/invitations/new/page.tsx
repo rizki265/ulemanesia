@@ -27,11 +27,14 @@ import {
   BookOpen,
   QrCode,
   Gift,
+  Music,
+  Video,
 } from "lucide-react";
 import { getAllRegisteredTemplates, getTemplateByKey } from "@/templates/registry";
 import { isValidSlug, slugify } from "@/lib/utils";
 import { MAX_GALLERY_PHOTOS } from "@/lib/constants";
 import { ImageUploader } from "@/components/admin/ImageUploader";
+import { AudioUploader } from "@/components/admin/AudioUploader";
 import templatePresetsData from "@/data/template-presets.json";
 import { BankAccount, LoveStory } from "@/types/database";
 
@@ -139,6 +142,12 @@ function NewInvitationContent() {
   // QRIS Pembayaran Digital Utama
   const [qrisImageUrl, setQrisImageUrl] = useState("");
 
+  // Video Prewedding (YouTube / Video URL)
+  const [videoUrl, setVideoUrl] = useState("");
+
+  // Custom Audio / Background Music
+  const [customMusicUrl, setCustomMusicUrl] = useState("");
+
   // Gallery URLs (up to 10)
   const [galleryUrls, setGalleryUrls] = useState<string[]>([]);
 
@@ -196,6 +205,18 @@ function NewInvitationContent() {
 
       if (preset.qris_image_url) {
         setQrisImageUrl(preset.qris_image_url);
+      }
+
+      if (preset.video_url) {
+        setVideoUrl(preset.video_url);
+      } else {
+        setVideoUrl("");
+      }
+
+      if (preset.custom_music_url) {
+        setCustomMusicUrl(preset.custom_music_url);
+      } else {
+        setCustomMusicUrl("");
       }
 
       // Default sample date 30 days ahead
@@ -377,6 +398,8 @@ function NewInvitationContent() {
           stories: stories,
           bank_accounts: bankAccounts,
           qris_image_url: qrisImageUrl || null,
+          video_url: videoUrl || null,
+          custom_music_url: customMusicUrl || null,
         },
       };
 
@@ -479,6 +502,8 @@ function NewInvitationContent() {
             },
           ],
           gallery: galleryUrls,
+          video_url: videoUrl || null,
+          custom_music_url: customMusicUrl || null,
           stories: stories.filter((s) => s.title.trim() || s.description.trim()),
           bank_accounts: bankAccounts.filter((b) => b.account_number.trim()),
           qris_image_url: qrisImageUrl || null,
@@ -1385,17 +1410,55 @@ function NewInvitationContent() {
                 </div>
               </div>
             )}
+
+            {/* Video Prewedding (YouTube / Direct Video Link) */}
+            <div className="pt-4 border-t border-stone-100 space-y-2">
+              <label className="block text-xs font-semibold text-stone-800 flex items-center gap-1.5">
+                <Video className="w-3.5 h-3.5 text-red-600" />
+                <span>Tautan Video Prewedding (YouTube / MP4 - Opsional)</span>
+              </label>
+              <input
+                type="url"
+                placeholder="https://www.youtube.com/watch?v=... atau https://youtu.be/..."
+                value={videoUrl}
+                onChange={(e) => setVideoUrl(e.target.value)}
+                className="w-full px-4 py-2.5 rounded-xl border border-stone-300 text-xs focus:border-[#844307] bg-stone-50/50"
+              />
+              <p className="text-[11px] text-stone-500">
+                Tempel tautan video YouTube momen prewedding Anda. Video akan disematkan elegan di galeri kenangan.
+              </p>
+            </div>
           </div>
         </div>
 
         {/* ======================================================== */}
-        {/* SECTION 8: REKENING TANDA KASIH & BARCODE QRIS          */}
+        {/* SECTION 8: MUSIK LATAR & AUDIO BACKGROUND               */}
+        {/* ======================================================== */}
+        <div className="p-6 sm:p-8 bg-white rounded-3xl border border-stone-200/90 shadow-xs space-y-4">
+          <div className="flex items-center gap-2 border-b border-stone-100 pb-3">
+            <Music className="w-4 h-4 text-[#844307]" />
+            <h3 className="font-serif font-bold text-base text-stone-900">
+              8. Musik Latar Undangan (Upload File Musik / Preset Romantis)
+            </h3>
+          </div>
+          <p className="text-xs text-stone-600">
+            Pilih file musik mp3/wav dari perangkat Anda, atau pilih lagu dari daftar melodi romantis pilihan Ulemanesia.
+          </p>
+          <AudioUploader
+            value={customMusicUrl}
+            onChange={setCustomMusicUrl}
+            label="File Audio Musik Undangan (Choose File / Upload MP3)"
+          />
+        </div>
+
+        {/* ======================================================== */}
+        {/* SECTION 9: REKENING TANDA KASIH & BARCODE QRIS          */}
         {/* ======================================================== */}
         <div className="p-6 sm:p-8 bg-white rounded-3xl border border-stone-200/90 shadow-xs space-y-6">
           <div className="flex items-center justify-between border-b border-stone-100 pb-3">
             <h3 className="font-serif font-bold text-base text-stone-900 flex items-center gap-2">
               <Gift className="w-4 h-4 text-[#844307]" />
-              <span>8. Amplop Digital: Rekening Bank &amp; Gambar QRIS</span>
+              <span>9. Amplop Digital: Rekening Bank &amp; Gambar QRIS</span>
             </h3>
             <button
               type="button"
@@ -1533,14 +1596,14 @@ function NewInvitationContent() {
         </div>
 
         {/* ======================================================== */}
-        {/* SECTION 9: DATA KLIEN & SLUG (KHUSUS UNDANGAN KLIEN)    */}
+        {/* SECTION 10: DATA KLIEN & SLUG (KHUSUS UNDANGAN KLIEN)   */}
         {/* ======================================================== */}
         <div className="p-6 sm:p-8 bg-white rounded-3xl border border-stone-200/90 shadow-xs space-y-6">
           <div className="flex items-center justify-between border-b border-stone-100 pb-3">
             <div className="flex items-center gap-2">
               <Globe className="w-4 h-4 text-emerald-600" />
               <h3 className="font-serif font-bold text-base text-stone-900">
-                9. Data Klien &amp; Tautan Undangan (Khusus Penerbitan Klien)
+                10. Data Klien &amp; Tautan Undangan (Khusus Penerbitan Klien)
               </h3>
             </div>
             <span className="text-[10px] bg-stone-100 text-stone-500 px-2.5 py-0.5 rounded-full">
