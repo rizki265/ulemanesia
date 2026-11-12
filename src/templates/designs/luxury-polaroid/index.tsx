@@ -488,9 +488,8 @@ export default function LuxuryPolaroidTemplate({
             <button
               type="button"
               onClick={() => scrollToSection("hero")}
-              className={`p-2 rounded-full transition-all cursor-pointer ${
-                activeNav === "hero" ? "bg-amber-600/30 text-amber-300 scale-110" : "hover:text-amber-200"
-              }`}
+              className={`p-2 rounded-full transition-all cursor-pointer ${activeNav === "hero" ? "bg-amber-600/30 text-amber-300 scale-110" : "hover:text-amber-200"
+                }`}
               title="Beranda"
             >
               <Home className="w-4 h-4" />
@@ -498,9 +497,8 @@ export default function LuxuryPolaroidTemplate({
             <button
               type="button"
               onClick={() => scrollToSection("couple")}
-              className={`p-2 rounded-full transition-all cursor-pointer ${
-                activeNav === "couple" ? "bg-amber-600/30 text-amber-300 scale-110" : "hover:text-amber-200"
-              }`}
+              className={`p-2 rounded-full transition-all cursor-pointer ${activeNav === "couple" ? "bg-amber-600/30 text-amber-300 scale-110" : "hover:text-amber-200"
+                }`}
               title="Mempelai"
             >
               <Heart className="w-4 h-4" />
@@ -508,9 +506,8 @@ export default function LuxuryPolaroidTemplate({
             <button
               type="button"
               onClick={() => scrollToSection("events")}
-              className={`p-2 rounded-full transition-all cursor-pointer ${
-                activeNav === "events" ? "bg-amber-600/30 text-amber-300 scale-110" : "hover:text-amber-200"
-              }`}
+              className={`p-2 rounded-full transition-all cursor-pointer ${activeNav === "events" ? "bg-amber-600/30 text-amber-300 scale-110" : "hover:text-amber-200"
+                }`}
               title="Rangkaian Acara"
             >
               <Calendar className="w-4 h-4" />
@@ -518,9 +515,8 @@ export default function LuxuryPolaroidTemplate({
             <button
               type="button"
               onClick={() => scrollToSection("story")}
-              className={`p-2 rounded-full transition-all cursor-pointer ${
-                activeNav === "story" ? "bg-amber-600/30 text-amber-300 scale-110" : "hover:text-amber-200"
-              }`}
+              className={`p-2 rounded-full transition-all cursor-pointer ${activeNav === "story" ? "bg-amber-600/30 text-amber-300 scale-110" : "hover:text-amber-200"
+                }`}
               title="Kisah Cinta"
             >
               <BookOpen className="w-4 h-4" />
@@ -528,9 +524,8 @@ export default function LuxuryPolaroidTemplate({
             <button
               type="button"
               onClick={() => scrollToSection("gallery")}
-              className={`p-2 rounded-full transition-all cursor-pointer ${
-                activeNav === "gallery" ? "bg-amber-600/30 text-amber-300 scale-110" : "hover:text-amber-200"
-              }`}
+              className={`p-2 rounded-full transition-all cursor-pointer ${activeNav === "gallery" ? "bg-amber-600/30 text-amber-300 scale-110" : "hover:text-amber-200"
+                }`}
               title="Galeri Foto"
             >
               <Camera className="w-4 h-4" />
@@ -538,9 +533,8 @@ export default function LuxuryPolaroidTemplate({
             <button
               type="button"
               onClick={() => scrollToSection("gift")}
-              className={`p-2 rounded-full transition-all cursor-pointer ${
-                activeNav === "gift" ? "bg-amber-600/30 text-amber-300 scale-110" : "hover:text-amber-200"
-              }`}
+              className={`p-2 rounded-full transition-all cursor-pointer ${activeNav === "gift" ? "bg-amber-600/30 text-amber-300 scale-110" : "hover:text-amber-200"
+                }`}
               title="Amplop Digital"
             >
               <Gift className="w-4 h-4" />
@@ -548,9 +542,8 @@ export default function LuxuryPolaroidTemplate({
             <button
               type="button"
               onClick={() => scrollToSection("wishes")}
-              className={`p-2 rounded-full transition-all cursor-pointer ${
-                activeNav === "wishes" ? "bg-amber-600/30 text-amber-300 scale-110" : "hover:text-amber-200"
-              }`}
+              className={`p-2 rounded-full transition-all cursor-pointer ${activeNav === "wishes" ? "bg-amber-600/30 text-amber-300 scale-110" : "hover:text-amber-200"
+                }`}
               title="Buku Tamu & Ucapan"
             >
               <MessageCircle className="w-4 h-4" />
@@ -910,8 +903,8 @@ export default function LuxuryPolaroidTemplate({
                   data.video_url.includes("youtube.com/watch?v=")
                     ? data.video_url.replace("watch?v=", "embed/")
                     : data.video_url.includes("youtu.be/")
-                    ? data.video_url.replace("youtu.be/", "www.youtube.com/embed/")
-                    : data.video_url
+                      ? data.video_url.replace("youtu.be/", "www.youtube.com/embed/")
+                      : data.video_url
                 }
                 title="Video Prewedding"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -1185,19 +1178,18 @@ export default function LuxuryPolaroidTemplate({
                       {w.guest_name}
                     </strong>
                     <span
-                      className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${
-                        w.attendance === "attending"
-                          ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
-                          : w.attendance === "not_attending"
+                      className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${w.attendance === "attending"
+                        ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
+                        : w.attendance === "not_attending"
                           ? "bg-rose-500/20 text-rose-300 border border-rose-500/30"
                           : "bg-amber-500/20 text-amber-300 border border-amber-500/30"
-                      }`}
+                        }`}
                     >
                       {w.attendance === "attending"
                         ? "Hadir"
                         : w.attendance === "not_attending"
-                        ? "Tidak Hadir"
-                        : "Belum Pasti"}
+                          ? "Tidak Hadir"
+                          : "Belum Pasti"}
                     </span>
                   </div>
 
